@@ -1,0 +1,133 @@
+baseURL = "https://ton-nom.pages.dev/"
+languageCode = "fr"
+title = "Ben Warai Otoko - Data Engineer"
+theme = "LoveIt"
+
+# Menu principal
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "Blog"
+    url = "/posts/"
+    weight = 1
+  [[menu.main]]
+    identifier = "projects"
+    name = "Projets"
+    url = "/projects/"
+    weight = 2
+  [[menu.main]]
+    identifier = "graph"
+    name = "Compétences"
+    url = "/graph/"
+    weight = 3
+  [[menu.main]]
+    identifier = "about"
+    name = "À propos"
+    url = "/about/"
+    weight = 4
+
+[params]
+  version = "0.2.X"
+  description = "Portfolio d'un Data Engineer junior - Python, SQL, ETL"
+  keywords = ["Data Engineering", "Python", "SQL", "ETL", "Codecademy"]
+
+  # Configuration de l'auteur
+  [params.author]
+    name = "Bwo"
+    link = "/about/"
+  
+  # Image par défaut pour les partages sociaux
+  images = ["/images/avatar.png"]
+  
+  # Apparence
+  defaultTheme = "dark"
+  
+  # Configuration de la page d'accueil
+  [params.home]
+    [params.home.profile]
+      enable = true
+      title = "Bwo"
+      subtitle = "Data Engineer junior | Python | SQL | ETL"
+      typeit = true
+      social = true
+      disclaimer = ""
+    [params.home.posts]
+      enable = true
+      paginate = 6
+
+  # Réseaux sociaux (optionnel)
+  [params.social]
+    GitHub = "BenWaraiotoko"
+    Email = "bwonews@proton.me"
+    RSS = true
+
+  # Configuration de la page
+  [params.page]
+    [params.page.toc]
+      enable = true
+      keepStatic = false
+      auto = true
+    [params.page.code]
+      copy = true
+      maxShownLines = 50
+    [params.page.comment]
+      enable = false
+
+  # Configuration du header
+  [params.header]
+    [params.header.title]
+      logo = ""
+      name = "Bwo"
+      pre = ""
+      post = ""
+      typeit = false
+
+  # Configuration du footer
+  [params.footer]
+    enable = true
+    custom = ""
+    hugo = false
+    copyright = true
+    author = true
+    since = 2025
+
+  # Configuration de la section
+  [params.section]
+    paginate = 20
+    dateFormat = "02-01-2006"
+    rss = 10
+
+  # Configuration des listes
+  [params.list]
+    paginate = 20
+    dateFormat = "02-01-2006"
+
+  # Configuration analytics (optionnel)
+  [params.analytics]
+    enable = false
+
+# Options de build
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+# Taxonomies
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+# Markdown
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = false
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+# Permalinks
+[permalinks]
+  posts = "/:year/:month/:contentbasename/"
+  projects = "/projects/:contentbasename/"
