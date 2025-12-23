@@ -1,106 +1,131 @@
 {
   "nodes": [
     {
-      "id": "benjamin",
-      "label": "Benjamin",
-      "category": "central",
-      "central": true,
-      "description": "Data Engineer en formation",
-      "url": "/about/"
+      "id": "center",
+      "label": "Benjamin DE",
+      "isCenter": true,
+      "url": "/"
     },
     {
       "id": "python",
       "label": "Python",
-      "category": "language",
-      "description": "Langage de programmation principal",
-      "url": "/tags/python/"
+      "url": "/tags/python/",
+      "category": "skill"
     },
     {
       "id": "sql",
       "label": "SQL",
-      "category": "language",
-      "description": "Bases de données relationnelles",
-      "url": "/tags/sql/"
+      "url": "/tags/sql/",
+      "category": "skill"
     },
     {
       "id": "etl",
-      "label": "ETL",
-      "category": "skill",
-      "description": "Extract, Transform, Load",
-      "url": "/tags/etl/"
+      "label": "ETL Pipelines",
+      "url": "/tags/etl/",
+      "category": "skill"
     },
     {
-      "id": "pandas",
-      "label": "Pandas",
-      "category": "tool",
-      "description": "Manipulation de données",
-      "url": "/tags/pandas/"
-    },
-    {
-      "id": "postgresql",
-      "label": "PostgreSQL",
-      "category": "database",
-      "description": "Base de données relationnelle",
-      "url": "/tags/postgresql/"
+      "id": "data-engineering",
+      "label": "Data Engineering",
+      "url": "/tags/data-engineering/",
+      "category": "skill"
     },
     {
       "id": "airflow",
-      "label": "Airflow",
-      "category": "tool",
-      "description": "Orchestration de workflows",
-      "url": "/tags/airflow/"
+      "label": "Apache Airflow",
+      "url": "/tags/airflow/",
+      "category": "tool"
+    },
+    {
+      "id": "dbt",
+      "label": "dbt",
+      "url": "/tags/dbt/",
+      "category": "tool"
     },
     {
       "id": "docker",
       "label": "Docker",
-      "category": "tool",
-      "description": "Conteneurisation",
-      "url": "/tags/docker/"
+      "url": "/tags/docker/",
+      "category": "tool"
     },
     {
-      "id": "git",
-      "label": "Git",
-      "category": "tool",
-      "description": "Contrôle de version",
-      "url": "/tags/git/"
+      "id": "postgres",
+      "label": "PostgreSQL",
+      "url": "/tags/postgresql/",
+      "category": "database"
     },
     {
-      "id": "data-viz",
-      "label": "Data Viz",
-      "category": "skill",
-      "description": "Visualisation de données",
-      "url": "/tags/visualization/"
+      "id": "duckdb",
+      "label": "DuckDB",
+      "url": "/tags/duckdb/",
+      "category": "database"
     },
     {
-      "id": "codecademy",
-      "label": "Codecademy",
-      "category": "learning",
-      "description": "Formation Data Engineer",
-      "url": "/posts/"
+      "id": "project-etl",
+      "label": "Pipeline ETL",
+      "url": "/projects/etl-pipeline/",
+      "category": "project"
     },
     {
-      "id": "api",
-      "label": "APIs",
-      "category": "skill",
-      "description": "REST APIs et intégrations",
-      "url": "/tags/api/"
+      "id": "project-dashboard",
+      "label": "Dashboard Analytics",
+      "url": "/projects/analytics-dashboard/",
+      "category": "project"
+    },
+    {
+      "id": "project-api",
+      "label": "Data API",
+      "url": "/projects/data-api/",
+      "category": "project"
+    },
+    {
+      "id": "about",
+      "label": "À propos",
+      "url": "/about/",
+      "category": "page"
+    },
+    {
+      "id": "blog",
+      "label": "Blog",
+      "url": "/posts/",
+      "category": "page"
     }
   ],
   "links": [
-    {"source": "benjamin", "target": "python"},
-    {"source": "benjamin", "target": "sql"},
-    {"source": "benjamin", "target": "etl"},
-    {"source": "benjamin", "target": "codecademy"},
-    {"source": "python", "target": "pandas"},
-    {"source": "python", "target": "etl"},
-    {"source": "python", "target": "api"},
-    {"source": "sql", "target": "postgresql"},
-    {"source": "sql", "target": "etl"},
-    {"source": "etl", "target": "airflow"},
-    {"source": "etl", "target": "docker"},
-    {"source": "docker", "target": "airflow"},
-    {"source": "pandas", "target": "data-viz"},
-    {"source": "python", "target": "git"},
-    {"source": "postgresql", "target": "docker"}
+    { "source": "center", "target": "python" },
+    { "source": "center", "target": "sql" },
+    { "source": "center", "target": "data-engineering" },
+    { "source": "center", "target": "about" },
+    { "source": "center", "target": "blog" },
+    
+    { "source": "python", "target": "etl" },
+    { "source": "python", "target": "airflow" },
+    { "source": "python", "target": "dbt" },
+    
+    { "source": "sql", "target": "etl" },
+    { "source": "sql", "target": "postgres" },
+    { "source": "sql", "target": "duckdb" },
+    { "source": "sql", "target": "dbt" },
+    
+    { "source": "etl", "target": "airflow" },
+    { "source": "etl", "target": "project-etl" },
+    
+    { "source": "data-engineering", "target": "etl" },
+    { "source": "data-engineering", "target": "docker" },
+    
+    { "source": "docker", "target": "airflow" },
+    { "source": "docker", "target": "project-etl" },
+    
+    { "source": "project-etl", "target": "python" },
+    { "source": "project-etl", "target": "airflow" },
+    
+    { "source": "project-dashboard", "target": "sql" },
+    { "source": "project-dashboard", "target": "duckdb" },
+    
+    { "source": "project-api", "target": "python" },
+    { "source": "project-api", "target": "postgres" },
+    
+    { "source": "dbt", "target": "postgres" },
+    { "source": "dbt", "target": "duckdb" }
   ]
 }

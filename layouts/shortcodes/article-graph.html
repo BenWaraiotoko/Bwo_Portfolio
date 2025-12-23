@@ -1,146 +1,83 @@
-<!-- Shortcode pour générer un mini-graphe basé sur les tags de l'article -->
-<!-- Usage dans un fichier .md -->
+{{/* 
+  Article Graph Shortcode
+  Génère automatiquement un mini-graphe basé sur les tags de l'article
+  Usage: {{< article-graph >}}
+*/}}
 
-{{ $title := .Page.Title }}
-{{ $tags := .Page.Params.tags }}
-
-{{ if $tags }}
-<div class="article-graph-container" style="margin: 2rem 0;">
-  <h3 style="color: #E46876; margin-bottom: 1rem;">🔗 Concepts liés</h3>
-  <div id="article-graph-{{ .Page.File.UniqueID }}" style="width: 100%; height: 400px; background-color: #1F1F28; border-radius: 8px; border: 1px solid #363646;"></div>
+<div class="graph-container" style="margin: 2rem 0;">
+  <h4 class="graph-title" style="color: var(--kanagawa-accent, #E46876); margin-bottom: 1rem;">
+    <i class="fa-solid fa-diagram-project"></i>
+    Connexions de cet article
+  </h4>
+  <div id="article-graph-{{ .Page.File.UniqueID }}"></div>
 </div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="/js/knowledge-graph.js"></script>
 
 <script>
 (function() {
-  // Données du graphe basées sur les tags
-  const articleId = "{{ .Page.File.UniqueID }}";
-  const data = {
-    nodes: [
-      {
-        id: 'article',
-        label: '{{ truncate 20 $title }}',
-        central: true,
-        url: '{{ .Page.Permalink }}'
-      }
-      {{ range $index, $tag := $tags }},
-      {
-        id: 'tag-{{ $index }}',
-        label: '{{ $tag }}',
-        url: '/tags/{{ $tag | urlize }}/'
-      }
-      {{ end }}
-    ],
-    links: [
-      {{ range $index, $tag := $tags }}
-      { source: 'article', target: 'tag-{{ $index }}' }{{ if ne $index (sub (len $tags) 1) }},{{ end }}
-      {{ end }}
-    ]
-  };
-
-  // Couleurs Kanagawa
-  const colors = {
-    bg: '#1F1F28',
-    node: '#7FB4CA',
-    nodeCentral: '#E46876',
-    link: '#E6C384',
-    text: '#DCD7BA',
-    hover: '#7E9CD8'
-  };
-
-  function initArticleGraph() {
-    const containerId = `article-graph-${articleId}`;
-    const container = document.getElementById(containerId);
-    if (!container) return;
-
-    const width = container.clientWidth;
-    const height = 400;
-
-    const svg = d3.select(`#${containerId}`)
-      .append('svg')
-      .attr('width', width)
-      .attr('height', height)
-      .style('background-color', colors.bg);
-
-    const g = svg.append('g');
-
-    const simulation = d3.forceSimulation(data.nodes)
-      .force('link', d3.forceLink(data.links).id(d => d.id).distance(100))
-      .force('charge', d3.forceManyBody().strength(-200))
-      .force('center', d3.forceCenter(width / 2, height / 2));
-
-    const link = g.append('g')
-      .selectAll('line')
-      .data(data.links)
-      .enter()
-      .append('line')
-      .attr('stroke', colors.link)
-      .attr('stroke-width', 2)
-      .attr('stroke-opacity', 0.6);
-
-    const node = g.append('g')
-      .selectAll('g')
-      .data(data.nodes)
-      .enter()
-      .append('g')
-      .style('cursor', 'pointer')
-      .on('click', (event, d) => {
-        if (d.url) window.location.href = d.url;
-      });
-
-    node.append('circle')
-      .attr('r', d => d.central ? 18 : 12)
-      .attr('fill', d => d.central ? colors.nodeCentral : colors.node)
-      .attr('stroke', colors.text)
-      .attr('stroke-width', 1.5)
-      .on('mouseover', function(event, d) {
-        d3.select(this)
-          .transition()
-          .duration(200)
-          .attr('r', d.central ? 22 : 15)
-          .attr('fill', colors.hover);
-      })
-      .on('mouseout', function(event, d) {
-        d3.select(this)
-          .transition()
-          .duration(200)
-          .attr('r', d.central ? 18 : 12)
-          .attr('fill', d.central ? colors.nodeCentral : colors.node);
-      });
-
-    node.append('text')
-      .text(d => d.label)
-      .attr('x', 0)
-      .attr('y', d => d.central ? 30 : 25)
-      .attr('text-anchor', 'middle')
-      .attr('fill', colors.text)
-      .attr('font-size', d => d.central ? '13px' : '11px')
-      .attr('font-weight', d => d.central ? 'bold' : 'normal')
-      .style('pointer-events', 'none');
-
-    simulation.on('tick', () => {
-      link
-        .attr('x1', d => d.source.x)
-        .attr('y1', d => d.source.y)
-        .attr('x2', d => d.target.x)
-        .attr('y2', d => d.target.y);
-
-      node.attr('transform', d => `translate(${d.x},${d.y})`);
+  // Récupérer les données depuis Hugo
+  const tags = {{ .Page.Params.tags | default (slice) | jsonify }};
+  const categories = {{ .Page.Params.categories | default (slice) | jsonify }};
+  const title = {{ .Page.Title | jsonify }};
+  const containerId = "article-graph-{{ .Page.File.UniqueID }}";
+  
+  // Construire les nodes
+  const nodes = [
+    { id: 'article', label: title, isCenter: true, url: '{{ .Page.Permalink }}' }
+  ];
+  const links = [];
+  
+  // Ajouter les tags
+  tags.forEach(function(tag) {
+    const tagId = 'tag-' + tag.toLowerCase().replace(/\s+/g, '-');
+    nodes.push({ 
+      id: tagId, 
+      label: tag, 
+      url: '/tags/' + tag.toLowerCase().replace(/\s+/g, '-') + '/',
+      category: 'tag'
     });
+    links.push({ source: 'article', target: tagId });
+  });
+  
+  // Ajouter les catégories
+  categories.forEach(function(cat) {
+    const catId = 'cat-' + cat.toLowerCase().replace(/\s+/g, '-');
+    nodes.push({ 
+      id: catId, 
+      label: cat, 
+      url: '/categories/' + cat.toLowerCase().replace(/\s+/g, '-') + '/',
+      category: 'category'
+    });
+    links.push({ source: 'article', target: catId });
+  });
+  
+  // Créer des connexions entre tags liés (optionnel)
+  // Ceci crée un graphe plus intéressant visuellement
+  if (tags.length > 1) {
+    for (let i = 0; i < tags.length - 1; i++) {
+      const tagId1 = 'tag-' + tags[i].toLowerCase().replace(/\s+/g, '-');
+      const tagId2 = 'tag-' + tags[i+1].toLowerCase().replace(/\s+/g, '-');
+      links.push({ source: tagId1, target: tagId2 });
+    }
   }
-
-  // Attendre que D3 soit chargé
-  if (typeof d3 !== 'undefined') {
-    initArticleGraph();
+  
+  // Initialiser le graphe seulement si on a des données
+  if (nodes.length > 1) {
+    document.addEventListener('DOMContentLoaded', function() {
+      new KnowledgeGraph(containerId, { nodes: nodes, links: links }, {
+        height: 350,
+        nodeRadius: 7,
+        centerNodeRadius: 12,
+        linkDistance: 80,
+        chargeStrength: -200
+      });
+    });
   } else {
-    const checkD3 = setInterval(() => {
-      if (typeof d3 !== 'undefined') {
-        clearInterval(checkD3);
-        initArticleGraph();
-      }
-    }, 100);
+    // Pas de tags/catégories, afficher un message
+    document.getElementById(containerId).innerHTML = 
+      '<p style="color: var(--kanagawa-fg-muted, #727169); text-align: center; padding: 2rem;">Ajoutez des tags à cet article pour voir le graphe.</p>';
   }
 })();
 </script>
-{{ else }}
-<p style="color: #727169; font-style: italic;">Aucun tag défini pour cet article.</p>
-{{ end }}

@@ -1,0 +1,19 @@
+{{/* 
+  LoveIt theme custom head extension
+  Ce fichier est automatiquement inclus par le thème LoveIt
+*/}}
+
+{{/* Google Fonts */}}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+{{/* Kanagawa Theme CSS */}}
+{{ $kanagawa := resources.Get "css/kanagawa.css" }}
+{{ if $kanagawa }}
+  {{ $kanagawa = $kanagawa | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $kanagawa.Permalink }}" integrity="{{ $kanagawa.Data.Integrity }}">
+{{ end }}
+
+{{/* Theme color for mobile */}}
+<meta name="theme-color" content="#1F1F28">

@@ -1,207 +1,263 @@
 /**
- * Knowledge Graph - Graphe interactif D3.js
- * Style Kanagawa comme ssp.sh
+ * Knowledge Graph - Interactive visualization
+ * Style inspiré de ssp.sh (Second Brain)
+ * Utilise D3.js v7
  */
 
-// Couleurs Kanagawa
-const colors = {
-  bg: '#1F1F28',
-  node: '#7FB4CA',        // Cyan pour nœuds normaux
-  nodeCentral: '#E46876', // Rose corail pour nœud central
-  link: '#E6C384',        // Doré pour les liens
-  text: '#DCD7BA',        // Crème pour le texte
-  hover: '#7E9CD8'        // Bleu au survol
-};
-
-// Initialisation du graphe
-async function initKnowledgeGraph(containerId = 'knowledge-graph') {
-  const container = document.getElementById(containerId);
-  if (!container) {
-    console.error(`Container ${containerId} not found`);
-    return;
+class KnowledgeGraph {
+  constructor(containerId, data, options = {}) {
+    this.containerId = containerId;
+    this.data = data;
+    this.options = {
+      width: options.width || 800,
+      height: options.height || 500,
+      nodeRadius: options.nodeRadius || 8,
+      centerNodeRadius: options.centerNodeRadius || 12,
+      linkDistance: options.linkDistance || 120,
+      chargeStrength: options.chargeStrength || -300,
+      // Couleurs Kanagawa
+      colors: {
+        node: options.nodeColor || '#7E9CD8',
+        nodeHover: options.nodeHoverColor || '#A3D4D5',
+        centerNode: options.centerNodeColor || '#E46876',
+        link: options.linkColor || '#E6C384',
+        text: options.textColor || '#C8C093',
+        background: options.bgColor || '#16161D'
+      },
+      ...options
+    };
+    
+    this.init();
   }
 
-  // Dimensions
-  const width = container.clientWidth || 800;
-  const height = Math.max(600, window.innerHeight * 0.7);
+  init() {
+    const container = document.getElementById(this.containerId);
+    if (!container) {
+      console.error(`Container #${this.containerId} not found`);
+      return;
+    }
 
-  // Chargement des données
-  let data;
-  try {
-    const response = await fetch('/data/graph.json');
-    data = await response.json();
-  } catch (error) {
-    console.error('Erreur chargement graph.json:', error);
-    container.innerHTML = '<p style="color: #E46876;">Erreur de chargement du graphe.</p>';
-    return;
+    // Responsive width
+    const containerRect = container.getBoundingClientRect();
+    this.options.width = containerRect.width || this.options.width;
+
+    // Clear existing content
+    container.innerHTML = '';
+
+    // Create SVG
+    this.svg = d3.select(`#${this.containerId}`)
+      .append('svg')
+      .attr('width', '100%')
+      .attr('height', this.options.height)
+      .attr('viewBox', `0 0 ${this.options.width} ${this.options.height}`)
+      .style('background-color', this.options.colors.background)
+      .style('border-radius', '6px');
+
+    // Add zoom behavior
+    const zoom = d3.zoom()
+      .scaleExtent([0.5, 3])
+      .on('zoom', (event) => {
+        this.g.attr('transform', event.transform);
+      });
+
+    this.svg.call(zoom);
+
+    // Main group for all elements
+    this.g = this.svg.append('g');
+
+    // Create force simulation
+    this.simulation = d3.forceSimulation(this.data.nodes)
+      .force('link', d3.forceLink(this.data.links)
+        .id(d => d.id)
+        .distance(this.options.linkDistance))
+      .force('charge', d3.forceManyBody()
+        .strength(this.options.chargeStrength))
+      .force('center', d3.forceCenter(
+        this.options.width / 2,
+        this.options.height / 2
+      ))
+      .force('collision', d3.forceCollide()
+        .radius(d => this.getNodeRadius(d) + 20));
+
+    this.render();
   }
 
-  // Création du SVG
-  const svg = d3.select(`#${containerId}`)
-    .append('svg')
-    .attr('width', width)
-    .attr('height', height)
-    .attr('viewBox', [0, 0, width, height])
-    .style('background-color', colors.bg);
+  getNodeRadius(d) {
+    return d.isCenter ? this.options.centerNodeRadius : this.options.nodeRadius;
+  }
 
-  // Conteneur pour zoom/pan
-  const g = svg.append('g');
+  render() {
+    // Draw links
+    this.links = this.g.append('g')
+      .attr('class', 'links')
+      .selectAll('line')
+      .data(this.data.links)
+      .enter()
+      .append('line')
+      .attr('class', 'graph-link')
+      .style('stroke', this.options.colors.link)
+      .style('stroke-opacity', 0.6)
+      .style('stroke-width', 2);
 
-  // Simulation de forces
-  const simulation = d3.forceSimulation(data.nodes)
-    .force('link', d3.forceLink(data.links)
-      .id(d => d.id)
-      .distance(120))
-    .force('charge', d3.forceManyBody().strength(-300))
-    .force('center', d3.forceCenter(width / 2, height / 2))
-    .force('collision', d3.forceCollide().radius(50));
+    // Draw nodes
+    this.nodes = this.g.append('g')
+      .attr('class', 'nodes')
+      .selectAll('circle')
+      .data(this.data.nodes)
+      .enter()
+      .append('circle')
+      .attr('class', d => `graph-node ${d.isCenter ? 'center' : ''}`)
+      .attr('r', d => this.getNodeRadius(d))
+      .style('fill', d => d.isCenter ? this.options.colors.centerNode : this.options.colors.node)
+      .style('stroke', this.options.colors.background)
+      .style('stroke-width', 2)
+      .style('cursor', 'pointer')
+      .call(this.drag())
+      .on('mouseover', (event, d) => this.handleNodeHover(event, d, true))
+      .on('mouseout', (event, d) => this.handleNodeHover(event, d, false))
+      .on('click', (event, d) => this.handleNodeClick(event, d));
 
-  // Liens
-  const link = g.append('g')
-    .selectAll('line')
-    .data(data.links)
-    .enter()
-    .append('line')
-    .attr('stroke', colors.link)
-    .attr('stroke-width', 2)
-    .attr('stroke-opacity', 0.6);
+    // Draw labels
+    this.labels = this.g.append('g')
+      .attr('class', 'labels')
+      .selectAll('text')
+      .data(this.data.nodes)
+      .enter()
+      .append('text')
+      .attr('class', 'graph-label')
+      .text(d => d.label)
+      .style('fill', this.options.colors.text)
+      .style('font-size', '12px')
+      .style('font-family', 'Inter, sans-serif')
+      .style('pointer-events', 'none')
+      .attr('dx', d => this.getNodeRadius(d) + 5)
+      .attr('dy', 4);
 
-  // Nœuds
-  const node = g.append('g')
-    .selectAll('g')
-    .data(data.nodes)
-    .enter()
-    .append('g')
-    .call(d3.drag()
+    // Update positions on simulation tick
+    this.simulation.on('tick', () => {
+      this.links
+        .attr('x1', d => d.source.x)
+        .attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x)
+        .attr('y2', d => d.target.y);
+
+      this.nodes
+        .attr('cx', d => d.x)
+        .attr('cy', d => d.y);
+
+      this.labels
+        .attr('x', d => d.x)
+        .attr('y', d => d.y);
+    });
+  }
+
+  drag() {
+    const dragstarted = (event, d) => {
+      if (!event.active) this.simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    };
+
+    const dragged = (event, d) => {
+      d.fx = event.x;
+      d.fy = event.y;
+    };
+
+    const dragended = (event, d) => {
+      if (!event.active) this.simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    };
+
+    return d3.drag()
       .on('start', dragstarted)
       .on('drag', dragged)
-      .on('end', dragended));
+      .on('end', dragended);
+  }
 
-  // Cercles des nœuds
-  node.append('circle')
-    .attr('r', d => d.central ? 20 : 15)
-    .attr('fill', d => d.central ? colors.nodeCentral : colors.node)
-    .attr('stroke', colors.text)
-    .attr('stroke-width', 2)
-    .style('cursor', 'pointer')
-    .on('mouseover', function(event, d) {
-      d3.select(this)
+  handleNodeHover(event, d, isHover) {
+    const node = d3.select(event.target);
+    
+    if (isHover) {
+      node
         .transition()
         .duration(200)
-        .attr('r', d.central ? 24 : 18)
-        .attr('fill', colors.hover);
+        .attr('r', this.getNodeRadius(d) * 1.3)
+        .style('fill', this.options.colors.nodeHover);
       
-      // Afficher tooltip
-      tooltip.transition()
-        .duration(200)
-        .style('opacity', .9);
-      tooltip.html(`<strong>${d.label}</strong><br/>${d.description || d.category}`)
-        .style('left', (event.pageX + 10) + 'px')
-        .style('top', (event.pageY - 28) + 'px');
-    })
-    .on('mouseout', function(event, d) {
-      d3.select(this)
-        .transition()
-        .duration(200)
-        .attr('r', d.central ? 20 : 15)
-        .attr('fill', d.central ? colors.nodeCentral : colors.node);
-      
-      tooltip.transition()
-        .duration(500)
-        .style('opacity', 0);
-    })
-    .on('click', (event, d) => {
-      if (d.url) {
-        window.location.href = d.url;
-      }
-    });
-
-  // Labels des nœuds
-  node.append('text')
-    .text(d => d.label)
-    .attr('x', 0)
-    .attr('y', d => d.central ? 35 : 30)
-    .attr('text-anchor', 'middle')
-    .attr('fill', colors.text)
-    .attr('font-size', d => d.central ? '14px' : '12px')
-    .attr('font-weight', d => d.central ? 'bold' : 'normal')
-    .style('pointer-events', 'none')
-    .style('user-select', 'none');
-
-  // Tooltip
-  const tooltip = d3.select('body').append('div')
-    .attr('class', 'graph-tooltip')
-    .style('position', 'absolute')
-    .style('background-color', colors.bg)
-    .style('color', colors.text)
-    .style('padding', '10px')
-    .style('border', `1px solid ${colors.nodeCentral}`)
-    .style('border-radius', '6px')
-    .style('pointer-events', 'none')
-    .style('opacity', 0)
-    .style('z-index', '1000')
-    .style('font-size', '12px')
-    .style('box-shadow', '0 4px 12px rgba(0,0,0,0.5)');
-
-  // Zoom et pan
-  const zoom = d3.zoom()
-    .scaleExtent([0.3, 3])
-    .on('zoom', (event) => {
-      g.attr('transform', event.transform);
-    });
-
-  svg.call(zoom);
-
-  // Animation de la simulation
-  simulation.on('tick', () => {
-    link
-      .attr('x1', d => d.source.x)
-      .attr('y1', d => d.source.y)
-      .attr('x2', d => d.target.x)
-      .attr('y2', d => d.target.y);
-
-    node.attr('transform', d => `translate(${d.x},${d.y})`);
-  });
-
-  // Fonctions de drag
-  function dragstarted(event, d) {
-    if (!event.active) simulation.alphaTarget(0.3).restart();
-    d.fx = d.x;
-    d.fy = d.y;
-  }
-
-  function dragged(event, d) {
-    d.fx = event.x;
-    d.fy = event.y;
-  }
-
-  function dragended(event, d) {
-    if (!event.active) simulation.alphaTarget(0);
-    d.fx = null;
-    d.fy = null;
-  }
-
-  // Responsive
-  window.addEventListener('resize', () => {
-    const newWidth = container.clientWidth;
-    const newHeight = Math.max(600, window.innerHeight * 0.7);
-    svg.attr('width', newWidth).attr('height', newHeight);
-    simulation.force('center', d3.forceCenter(newWidth / 2, newHeight / 2));
-    simulation.alpha(0.3).restart();
-  });
-}
-
-// Auto-initialisation au chargement
-document.addEventListener('DOMContentLoaded', () => {
-  if (document.getElementById('knowledge-graph')) {
-    // Chargement de D3.js si pas déjà chargé
-    if (typeof d3 === 'undefined') {
-      const script = document.createElement('script');
-      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js';
-      script.onload = () => initKnowledgeGraph();
-      document.head.appendChild(script);
+      // Highlight connected links
+      this.links
+        .style('stroke-opacity', link => 
+          link.source.id === d.id || link.target.id === d.id ? 1 : 0.2
+        )
+        .style('stroke-width', link =>
+          link.source.id === d.id || link.target.id === d.id ? 3 : 2
+        );
     } else {
-      initKnowledgeGraph();
+      node
+        .transition()
+        .duration(200)
+        .attr('r', this.getNodeRadius(d))
+        .style('fill', d.isCenter ? this.options.colors.centerNode : this.options.colors.node);
+      
+      // Reset links
+      this.links
+        .style('stroke-opacity', 0.6)
+        .style('stroke-width', 2);
     }
   }
+
+  handleNodeClick(event, d) {
+    if (d.url) {
+      window.location.href = d.url;
+    }
+  }
+
+  // Add a new node dynamically
+  addNode(node) {
+    this.data.nodes.push(node);
+    this.simulation.nodes(this.data.nodes);
+    this.render();
+  }
+
+  // Add a new link dynamically
+  addLink(link) {
+    this.data.links.push(link);
+    this.simulation.force('link').links(this.data.links);
+    this.render();
+  }
+
+  // Resize handler
+  resize() {
+    const container = document.getElementById(this.containerId);
+    if (container) {
+      const containerRect = container.getBoundingClientRect();
+      this.options.width = containerRect.width;
+      this.svg.attr('viewBox', `0 0 ${this.options.width} ${this.options.height}`);
+      this.simulation.force('center', d3.forceCenter(
+        this.options.width / 2,
+        this.options.height / 2
+      ));
+      this.simulation.alpha(0.3).restart();
+    }
+  }
+}
+
+// Auto-initialize graphs with data-graph attribute
+document.addEventListener('DOMContentLoaded', () => {
+  // Handle window resize
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      if (window.knowledgeGraph) {
+        window.knowledgeGraph.resize();
+      }
+    }, 250);
+  });
 });
+
+// Export for use as module
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = KnowledgeGraph;
+}

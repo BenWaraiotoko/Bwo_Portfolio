@@ -1,239 +1,119 @@
-# Portfolio Data Engineer - Hugo Kanagawa
+# Portfolio Data Engineer
 
-Portfolio personnel minimaliste inspiré de [ssp.sh](https://www.ssp.sh/) avec thème Kanagawa et graphe interactif D3.js.
+Portfolio personnel auto-hébergé utilisant Hugo avec le thème LoveIt et la palette Kanagawa.
 
-## ✨ Fonctionnalités
+**Inspiré par [ssp.sh](https://www.ssp.sh)** — Simon Späti's Data Engineering Blog
 
-- 🎨 **Design Kanagawa** : Palette noir/rose/cyan élégante
-- 📝 **Blog** : Articles en Markdown
-- 💼 **Projets** : Showcase de tes réalisations
-- 🧠 **Graphe interactif** : Visualisation D3.js de tes compétences
-- 🚀 **Hébergement gratuit** : Cloudflare Pages
-- ⚡ **Déploiement automatique** : Git push → Site mis à jour
+## 🎨 Design
 
-## 🛠️ Stack technique
+- **Générateur** : Hugo (GoHugo)
+- **Thème** : LoveIt
+- **Palette** : Kanagawa (thème sombre japonais)
+- **Features** : Graphe interactif D3.js, mode sombre natif
 
-- **Hugo Extended** v0.139.0 : Générateur de site statique
-- **Thème LoveIt** : Base du design
-- **D3.js** v7.8.5 : Visualisations interactives
-- **Cloudflare Pages** : Hébergement et CDN
-- **GitHub** : Contrôle de version
+## 🚀 Quick Start
 
-## 📋 Prérequis
-
-### Mac (ARM ou Intel)
+### Installation
 
 ```bash
-# Homebrew (si pas installé)
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# Hugo Extended + Git
-brew install git hugo
-```
-
-### Vérifications
-
-```bash
-hugo version   # Doit afficher "extended"
-git --version
-```
-
-## 🚀 Installation
-
-### 1. Clone ce repo
-
-```bash
+# Cloner le repo
 git clone https://github.com/ton-username/portfolio.git
 cd portfolio
-```
 
-### 2. Installe le thème
-
-```bash
+# Installer le thème
 git submodule add https://github.com/dillonzq/LoveIt.git themes/LoveIt
-git submodule update --init --recursive
-```
 
-### 3. Lance en local
-
-```bash
+# Lancer en local
 hugo server -D
 ```
 
-Ouvre [http://localhost:1313](http://localhost:1313)
+Ouvrir http://localhost:1313
 
-## ✏️ Personnalisation
-
-### Modifier tes infos
-
-Édite `config.toml` :
-
-```toml
-title = "Ton Nom"
-baseURL = "https://ton-site.pages.dev/"
-
-[params]
-  author = "Ton Nom"
-  description = "Ton slogan"
-```
-
-### Ajouter un article
+### Nouveau contenu
 
 ```bash
+# Nouvel article
 hugo new posts/mon-article.md
-```
 
-Édite le fichier créé dans `content/posts/`
-
-### Ajouter un projet
-
-```bash
+# Nouveau projet
 hugo new projects/mon-projet.md
 ```
 
-### Modifier le graphe
+### Build & Deploy
 
-Édite `static/data/graph.json` pour ajouter/supprimer des nœuds et liens.
+```bash
+# Build
+hugo --minify
 
-## 🎨 Couleurs Kanagawa
+# Deploy vers NAS
+./deploy.sh
+```
 
-Les couleurs sont définies dans `assets/css/kanagawa.css` :
-
-| Élément | Couleur | Hex |
-|---------|---------|-----|
-| Fond | Noir encre | `#1F1F28` |
-| Texte | Crème | `#DCD7BA` |
-| Accent | Rose corail | `#E46876` |
-| Liens | Cyan | `#7FB4CA` |
-| Code | Vert | `#98BB6C` |
-
-## 📦 Structure du projet
+## 📁 Structure
 
 ```
 portfolio-hugo/
-├── config.toml              # Configuration Hugo
+├── archetypes/          # Templates pour nouveau contenu
+├── assets/css/          # CSS personnalisé (Kanagawa)
 ├── content/
-│   ├── posts/               # Articles de blog
-│   ├── projects/            # Tes projets
-│   ├── about.md             # Page À propos
-│   └── graph.md             # Page du graphe
-├── assets/css/
-│   └── kanagawa.css         # Thème de couleurs
+│   ├── posts/           # Articles de blog
+│   ├── projects/        # Projets
+│   ├── about.md         # Page À propos
+│   └── graph.md         # Page graphe interactif
+├── layouts/
+│   ├── partials/        # Overrides du thème
+│   └── shortcodes/      # Shortcodes personnalisés
 ├── static/
-│   ├── js/
-│   │   └── knowledge-graph.js   # Code du graphe D3.js
-│   └── data/
-│       └── graph.json       # Données du graphe
-├── layouts/shortcodes/
-│   ├── knowledge-graph.html # Shortcode graphe complet
-│   └── article-graph.html   # Mini-graphe par article
-├── themes/
-│   └── LoveIt/              # Thème Hugo (submodule)
-├── docker-compose.yml       # Hébergement Docker (optionnel)
-├── nginx.conf               # Config Nginx (optionnel)
-└── deploy.sh                # Script de déploiement
+│   ├── images/          # Images
+│   ├── js/              # JavaScript (graphe D3)
+│   └── data/            # JSON pour le graphe
+├── config.toml          # Configuration Hugo
+├── docker-compose.yml   # Hébergement Docker
+└── deploy.sh            # Script de déploiement
 ```
 
-## ☁️ Déploiement sur Cloudflare Pages
+## 🎨 Palette Kanagawa
 
-### Étape 1 : Push sur GitHub
+| Couleur | Hex | Usage |
+|---------|-----|-------|
+| sumiInk | `#1F1F28` | Fond principal |
+| fujiWhite | `#DCD7BA` | Texte |
+| waveRed | `#E46876` | Accents, titres |
+| crystalBlue | `#7FB4CA` | Liens |
+| springGreen | `#98BB6C` | Code |
+| carpYellow | `#E6C384` | Tags, graphe |
 
-```bash
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/TON-USERNAME/TON-REPO.git
-git push -u origin main
+## 📊 Graphe Interactif
+
+Le graphe utilise D3.js pour visualiser les connexions entre compétences et projets.
+
+**Configuration** : Éditer `/static/data/graph.json`
+
+**Usage dans une page** :
+```markdown
+{{</* knowledge-graph */>}}
 ```
 
-### Étape 2 : Cloudflare Pages
+## 🐳 Hébergement
 
-1. Va sur [dash.cloudflare.com](https://dash.cloudflare.com)
-2. **Workers & Pages** → **Create** → **Connect to Git**
-3. Sélectionne ton repo GitHub
-4. **Build settings** :
-   - Framework : `Hugo`
-   - Build command : `hugo --minify`
-   - Output directory : `public`
-   - **Variable d'environnement** : `HUGO_VERSION` = `0.139.0`
-5. **Save and Deploy**
-
-⏳ Attends 1-2 minutes...
-
-✅ **Ton site est en ligne !** URL : `ton-site.pages.dev`
-
-### Workflow quotidien
+### Option 1 : Docker (recommandé)
 
 ```bash
-# 1. Fais tes modifications
-hugo server -D
-
-# 2. Commit et push
-git add .
-git commit -m "Nouvel article ETL"
-git push
-
-# 3. Cloudflare redéploie automatiquement
-```
-
-## 🐳 Hébergement Docker (optionnel)
-
-Pour héberger sur ton NAS ou serveur :
-
-```bash
-# Build du site
-hugo --minify
-
-# Lance avec Docker Compose
 docker-compose up -d
-
-# Accède à http://localhost:8080
 ```
 
-## 🔧 Commandes utiles
+Accessible sur `http://IP:8080`
 
-```bash
-# Nouveau contenu
-hugo new posts/titre.md
-hugo new projects/titre.md
+### Option 2 : Synology Web Station
 
-# Serveur local (avec brouillons)
-hugo server -D
+1. Copier `public/` vers `/volume1/web/portfolio`
+2. Configurer un Virtual Host dans Web Station
+3. Activer HTTPS via le panneau Synology
 
-# Build production
-hugo --minify
+## 📝 License
 
-# Nettoyer
-rm -rf public/ resources/
-
-# Stats
-hugo list all
-```
-
-## 📚 Ressources
-
-- [Documentation Hugo](https://gohugo.io/documentation/)
-- [Thème LoveIt](https://hugoloveit.com/)
-- [D3.js](https://d3js.org/)
-- [Cloudflare Pages](https://pages.cloudflare.com/)
-
-## 🤝 Contribution
-
-Ce portfolio est open source ! N'hésite pas à :
-- 🐛 Signaler des bugs
-- 💡 Proposer des améliorations
-- 🔀 Fork et personnaliser pour ton usage
-
-## 📄 Licence
-
-MIT - Tu peux utiliser, modifier et distribuer ce code librement.
-
-## 🙏 Crédits
-
-- Design inspiré de [Simon Späti (ssp.sh)](https://www.ssp.sh/)
-- Palette [Kanagawa](https://github.com/rebelot/kanagawa.nvim)
-- Thème [LoveIt](https://github.com/dillonzq/LoveIt)
+MIT
 
 ---
 
-**Fait avec ❤️ et Hugo**
+*Fait avec ❤️ et ☕ — En route vers le Data Engineering*

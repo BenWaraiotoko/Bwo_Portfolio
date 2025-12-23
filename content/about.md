@@ -1,73 +1,49 @@
 ---
 title: "À propos"
-date: 2025-01-10
+date: 2025-01-01
 draft: false
+lightgallery: true
 ---
 
-# 👋 Salut, moi c'est Benjamin
+## Hello, I'm Benjamin 👋
 
-Je suis en reconversion professionnelle pour devenir **Data Engineer**. Ce portfolio documente mon parcours, mes projets et mes apprentissages.
+Je suis un **Data Engineer en devenir**, actuellement en reconversion professionnelle après 15+ années dans l'infrastructure broadcast télévisuel. Passionné par l'automatisation et la data, je me forme activement pour devenir Data Engineer d'ici 2029.
 
-## 🎯 Mon parcours
+<div class="intro-block">
 
-Après plusieurs années dans un autre secteur, j'ai décidé de suivre ma passion pour la tech et les données. Je me forme actuellement avec **Codecademy** sur le parcours Data Engineering.
+Mon parcours technique m'a permis de développer une expertise solide en **infrastructure**, **virtualisation** (VMware/vSphere), et **stockage réseau**. Aujourd'hui, je transpose ces compétences vers le monde de la data avec Python, SQL, et les pipelines ETL.
 
-### Ce que j'apprends
+</div>
 
-- **Python** : Pandas, NumPy, scripting
-- **SQL** : PostgreSQL, requêtes complexes, optimisation
-- **ETL** : Conception de pipelines de données
-- **Outils** : Git, Docker, Linux
-- **À venir** : Airflow, Spark, AWS/GCP
+## 🎯 Objectifs actuels
 
-## 💻 Ma stack technique
+- **Formation Data Engineering** — Codecademy Career Path + Le Wagon Bootcamp (2025)
+- **Projets pratiques** — ETL pipelines, APIs, dashboards analytics
+- **Auto-hébergement** — Ce portfolio tourne sur mon HomeLab
 
-```
-Langages     : Python, SQL, Bash
-Données      : Pandas, PostgreSQL
-DevOps       : Docker, Git, GitHub Actions
-Homelab      : Synology DS923+, ZimaOS
-```
+## 🛠️ Stack Technique
 
-## 🚀 Mes projets
+### En apprentissage actif
+- **Python** — Pandas, NumPy, scripts d'automatisation
+- **SQL** — PostgreSQL, DuckDB, requêtes analytiques
+- **ETL** — Apache Airflow, dbt, pipelines de données
 
-Je documente tous mes projets sur la page [Projets](/projects/). Quelques exemples :
+### Expertise actuelle
+- **Infrastructure** — VMware, Docker, Linux, réseaux
+- **Broadcast** — Encodage vidéo, FFmpeg, workflows production
+- **Home Automation** — Home Assistant, self-hosting
 
-- **Pipeline ETL météo** : Collecte de données météo via API, transformation avec Pandas, stockage PostgreSQL
-- **Ce portfolio** : Site statique Hugo avec graphe interactif D3.js
-- **Scripts automation** : Divers scripts Python pour automatiser mes tâches quotidiennes
+## 📍 Parcours
 
-## 🌐 Pourquoi pas de réseaux sociaux ?
+Je travaille actuellement comme technicien infrastructure broadcast près de Monaco, gérant l'infrastructure VMware/vSphere pour la diffusion télévisuelle linéaire.
 
-J'ai fait le choix de ne pas utiliser LinkedIn ou autres réseaux sociaux traditionnels. À la place, j'ai créé ce portfolio pour :
-
-- **Contrôler ma présence en ligne** : Mon site, mes règles
-- **Documenter mon apprentissage** : Chaque article est une trace de ma progression
-- **Partager des connaissances** : Sans algorithme ni publicité
-- **Démontrer mes compétences** : Code, déploiement, architecture
+Mon objectif : m'expatrier au **Japon (Fukuoka)** d'ici 2029 en tant que Data Engineer, combinant ma passion pour la technologie et ma fascination pour la culture japonaise.
 
 ## 📬 Contact
 
-Tu veux échanger sur la data, un projet ou une opportunité ?
-
-- **Email** : ton-email@exemple.com
-- **GitHub** : [github.com/ton-username](https://github.com/ton-username)
-- **RSS** : [/index.xml](/index.xml)
-
-## 🎨 Ce site
-
-Ce portfolio est :
-- Construit avec **Hugo** et le thème **LoveIt**
-- Stylisé avec la palette **Kanagawa** (inspiré de [ssp.sh](https://www.ssp.sh/))
-- Hébergé gratuitement sur **Cloudflare Pages**
-- Open source : [voir le code](https://github.com/ton-username/portfolio)
-
-## 🔗 Visualisation de mes compétences
-
-Voici une représentation interactive de mes compétences actuelles et objectifs :
-
-{{< knowledge-graph >}}
+- **GitHub** — [ton-username](https://github.com/ton-username)
+- **Email** — ton@email.com
 
 ---
 
-*Dernière mise à jour : Janvier 2025*
+*Ce site est généré avec [Hugo](https://gohugo.io) et le thème [LoveIt](https://hugoloveit.com), stylisé avec la palette [Kanagawa](https://github.com/rebelot/kanagawa.nvim), inspiré par [ssp.sh](https://www.ssp.sh).*

@@ -1,68 +1,90 @@
-<!-- Shortcode pour afficher le graphe interactif -->
-<!-- Usage dans un fichier .md -->
-
-<div class="knowledge-graph-container" style="margin: 2rem 0;">
-  <div id="knowledge-graph" style="width: 100%; min-height: 600px; background-color: #1F1F28; border-radius: 8px; border: 1px solid #363646; overflow: hidden;"></div>
+{{/* 
+  Knowledge Graph Shortcode
+  Usage: {{< knowledge-graph >}}
   
-  <div class="graph-controls" style="margin-top: 1rem; text-align: center; color: #C8C093; font-size: 0.9rem;">
-    <p>
-      <strong style="color: #E46876;">💡 Interaction :</strong> 
-      Clique et glisse les nœuds • Scroll pour zoomer • Double-clique pour naviguer
-    </p>
-  </div>
+  Le graphe lit les données depuis /data/graph.json
+  ou les projets/posts avec des tags pour créer les connexions
+*/}}
+
+<div class="graph-container">
+  <h3 class="graph-title">
+    <i class="fa-solid fa-diagram-project"></i>
+    Interactive Graph
+  </h3>
+  <div id="knowledge-graph"></div>
 </div>
 
-<!-- Chargement de D3.js si pas déjà présent -->
-<script>
-  if (typeof d3 === 'undefined') {
-    const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js';
-    script.integrity = 'sha512-TwY5O9ry9SJP6X2SJJqzZxXySPCJHYdz8PfG2Ps+XofLt5s1O1nZB1PyE3B3xbKd4WrTqW6P8z8gF2P1D6KnpA==';
-    script.crossOrigin = 'anonymous';
-    document.head.appendChild(script);
-    
-    script.onload = function() {
-      loadGraphScript();
-    };
-  } else {
-    loadGraphScript();
-  }
-  
-  function loadGraphScript() {
-    if (!document.getElementById('knowledge-graph-script')) {
-      const graphScript = document.createElement('script');
-      graphScript.id = 'knowledge-graph-script';
-      graphScript.src = '/js/knowledge-graph.js';
-      document.body.appendChild(graphScript);
-    }
-  }
-</script>
+<!-- D3.js -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="/js/knowledge-graph.js"></script>
 
-<style>
-  .knowledge-graph-container {
-    animation: fadeIn 0.6s ease-out;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .graph-controls p {
-    background-color: #16161D;
-    padding: 0.8rem 1.5rem;
-    border-radius: 6px;
-    border: 1px solid #363646;
-    display: inline-block;
-  }
-  
-  .graph-controls strong {
-    font-weight: 700;
-  }
-</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Récupérer les données du graphe
+  // Option 1: Depuis un fichier JSON
+  fetch('/data/graph.json')
+    .then(response => {
+      if (!response.ok) {
+        // Si pas de fichier JSON, générer depuis les métadonnées
+        return generateGraphFromContent();
+      }
+      return response.json();
+    })
+    .then(data => {
+      window.knowledgeGraph = new KnowledgeGraph('knowledge-graph', data, {
+        height: 500,
+        nodeRadius: 8,
+        centerNodeRadius: 14,
+        linkDistance: 100,
+        chargeStrength: -250
+      });
+    })
+    .catch(error => {
+      console.log('Using default graph data');
+      // Données par défaut si aucune source disponible
+      const defaultData = {
+        nodes: [
+          { id: 'center', label: 'Portfolio', isCenter: true, url: '/' },
+          { id: 'python', label: 'Python', url: '/tags/python/' },
+          { id: 'sql', label: 'SQL', url: '/tags/sql/' },
+          { id: 'etl', label: 'ETL', url: '/tags/etl/' },
+          { id: 'data-engineering', label: 'Data Engineering', url: '/tags/data-engineering/' },
+          { id: 'projects', label: 'Projets', url: '/projects/' },
+          { id: 'about', label: 'À propos', url: '/about/' }
+        ],
+        links: [
+          { source: 'center', target: 'python' },
+          { source: 'center', target: 'sql' },
+          { source: 'center', target: 'etl' },
+          { source: 'center', target: 'data-engineering' },
+          { source: 'center', target: 'projects' },
+          { source: 'center', target: 'about' },
+          { source: 'python', target: 'etl' },
+          { source: 'sql', target: 'etl' },
+          { source: 'python', target: 'data-engineering' },
+          { source: 'sql', target: 'data-engineering' }
+        ]
+      };
+      
+      window.knowledgeGraph = new KnowledgeGraph('knowledge-graph', defaultData, {
+        height: 500,
+        nodeRadius: 8,
+        centerNodeRadius: 14,
+        linkDistance: 100,
+        chargeStrength: -250
+      });
+    });
+});
+
+// Fonction pour générer le graphe depuis le contenu Hugo
+function generateGraphFromContent() {
+  // Cette fonction serait appelée si on veut générer dynamiquement
+  // Pour Hugo, on préfère généralement générer le JSON au build time
+  return Promise.resolve({
+    nodes: [
+      { id: 'center', label: 'Portfolio', isCenter: true, url: '/' }
+    ],
+    links: []
+  });
+}
+</script>

@@ -209,7 +209,7 @@ git push -u origin main
    - Build command : `hugo --minify`
    - Build output directory : `public`
    - **Ajoute une variable d'environnement** :
-     - `HUGO_VERSION` = `0.139.0`
+     - `HUGO_VERSION` = `0.153.1`
 7. Clique sur **Save and Deploy**
 
 ⏳ Attends 1-2 minutes...

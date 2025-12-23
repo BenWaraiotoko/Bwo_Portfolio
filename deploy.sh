@@ -1,62 +1,55 @@
 #!/bin/bash
 
-# Script de déploiement du portfolio Hugo
-# Usage: ./deploy.sh [production|staging]
+# ===========================================
+# DEPLOY.SH - Déploiement du portfolio Hugo
+# ===========================================
 
-set -e  # Arrêt en cas d'erreur
+set -e  # Exit on error
 
-# Couleurs pour les messages
+# Configuration (à adapter)
+#NAS_USER="ton-user"
+#NAS_HOST="192.168.1.xxx"  # IP de ton NAS
+#NAS_PATH="/volume1/docker/portfolio"
+# OU pour ZimaBoard:
+# NAS_PATH="/DATA/docker/portfolio"
+
+# Couleurs pour le terminal
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-echo -e "${GREEN}🚀 Déploiement du portfolio Hugo${NC}"
+echo -e "${YELLOW}🚀 Déploiement du portfolio...${NC}"
 
-# Vérifier l'environnement
-ENV=${1:-production}
-echo -e "${YELLOW}Environnement : ${ENV}${NC}"
+# 1. Build Hugo
+echo -e "${YELLOW}📦 Build Hugo...${NC}"
+hugo --minify --gc
 
-# Nettoyer les fichiers générés précédemment
-echo -e "${YELLOW}🧹 Nettoyage...${NC}"
-rm -rf public/ resources/
-
-# Build du site
-echo -e "${YELLOW}🔨 Build Hugo...${NC}"
-if [ "$ENV" == "production" ]; then
-    hugo --minify
-else
-    hugo -D --minify
+if [ $? -ne 0 ]; then
+    echo -e "${RED}❌ Erreur lors du build Hugo${NC}"
+    exit 1
 fi
 
-echo -e "${GREEN}✅ Build terminé !${NC}"
+echo -e "${GREEN}✅ Build terminé${NC}"
 
-# Stats
-echo -e "${YELLOW}📊 Statistiques :${NC}"
-echo "   - Fichiers HTML : $(find public -name "*.html" | wc -l)"
-echo "   - Fichiers CSS : $(find public -name "*.css" | wc -l)"
-echo "   - Fichiers JS : $(find public -name "*.js" | wc -l)"
-echo "   - Taille totale : $(du -sh public | cut -f1)"
+# 2. Sync vers NAS
+echo -e "${YELLOW}📤 Synchronisation vers le NAS...${NC}"
+rsync -avz --delete \
+    --exclude '.git' \
+    --exclude 'node_modules' \
+    --exclude '.DS_Store' \
+    public/ ${NAS_USER}@${NAS_HOST}:${NAS_PATH}/public/
 
-# Option : Déployer sur un serveur distant via rsync (optionnel)
-if [ "$ENV" == "production" ] && [ ! -z "$DEPLOY_HOST" ]; then
-    echo -e "${YELLOW}📤 Déploiement sur le serveur...${NC}"
-    rsync -avz --delete \
-        -e "ssh -p ${DEPLOY_PORT:-22}" \
-        public/ ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}
-    echo -e "${GREEN}✅ Déploiement réussi !${NC}"
+if [ $? -ne 0 ]; then
+    echo -e "${RED}❌ Erreur lors du rsync${NC}"
+    exit 1
 fi
 
-# Commit et push Git (optionnel)
-read -p "Voulez-vous commit et push vers GitHub ? (y/n) " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    echo -e "${YELLOW}📝 Git commit...${NC}"
-    git add .
-    git commit -m "Deploy: $(date '+%Y-%m-%d %H:%M')" || echo "Rien à commiter"
-    git push origin main
-    echo -e "${GREEN}✅ Poussé vers GitHub !${NC}"
-    echo -e "${GREEN}🌐 Cloudflare Pages va déployer automatiquement${NC}"
-fi
+echo -e "${GREEN}✅ Fichiers synchronisés${NC}"
 
-echo -e "${GREEN}✨ Terminé !${NC}"
+# 3. Restart container (optionnel)
+echo -e "${YELLOW}🔄 Redémarrage du container...${NC}"
+ssh ${NAS_USER}@${NAS_HOST} "cd ${NAS_PATH} && docker-compose restart portfolio" 2>/dev/null || true
+
+echo -e "${GREEN}✅ Déploiement terminé !${NC}"
+echo -e "${GREEN}🌐 Site accessible sur https://ton-domaine.fr${NC}"
