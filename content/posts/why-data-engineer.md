@@ -3,7 +3,7 @@ title: "Why I Try to Become a Data Engineer"
 date: 2025-12-23
 draft: false
 description: "My career transition journey: from broadcast technician to Data Engineer"
-tags: ["data-engineering", "career-change", "career"]
+tags: ["data-engineering", "career"]
 categories: ["blog"]
 featuredImage: "/images/posts/data-engineer-journey.png"
 ---

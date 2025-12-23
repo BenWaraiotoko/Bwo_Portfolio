@@ -1,6 +1,6 @@
 ---
 title: "Knowledge Graph"
-date: 2025-01-01
+date: 2025-12-23
 draft: false
 ---
 

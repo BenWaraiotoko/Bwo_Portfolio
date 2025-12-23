@@ -1,7 +1,7 @@
 ---
 title: "ETL Pipeline with Python & Airflow"
-date: 2025-01-15
-draft: false
+date: 2025-12-23
+draft: true
 description: "A complete ETL pipeline to extract, transform, and load data from an API to PostgreSQL"
 tags: ["python", "etl", "airflow", "postgresql", "data-engineering"]
 categories: ["projects"]
