@@ -5,23 +5,37 @@ draft: false
 lightgallery: true
 ---
 
-## Hello, I'm Benjamin 👋
+## Hello, I'm Benjamin 👋 – Data Engineer in progress 🚀
 
-I'm an **aspiring Data Engineer**, currently transitioning careers after 15+ years in broadcast infrastructure. Passionate about automation and data, I'm actively training to become a Data Engineer by 2029.
+![Profile Picture](/images/avatar.jpg)
 
-<div class="intro-block">
+**10+ years in video production & broadcast infrastructure. Now diving into data pipelines.**
+## Background
+I spent a decade working on extreme sports documentaries, TV production, and broadcast systems—managing everything from live encoding pipelines to complex infrastructure. **That's actually perfect training for data engineering.** Automating video workflows taught me to think in ETL. Managing distributed systems taught me about reliability at scale.
 
-My technical background has allowed me to develop solid expertise in **infrastructure**, **virtualization** (VMware/vSphere), and **network storage**. Today, I'm transferring these skills to the data world with Python, SQL, and ETL pipelines.
+I currently work as a broadcast infrastructure technician near Monaco, managing VMware/vSphere infrastructure for linear television broadcasting.
+Now I'm formalizing those instincts with Python, SQL, and real data projects.
 
-</div>
+---
 
-## 🎯 Current Goals
+## Why data?
 
-- **Data Engineering Training** — Codecademy Career Path + Le Wagon Bootcamp (2025)
-- **Hands-on Projects** — ETL pipelines, APIs, analytics dashboards
-- **Self-Hosting** — This portfolio runs on my HomeLab
+It's the natural next step. The problems are similar—**move data reliably, automate workflows, solve for scale**—but the sandbox is bigger and the tools are more interesting.
 
-## 🛠️ Tech Stack
+I like learning. I like building things. This is both.
+
+---
+
+## What's my plan'
+
+**Learning** — Codecademy Data Path (Python, SQL, analytics fundamentals)  
+**Bootcamp** — Le Wagon (autumn 2026) for intensive hands-on training  
+**Building** — ETL projects, data analysis, automation scripts  
+**Networking** — Connecting with data professionals to learn from their experiences
+
+---
+
+## Tech Stack
 
 ### Actively Learning
 - **Python** — Pandas, NumPy, automation scripts
@@ -30,20 +44,27 @@ My technical background has allowed me to develop solid expertise in **infrastru
 
 ### Current Expertise
 - **Infrastructure** — VMware, Docker, Linux, networking
-- **Broadcast** — Video encoding, FFmpeg, production workflows
-- **Home Automation** — Home Assistant, self-hosting
+- **Broadcast** — broadcast infrastructure, FFmpeg, live systems—still useful for understanding data flows under pressure.
 
-## 📍 Background
+---
 
-I currently work as a broadcast infrastructure technician near Monaco, managing VMware/vSphere infrastructure for linear television broadcasting.
 
-My goal: relocate to **Japan (Fukuoka)** by 2029 as a Data Engineer, combining my passion for technology with my fascination for Japanese culture.
+## What I value
+
+- **Systems thinking** — How pieces fit together matters more than individual tools
+- **Automation** — Manual work is a sign you haven't automated enough
+- **Learning by doing** — Theory is fine, but projects teach faster
+- **Reliability** — Broadcast taught me that "it usually works" isn't acceptable
+
+
 
 ## 📬 Contact
 
-- **GitHub** — [ton-username](https://github.com/ton-username)
-- **Email** — ton@email.com
+- **GitHub** — [BenWaraiotoko](https://github.com/BenWaraiotoko)
+- **Email** — bwonews@proton.me
 
+---
+That's it. Let's build something.
 ---
 
 *This site is built with [Hugo](https://gohugo.io) and the [LoveIt](https://hugoloveit.com) theme, styled with the [Kanagawa](https://github.com/rebelot/kanagawa.nvim) palette, inspired by [ssp.sh](https://www.ssp.sh).*

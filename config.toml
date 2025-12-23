@@ -153,8 +153,8 @@ enableGitInfo = false
 
   # Social config
   [params.social]
-    GitHub = "ton-username"
-    Email = "ton@email.com"
+    GitHub = "BenWaraiotoko"
+    Email = "bwonews@proton.me"
     RSS = true
 
   # Page config

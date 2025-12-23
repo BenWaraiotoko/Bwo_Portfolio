@@ -243,9 +243,14 @@ blockquote a:hover {
    ARTICLES & POSTS
    =========================================== */
 
+/* All headings in coral pink */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--kanagawa-accent) !important;
+}
+
 .post-title,
 .single-title {
-  color: var(--kanagawa-fg) !important;
+  color: var(--kanagawa-accent) !important;
   font-weight: 700;
 }
 
@@ -261,8 +266,10 @@ blockquote a:hover {
 .post-content h1,
 .post-content h2,
 .post-content h3,
-.post-content h4 {
-  color: var(--kanagawa-fg) !important;
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+  color: var(--kanagawa-accent) !important;
   font-weight: 600;
   margin-top: 2rem;
 }
