@@ -62,7 +62,7 @@
     },
     {
       "id": "project-etl",
-      "label": "Pipeline ETL",
+      "label": "ETL Pipeline",
       "url": "/projects/etl-pipeline/",
       "category": "project"
     },
@@ -80,7 +80,7 @@
     },
     {
       "id": "about",
-      "label": "À propos",
+      "label": "About",
       "url": "/about/",
       "category": "page"
     },

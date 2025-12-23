@@ -1,7 +1,7 @@
 /**
  * Knowledge Graph - Interactive visualization
- * Style inspiré de ssp.sh (Second Brain)
- * Utilise D3.js v7
+ * Style inspired by ssp.sh (Second Brain)
+ * Uses D3.js v7
  */
 
 class KnowledgeGraph {
@@ -15,7 +15,7 @@ class KnowledgeGraph {
       centerNodeRadius: options.centerNodeRadius || 12,
       linkDistance: options.linkDistance || 120,
       chargeStrength: options.chargeStrength || -300,
-      // Couleurs Kanagawa
+      // Kanagawa colors
       colors: {
         node: options.nodeColor || '#7E9CD8',
         nodeHover: options.nodeHoverColor || '#A3D4D5',

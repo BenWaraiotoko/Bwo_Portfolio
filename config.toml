@@ -1,10 +1,10 @@
 baseURL = "https://bwo-portfolio.pages.dev"
 title = "Ben Warai Otoko | Data Engineer"
 theme = "LoveIt"
-languageCode = "fr"
-defaultContentLanguage = "fr"
+languageCode = "en"
+defaultContentLanguage = "en"
 
-# Génération
+# Generation
 enableRobotsTXT = true
 enableEmoji = true
 enableGitInfo = false
@@ -13,7 +13,6 @@ enableGitInfo = false
 [taxonomies]
   tag = "tags"
   category = "categories"
-  project = "projects"
 
 # Menu principal
 [menu]
@@ -26,7 +25,7 @@ enableGitInfo = false
       icon = "fa-solid fa-blog"
   [[menu.main]]
     identifier = "projects"
-    name = "Projets"
+    name = "Projects"
     url = "/projects/"
     weight = 2
     [menu.main.params]
@@ -54,18 +53,18 @@ enableGitInfo = false
       icon = "fa-solid fa-user"
 
 [params]
-  # Version LoveIt
+  # LoveIt Version
   version = "0.2.X"
-  
-  # Mode sombre par défaut (style Kanagawa)
+
+  # Dark mode by default (Kanagawa style)
   defaultTheme = "dark"
-  
+
   # Git info
   gitRepo = "https://github.com/BenWaraiotoko/Bwo_Portfolio"
-  
-  # Fingerprint pour le cache
+
+  # Fingerprint for cache
   fingerprint = ""
-  
+
   # Date format
   dateFormat = "02/01/2006"
   
@@ -116,7 +115,7 @@ enableGitInfo = false
     dateFormat = "01-02"
     rss = 10
 
-  # App icon config (pour PWA)
+  # App icon config (for PWA)
   [params.app]
     title = "BWO"
     noFavicon = false
@@ -130,7 +129,7 @@ enableGitInfo = false
     enable = true
     type = "lunr"
     contentLength = 4000
-    placeholder = "Rechercher..."
+    placeholder = "Search..."
     maxResultLength = 10
     snippetLength = 30
     highlightTag = "em"
@@ -143,8 +142,8 @@ enableGitInfo = false
       enable = true
       gravatarEmail = ""
       avatarURL = "/images/avatar.jpg"
-      title = "BWO 👨🏽‍💻 | Data Engineer en devenir"
-      subtitle = "Genuine Insights into the Data Ecosystem"
+      title = "Hi I'm Ben Warai Otoko"
+      subtitle = "Welcome to My Data Engineering Portfolio"
       typeit = true
       social = true
       disclaimer = ""
@@ -189,11 +188,11 @@ enableGitInfo = false
     cursorChar = "|"
     duration = -1
 
-  # Analytics (optionnel)
+  # Analytics (optional)
   [params.analytics]
     enable = false
 
-  # Cookie consent (optionnel)
+  # Cookie consent (optional)
   [params.cookieconsent]
     enable = false
 

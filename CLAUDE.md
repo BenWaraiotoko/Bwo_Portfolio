@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a French-language portfolio site for a Data Engineer built with Hugo Extended, featuring an interactive D3.js knowledge graph visualization. The site is designed with a Kanagawa color scheme and uses the LoveIt theme as a base, deployed to Cloudflare Pages.
+This is an English-language portfolio site for a Data Engineer built with Hugo Extended, featuring an interactive D3.js knowledge graph visualization. The site is designed with a Kanagawa color scheme and uses the LoveIt theme as a base, deployed to Cloudflare Pages.
 
 **Stack**: Hugo Extended v0.139.0, LoveIt theme, D3.js v7.8.5, Kanagawa CSS theme
 
-**Language**: French (fr) - all content, comments, and user-facing text should be in French
+**Language**: English (en) - all content, comments, and user-facing text should be in English
 
 ## Essential Commands
 
@@ -58,9 +58,9 @@ git push origin main
 ### Hugo Site Structure
 
 **Content Organization**:
-- `content/posts/` - Blog articles about Data Engineering journey
+- `content/posts/` - Blog articles about the Data Engineering journey
 - `content/projects/` - Portfolio project showcases
-- `content/about.md` - About page
+- `content/about.md` - About page in English
 - `content/graph.md` - Interactive knowledge graph page (main feature)
 
 **Custom Theme System**:
@@ -116,9 +116,9 @@ This CSS file overrides LoveIt theme defaults to achieve the Kanagawa aesthetic.
 
 Key settings:
 - `baseURL`: Cloudflare Pages URL (update for production)
-- `languageCode = "fr"`: French language site
+- `languageCode = "en"`: English language site
 - `theme = "LoveIt"`: Base theme
-- Menu structure: Blog, Projets, Compétences (graph), À propos
+- Menu structure: Blog, Projects, Tags, Graph, About
 - Dark theme by default: `defaultTheme = "dark"`
 - Build outputs: `["HTML", "RSS", "JSON"]`
 - Taxonomies: tags and categories enabled
@@ -132,7 +132,7 @@ Key settings:
 title: "Post Title"
 date: 2025-01-15
 tags: ["python", "sql", "data-engineering"]
-categories: ["Formation"]
+categories: ["blog"]
 draft: false
 ---
 ```
@@ -143,6 +143,7 @@ draft: false
 title: "Project Name"
 date: 2025-01-10
 tags: ["etl", "python", "docker"]
+categories: ["projects"]
 draft: false
 ---
 ```

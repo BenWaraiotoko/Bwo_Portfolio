@@ -6,25 +6,25 @@ draft: false
 
 ## Explore My Knowledge Graph
 
-Ce graphe interactif représente les connexions entre mes compétences, outils, et projets. **Cliquez sur un nœud** pour naviguer vers la section correspondante.
+This interactive graph represents the connections between my skills, tools, and projects. **Click on a node** to navigate to the corresponding section.
 
 {{< knowledge-graph >}}
 
-### Comment lire ce graphe
+### How to Read This Graph
 
-- **Nœud central (rose)** — Point d'entrée principal
-- **Nœuds bleus** — Compétences, outils, et projets
-- **Lignes dorées** — Connexions et relations
+- **Central node (pink)** — Main entry point
+- **Blue nodes** — Skills, tools, and projects
+- **Golden lines** — Connections and relationships
 
-### Technologies représentées
+### Technologies Represented
 
-Ce graphe évolue avec mon apprentissage. Il reflète actuellement mon parcours de formation en Data Engineering, incluant :
+This graph evolves with my learning journey. It currently reflects my Data Engineering training path, including:
 
-- **Langages** — Python, SQL
-- **Outils** — Apache Airflow, dbt, Docker
-- **Bases de données** — PostgreSQL, DuckDB
-- **Projets** — Mes réalisations pratiques
+- **Languages** — Python, SQL
+- **Tools** — Apache Airflow, dbt, Docker
+- **Databases** — PostgreSQL, DuckDB
+- **Projects** — My practical achievements
 
 ---
 
-*Inspiré par le "Second Brain" de [Simon Späti](https://www.ssp.sh/brain/).*
+*Inspired by [Simon Späti](https://www.ssp.sh/brain/)'s "Second Brain".*

@@ -1,5 +1,5 @@
 ---
-title: "À propos"
+title: "About"
 date: 2025-01-01
 draft: false
 lightgallery: true
@@ -7,37 +7,37 @@ lightgallery: true
 
 ## Hello, I'm Benjamin 👋
 
-Je suis un **Data Engineer en devenir**, actuellement en reconversion professionnelle après 15+ années dans l'infrastructure broadcast télévisuel. Passionné par l'automatisation et la data, je me forme activement pour devenir Data Engineer d'ici 2029.
+I'm an **aspiring Data Engineer**, currently transitioning careers after 15+ years in broadcast infrastructure. Passionate about automation and data, I'm actively training to become a Data Engineer by 2029.
 
 <div class="intro-block">
 
-Mon parcours technique m'a permis de développer une expertise solide en **infrastructure**, **virtualisation** (VMware/vSphere), et **stockage réseau**. Aujourd'hui, je transpose ces compétences vers le monde de la data avec Python, SQL, et les pipelines ETL.
+My technical background has allowed me to develop solid expertise in **infrastructure**, **virtualization** (VMware/vSphere), and **network storage**. Today, I'm transferring these skills to the data world with Python, SQL, and ETL pipelines.
 
 </div>
 
-## 🎯 Objectifs actuels
+## 🎯 Current Goals
 
-- **Formation Data Engineering** — Codecademy Career Path + Le Wagon Bootcamp (2025)
-- **Projets pratiques** — ETL pipelines, APIs, dashboards analytics
-- **Auto-hébergement** — Ce portfolio tourne sur mon HomeLab
+- **Data Engineering Training** — Codecademy Career Path + Le Wagon Bootcamp (2025)
+- **Hands-on Projects** — ETL pipelines, APIs, analytics dashboards
+- **Self-Hosting** — This portfolio runs on my HomeLab
 
-## 🛠️ Stack Technique
+## 🛠️ Tech Stack
 
-### En apprentissage actif
-- **Python** — Pandas, NumPy, scripts d'automatisation
-- **SQL** — PostgreSQL, DuckDB, requêtes analytiques
-- **ETL** — Apache Airflow, dbt, pipelines de données
+### Actively Learning
+- **Python** — Pandas, NumPy, automation scripts
+- **SQL** — PostgreSQL, DuckDB, analytical queries
+- **ETL** — Apache Airflow, dbt, data pipelines
 
-### Expertise actuelle
-- **Infrastructure** — VMware, Docker, Linux, réseaux
-- **Broadcast** — Encodage vidéo, FFmpeg, workflows production
+### Current Expertise
+- **Infrastructure** — VMware, Docker, Linux, networking
+- **Broadcast** — Video encoding, FFmpeg, production workflows
 - **Home Automation** — Home Assistant, self-hosting
 
-## 📍 Parcours
+## 📍 Background
 
-Je travaille actuellement comme technicien infrastructure broadcast près de Monaco, gérant l'infrastructure VMware/vSphere pour la diffusion télévisuelle linéaire.
+I currently work as a broadcast infrastructure technician near Monaco, managing VMware/vSphere infrastructure for linear television broadcasting.
 
-Mon objectif : m'expatrier au **Japon (Fukuoka)** d'ici 2029 en tant que Data Engineer, combinant ma passion pour la technologie et ma fascination pour la culture japonaise.
+My goal: relocate to **Japan (Fukuoka)** by 2029 as a Data Engineer, combining my passion for technology with my fascination for Japanese culture.
 
 ## 📬 Contact
 
@@ -46,4 +46,4 @@ Mon objectif : m'expatrier au **Japon (Fukuoka)** d'ici 2029 en tant que Data En
 
 ---
 
-*Ce site est généré avec [Hugo](https://gohugo.io) et le thème [LoveIt](https://hugoloveit.com), stylisé avec la palette [Kanagawa](https://github.com/rebelot/kanagawa.nvim), inspiré par [ssp.sh](https://www.ssp.sh).*
+*This site is built with [Hugo](https://gohugo.io) and the [LoveIt](https://hugoloveit.com) theme, styled with the [Kanagawa](https://github.com/rebelot/kanagawa.nvim) palette, inspired by [ssp.sh](https://www.ssp.sh).*

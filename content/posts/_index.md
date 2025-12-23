@@ -1,14 +1,14 @@
 ---
 title: "Blog"
-description: "Articles sur mon parcours Data Engineering, tutoriels, et retours d'expérience"
+description: "Articles about my Data Engineering journey, tutorials, and experience sharing"
 ---
 
 ## Data Engineering Blog
 
-Bienvenue sur mon blog où je partage mon parcours de reconversion vers le Data Engineering, des tutoriels techniques, et mes réflexions sur l'industrie de la data.
+Welcome to my blog where I share my career transition journey to Data Engineering, technical tutorials, and reflections on the data industry.
 
 <div class="intro-block">
 
-**Genuine Insights into the Data Ecosystem** — Des articles authentiques basés sur mon expérience réelle d'apprentissage et de pratique.
+**Genuine Insights into the Data Ecosystem** — Authentic articles based on my real learning and practice experience.
 
 </div>

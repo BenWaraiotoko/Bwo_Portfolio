@@ -1,34 +1,34 @@
 ---
-title: "Pipeline ETL avec Python & Airflow"
+title: "ETL Pipeline with Python & Airflow"
 date: 2025-01-15
 draft: false
-description: "Un pipeline ETL complet pour extraire, transformer et charger des données depuis une API vers PostgreSQL"
+description: "A complete ETL pipeline to extract, transform, and load data from an API to PostgreSQL"
 tags: ["python", "etl", "airflow", "postgresql", "data-engineering"]
 categories: ["projects"]
 featuredImage: "/images/projects/etl-pipeline.png"
 ---
 
-## 📋 Aperçu du projet
+## 📋 Project Overview
 
-Ce projet démontre la création d'un **pipeline ETL** (Extract, Transform, Load) complet utilisant Python et Apache Airflow pour orchestrer le flux de données.
+This project demonstrates building a complete **ETL pipeline** (Extract, Transform, Load) using Python and Apache Airflow to orchestrate the data flow.
 
 <div class="intro-block">
 
-**Objectif** : Extraire des données météo depuis une API publique, les transformer en métriques exploitables, et les charger dans une base PostgreSQL pour analyse.
+**Goal**: Extract weather data from a public API, transform it into actionable metrics, and load it into a PostgreSQL database for analysis.
 
 </div>
 
-## 🛠️ Stack technique
+## 🛠️ Tech Stack
 
-| Composant | Technologie |
+| Component | Technology |
 |-----------|-------------|
 | Orchestration | Apache Airflow |
-| Langage | Python 3.11 |
-| Base de données | PostgreSQL 15 |
-| Conteneurisation | Docker Compose |
-| Tests | pytest |
+| Language | Python 3.11 |
+| Database | PostgreSQL 15 |
+| Containerization | Docker Compose |
+| Testing | pytest |
 
-## 📁 Structure du projet
+## 📁 Project Structure
 
 ```
 etl-weather-pipeline/
@@ -44,9 +44,9 @@ etl-weather-pipeline/
 └── README.md
 ```
 
-## 💻 Code principal
+## 💻 Main Code
 
-### DAG Airflow
+### Airflow DAG
 
 ```python
 from airflow import DAG
@@ -87,17 +87,17 @@ with DAG(
     extract_task >> transform_task >> load_task
 ```
 
-## 📊 Résultats
+## 📊 Results
 
-- **Volume traité** : ~10,000 records/jour
-- **Temps d'exécution** : < 2 minutes
-- **Fiabilité** : 99.5% uptime sur 30 jours
+- **Volume Processed**: ~10,000 records/day
+- **Execution Time**: < 2 minutes
+- **Reliability**: 99.5% uptime over 30 days
 
-## 🔗 Liens
+## 🔗 Links
 
-- [**Code source sur GitHub**](https://github.com/ton-username/etl-weather-pipeline)
-- [Documentation Airflow](https://airflow.apache.org/docs/)
+- [**Source Code on GitHub**](https://github.com/ton-username/etl-weather-pipeline)
+- [Airflow Documentation](https://airflow.apache.org/docs/)
 
 ---
 
-*Projet réalisé dans le cadre de ma formation Data Engineering.*
+*Project completed as part of my Data Engineering training.*
