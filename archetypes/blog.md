@@ -57,7 +57,7 @@ SELECT * FROM example_table;
 ## Practical Applications
 
 How does this learning apply to real Data Engineering work? Can you see yourself using this in:
-- ETL pipelines?
+- ETL pipelines? 
 - Data transformation?
 - Database management?
 - Data quality checks?
