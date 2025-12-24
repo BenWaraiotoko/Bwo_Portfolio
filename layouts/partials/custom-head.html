@@ -1,6 +1,6 @@
 {{/* Custom head additions for Kanagawa theme */}}
 
-{{/* Google Fonts - Inter pour le texte, JetBrains Mono pour le code */}}
+{{/* Google Fonts - Inter for text, JetBrains Mono for code */}}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -8,8 +8,12 @@
 {{/* Custom Kanagawa CSS */}}
 {{ $kanagawa := resources.Get "css/kanagawa.css" }}
 {{ if $kanagawa }}
-  {{ $kanagawa = $kanagawa | minify | fingerprint }}
-  <link rel="stylesheet" href="{{ $kanagawa.Permalink }}" integrity="{{ $kanagawa.Data.Integrity }}">
+  {{- if hugo.IsProduction -}}
+    {{ $kanagawa = $kanagawa | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ $kanagawa.Permalink }}" integrity="{{ $kanagawa.Data.Integrity }}">
+  {{- else -}}
+    <link rel="stylesheet" href="{{ $kanagawa.RelPermalink }}">
+  {{- end -}}
 {{ end }}
 
 {{/* Meta theme-color for mobile browsers */}}

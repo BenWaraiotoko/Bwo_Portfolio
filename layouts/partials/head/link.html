@@ -62,8 +62,12 @@
 {{/* Custom Kanagawa CSS - LOADED LAST to override theme styles */}}
 {{ $kanagawa := resources.Get "css/kanagawa.css" }}
 {{ if $kanagawa }}
-  {{ $kanagawa = $kanagawa | minify | fingerprint }}
-  <link rel="stylesheet" href="{{ $kanagawa.Permalink }}" integrity="{{ $kanagawa.Data.Integrity }}">
+  {{- if hugo.IsProduction -}}
+    {{ $kanagawa = $kanagawa | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ $kanagawa.Permalink }}" integrity="{{ $kanagawa.Data.Integrity }}">
+  {{- else -}}
+    <link rel="stylesheet" href="{{ $kanagawa.RelPermalink }}">
+  {{- end -}}
 {{ end }}
 
 {{/* Meta theme-color for mobile browsers */}}
