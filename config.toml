@@ -186,7 +186,7 @@ enableGitInfo = false
       maxShownLines = 50
     
     [params.page.share]
-      enable = false
+      enable = true
 
   # TypeIt config
   [params.typeit]
