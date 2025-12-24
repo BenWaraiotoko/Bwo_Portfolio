@@ -7,7 +7,7 @@ lightgallery: true
 
 ## Hello, I'm Benjamin 👋 – Data Engineer in progress 🚀
 
-![Profile Picture](/images/avatar.jpg)
+![Profile Picture](/images/Portrait_Ben.png)
 
 **10+ years in video production & broadcast infrastructure. Now diving into data pipelines.**
 ## Background
