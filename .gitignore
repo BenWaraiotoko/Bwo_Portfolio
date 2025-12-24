@@ -19,3 +19,35 @@ resources/
 # Temporary files
 tmp/
 temp/
+
+# ======================================
+# PERSONAL & SENSITIVE CONTENT
+# ======================================
+
+# Claude Code instructions (contains full career plan)
+CLAUDE.md
+
+# Private notes and planning
+notes/
+private/
+personal/
+*.private.md
+*-private.md
+
+# Drafts with sensitive information
+content/drafts/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Personal learning logs (use public versions only)
+# Keep _index.md but ignore detailed logs
+content/learning-logs/*.md
+!content/learning-logs/_index.md
+!content/learning-logs/*-public.md
+
+# Backup files
+*.bak
+*~
