@@ -1,15 +1,14 @@
-{{/* 
-  Knowledge Graph Shortcode
+{{/*
+  Knowledge Graph Shortcode - Dynamic Version
   Usage: {{< knowledge-graph >}}
-  
-  Le graphe lit les données depuis /data/graph.json
-  ou les projets/posts avec des tags pour créer les connexions
+
+  Automatically generates graph from all posts, projects, and tags
 */}}
 
 <div class="graph-container">
   <h3 class="graph-title">
     <i class="fa-solid fa-diagram-project"></i>
-    Interactive Graph
+    Interactive Knowledge Graph
   </h3>
   <div id="knowledge-graph"></div>
 </div>
@@ -20,71 +19,130 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Récupérer les données du graphe
-  // Option 1: Depuis un fichier JSON
-  fetch('/data/graph.json')
-    .then(response => {
-      if (!response.ok) {
-        // Si pas de fichier JSON, générer depuis les métadonnées
-        return generateGraphFromContent();
-      }
-      return response.json();
-    })
-    .then(data => {
-      window.knowledgeGraph = new KnowledgeGraph('knowledge-graph', data, {
-        height: 500,
-        nodeRadius: 8,
-        centerNodeRadius: 14,
-        linkDistance: 100,
-        chargeStrength: -250
-      });
-    })
-    .catch(error => {
-      console.log('Using default graph data');
-      // Données par défaut si aucune source disponible
-      const defaultData = {
-        nodes: [
-          { id: 'center', label: 'Portfolio', isCenter: true, url: '/' },
-          { id: 'python', label: 'Python', url: '/tags/python/' },
-          { id: 'sql', label: 'SQL', url: '/tags/sql/' },
-          { id: 'etl', label: 'ETL', url: '/tags/etl/' },
-          { id: 'data-engineering', label: 'Data Engineering', url: '/tags/data-engineering/' },
-          { id: 'projects', label: 'Projets', url: '/projects/' },
-          { id: 'about', label: 'À propos', url: '/about/' }
-        ],
-        links: [
-          { source: 'center', target: 'python' },
-          { source: 'center', target: 'sql' },
-          { source: 'center', target: 'etl' },
-          { source: 'center', target: 'data-engineering' },
-          { source: 'center', target: 'projects' },
-          { source: 'center', target: 'about' },
-          { source: 'python', target: 'etl' },
-          { source: 'sql', target: 'etl' },
-          { source: 'python', target: 'data-engineering' },
-          { source: 'sql', target: 'data-engineering' }
-        ]
-      };
-      
-      window.knowledgeGraph = new KnowledgeGraph('knowledge-graph', defaultData, {
-        height: 500,
-        nodeRadius: 8,
-        centerNodeRadius: 14,
-        linkDistance: 100,
-        chargeStrength: -250
-      });
-    });
-});
-
-// Fonction pour générer le graphe depuis le contenu Hugo
-function generateGraphFromContent() {
-  // Cette fonction serait appelée si on veut générer dynamiquement
-  // Pour Hugo, on préfère généralement générer le JSON au build time
-  return Promise.resolve({
+  // Dynamically generated graph data from Hugo
+  const graphData = {
     nodes: [
-      { id: 'center', label: 'Portfolio', isCenter: true, url: '/' }
+      // Center node
+      {
+        id: 'center',
+        label: 'Ben Warai Otoko',
+        isCenter: true,
+        url: '/',
+        category: 'central'
+      },
+
+      // Main pages
+      { id: 'about', label: 'About', url: '/about/', category: 'page' },
+      { id: 'posts', label: 'Blog', url: '/posts/', category: 'page' },
+      { id: 'projects', label: 'Projects', url: '/projects/', category: 'page' },
+
+      // Tags (generated from site taxonomies)
+      {{ range $name, $taxonomy := .Site.Taxonomies.tags -}}
+      {
+        id: 'tag-{{ $name | urlize }}',
+        label: '{{ $name | title }}',
+        url: '/tags/{{ $name | urlize }}/',
+        category: 'skill',
+        count: {{ len $taxonomy }}
+      },
+      {{ end -}}
+
+      // Posts and Projects
+      {{ range where .Site.RegularPages "Section" "in" (slice "posts" "projects") -}}
+      {{ if not .Draft -}}
+      {
+        id: 'content-{{ .File.UniqueID }}',
+        label: '{{ .Title }}',
+        url: '{{ .RelPermalink }}',
+        category: '{{ if eq .Section "projects" }}project{{ else }}post{{ end }}',
+        tags: [{{ range .Params.tags }}'{{ . | urlize }}',{{ end }}]
+      },
+      {{ end -}}
+      {{ end -}}
     ],
-    links: []
+
+    links: [
+      // Center connects to main pages
+      { source: 'center', target: 'about' },
+      { source: 'center', target: 'posts' },
+      { source: 'center', target: 'projects' },
+
+      // Center connects to primary skills
+      {{ $primaryTags := slice "python" "sql" "data-engineering" "etl" "video" "broadcast" "ffmpeg" "automation" -}}
+      {{ range $primaryTags -}}
+      {{ if index $.Site.Taxonomies.tags (. | urlize) -}}
+      { source: 'center', target: 'tag-{{ . | urlize }}' },
+      {{ end -}}
+      {{ end -}}
+
+      // Posts/Projects connect to their tags
+      {{ range where .Site.RegularPages "Section" "in" (slice "posts" "projects") -}}
+      {{ if not .Draft -}}
+      {{ $contentID := printf "content-%s" .File.UniqueID -}}
+      {{ range .Params.tags -}}
+      { source: '{{ $contentID }}', target: 'tag-{{ . | urlize }}' },
+      {{ end -}}
+
+      // Posts connect to posts section, projects to projects section
+      {{ if eq .Section "projects" -}}
+      { source: '{{ $contentID }}', target: 'projects' },
+      {{ else -}}
+      { source: '{{ $contentID }}', target: 'posts' },
+      {{ end -}}
+      {{ end -}}
+      {{ end -}}
+
+      // Create connections between related tags (tags that appear together)
+      {{ $tagConnections := dict -}}
+      {{ range where .Site.RegularPages "Section" "in" (slice "posts" "projects") -}}
+      {{ if not .Draft -}}
+      {{ $postTags := .Params.tags -}}
+      {{ range $i, $tag1 := $postTags -}}
+      {{ range $j, $tag2 := $postTags -}}
+      {{ if and (ne $i $j) (lt $i $j) -}}
+      {{ $key := printf "%s-%s" ($tag1 | urlize) ($tag2 | urlize) -}}
+      {{ $tagConnections = merge $tagConnections (dict $key true) -}}
+      {{ end -}}
+      {{ end -}}
+      {{ end -}}
+      {{ end -}}
+      {{ end -}}
+
+      // Output tag-to-tag connections
+      {{ range $key, $_ := $tagConnections -}}
+      {{ $parts := split $key "-" -}}
+      {{ if eq (len $parts) 2 -}}
+      { source: 'tag-{{ index $parts 0 }}', target: 'tag-{{ index $parts 1 }}' },
+      {{ end -}}
+      {{ end -}}
+    ]
+  };
+
+  // Remove duplicate links
+  const uniqueLinks = [];
+  const linkSet = new Set();
+
+  graphData.links.forEach(link => {
+    const key = `${link.source}-${link.target}`;
+    const reverseKey = `${link.target}-${link.source}`;
+
+    if (!linkSet.has(key) && !linkSet.has(reverseKey)) {
+      linkSet.add(key);
+      uniqueLinks.push(link);
+    }
   });
-}
+
+  graphData.links = uniqueLinks;
+
+  // Initialize the knowledge graph
+  window.knowledgeGraph = new KnowledgeGraph('knowledge-graph', graphData, {
+    height: 600,
+    nodeRadius: 6,
+    centerNodeRadius: 12,
+    linkDistance: 120,
+    chargeStrength: -300
+  });
+
+  console.log('Knowledge graph initialized with', graphData.nodes.length, 'nodes and', graphData.links.length, 'links');
+});
 </script>

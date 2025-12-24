@@ -1,0 +1,74 @@
+{{- /* Generate dynamic graph.json from all posts, projects, and tags */ -}}
+{{- $nodes := slice -}}
+{{- $links := slice -}}
+
+{{- /* Center node */ -}}
+{{- $nodes = $nodes | append (dict "id" "center" "label" "Ben Warai Otoko" "isCenter" true "url" "/" "category" "central") -}}
+
+{{- /* Main pages */ -}}
+{{- $nodes = $nodes | append (dict "id" "about" "label" "About" "url" "/about/" "category" "page") -}}
+{{- $nodes = $nodes | append (dict "id" "posts" "label" "Blog" "url" "/posts/" "category" "page") -}}
+{{- $nodes = $nodes | append (dict "id" "projects" "label" "Projects" "url" "/projects/" "category" "page") -}}
+
+{{- /* Links from center to main pages */ -}}
+{{- $links = $links | append (dict "source" "center" "target" "about") -}}
+{{- $links = $links | append (dict "source" "center" "target" "posts") -}}
+{{- $links = $links | append (dict "source" "center" "target" "projects") -}}
+
+{{- /* Tags */ -}}
+{{- range $name, $taxonomy := .Site.Taxonomies.tags -}}
+  {{- $tagID := printf "tag-%s" ($name | urlize) -}}
+  {{- $nodes = $nodes | append (dict "id" $tagID "label" ($name | title) "url" (printf "/tags/%s/" ($name | urlize)) "category" "skill" "count" (len $taxonomy)) -}}
+{{- end -}}
+
+{{- /* Primary tags connect to center */ -}}
+{{- $primaryTags := slice "python" "sql" "data-engineering" "etl" "video" "broadcast" "ffmpeg" "automation" "infrastructure" "macos" -}}
+{{- range $primaryTags -}}
+  {{- if index $.Site.Taxonomies.tags (. | urlize) -}}
+    {{- $links = $links | append (dict "source" "center" "target" (printf "tag-%s" (. | urlize))) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Posts and Projects */ -}}
+{{- $tagConnections := dict -}}
+{{- range where .Site.RegularPages "Section" "in" (slice "posts" "projects") -}}
+  {{- if not .Draft -}}
+    {{- $contentID := printf "content-%s" .File.UniqueID -}}
+    {{- $nodes = $nodes | append (dict "id" $contentID "label" .Title "url" .RelPermalink "category" (cond (eq .Section "projects") "project" "post")) -}}
+
+    {{- /* Posts/Projects connect to their section */ -}}
+    {{- if eq .Section "projects" -}}
+      {{- $links = $links | append (dict "source" $contentID "target" "projects") -}}
+    {{- else -}}
+      {{- $links = $links | append (dict "source" $contentID "target" "posts") -}}
+    {{- end -}}
+
+    {{- /* Posts/Projects connect to their tags */ -}}
+    {{- $postTags := .Params.tags -}}
+    {{- range $postTags -}}
+      {{- $tagID := printf "tag-%s" (. | urlize) -}}
+      {{- $links = $links | append (dict "source" $contentID "target" $tagID) -}}
+    {{- end -}}
+
+    {{- /* Track tag co-occurrences */ -}}
+    {{- range $i, $tag1 := $postTags -}}
+      {{- range $j, $tag2 := $postTags -}}
+        {{- if and (ne $i $j) (lt $i $j) -}}
+          {{- $key := printf "%s|%s" ($tag1 | urlize) ($tag2 | urlize) -}}
+          {{- $tagConnections = merge $tagConnections (dict $key true) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Add tag-to-tag connections */ -}}
+{{- range $key, $_ := $tagConnections -}}
+  {{- $parts := split $key "|" -}}
+  {{- if eq (len $parts) 2 -}}
+    {{- $links = $links | append (dict "source" (printf "tag-%s" (index $parts 0)) "target" (printf "tag-%s" (index $parts 1))) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Output JSON */ -}}
+{{- dict "nodes" $nodes "links" $links | jsonify -}}

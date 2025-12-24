@@ -239,8 +239,15 @@ enableGitInfo = false
 
 # Outputs
 [outputs]
-  home = ["HTML", "RSS", "JSON"]
+  home = ["HTML", "RSS", "JSON", "graphjson"]
   page = ["HTML"]
   section = ["HTML", "RSS"]
   taxonomy = ["HTML", "RSS"]
   term = ["HTML"]
+
+# Custom output formats
+[outputFormats.graphjson]
+  baseName = "graph"
+  mediaType = "application/json"
+  isPlainText = true
+  notAlternative = true
