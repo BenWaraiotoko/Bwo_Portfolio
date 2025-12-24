@@ -37,14 +37,17 @@ I like learning. I like building things. This is both.
 
 ## Tech Stack
 
-### Actively Learning
-- **Python** — Pandas, NumPy, automation scripts
-- **SQL** — PostgreSQL, DuckDB, analytical queries
-- **ETL** — Apache Airflow, dbt, data pipelines
+### Actively Learning (Codecademy Data Engineer Path)
+- **Python** — Fundamentals, Intermediate, Advanced Python; Pandas for data manipulation
+- **SQL** — Fundamentals & Advanced SQL for data engineering
+- **Big Data** — PySpark for distributed data processing
+- **NoSQL** — MongoDB (CRUD operations, document databases)
+- **Version Control** — Git workflows, command line, deployment
+- **Data Engineering** — Data wrangling, cleaning, tidying; ETL pipelines
 
 ### Current Expertise
 - **Infrastructure** — VMware, Docker, Linux, networking
-- **Broadcast** — broadcast infrastructure, FFmpeg, live systems—still useful for understanding data flows under pressure.
+- **Broadcast** — Broadcast infrastructure, FFmpeg, live systems—still useful for understanding data flows under pressure.
 
 ---
 

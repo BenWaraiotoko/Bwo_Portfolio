@@ -17,13 +17,6 @@ Welcome to my professional development journey! This is where I document my week
 
 **Enhance broadcast infrastructure expertise with modern data engineering capabilities**
 
-### Professional Development Milestones
-
-- ✅ **Dec 2024:** Started Codecademy Data Engineer Career Path (8% complete)
-- 🚧 **2025:** Complete Codecademy + build 5+ practical ETL projects
-- 🎯 **2025-2026:** Apply data engineering skills to broadcast workflow optimization
-- 🎯 **Ongoing:** Share knowledge through technical writing and documentation
-
 ## Follow Along
 
 I'm documenting this professional development journey transparently - sharing both successes and challenges. These skills will directly enhance my current work in broadcast infrastructure while building a foundation in modern data engineering practices.
