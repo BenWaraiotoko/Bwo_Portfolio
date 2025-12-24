@@ -10,7 +10,7 @@ featuredImage: "/images/posts/data-engineer-journey.png"
 
 ## The Turning Point
 
-After more than 15 years in video production, postproduction and now broadcast infrastructure, I rwant a new challenge and I want to learn new technologies.
+After more than 15 years in video production, postproduction and now broadcast infrastructure, I want a new challenge and I want to learn new technologies.
 
 <div class="intro-block">
 

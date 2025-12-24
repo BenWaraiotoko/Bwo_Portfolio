@@ -196,6 +196,7 @@ week_number: 1
 - Time allocation could be more efficient
 - Don't really appreciate the codecademy coding module, so I do the exercises on Visual Studio Code instead
 
+
 ### Professional Growth
 
 This week marked the beginning of a structured approach to expanding data engineering skills. The fundamentals learned (Python, Git) are directly applicable to optimizing broadcast infrastructure workflows. Looking forward to applying these concepts to real-world media technology challenges in upcoming projects.
