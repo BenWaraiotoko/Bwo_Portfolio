@@ -1,5 +1,5 @@
 ---
-title: "Broadcast SDI Capture System"
+title: "📼 Broadcast SDI Capture System"
 date: 2025-12-24
 draft: false
 description: "Real-time professional video capture from SDI to MXF OP1a format for Apple Silicon"
