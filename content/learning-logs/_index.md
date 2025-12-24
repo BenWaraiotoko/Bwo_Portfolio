@@ -1,10 +1,7 @@
 ---
-title: "Learning Logs"
-date: 2025-12-23
+title: "Learning Logs 📚"
 description: "Weekly reviews tracking my professional development in Data Engineering"
 ---
-
-# Learning Logs 📚
 
 Welcome to my professional development journey! This is where I document my weekly progress as I expand my skillset into data engineering to enhance my broadcast infrastructure expertise.
 

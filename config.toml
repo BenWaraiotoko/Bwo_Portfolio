@@ -31,24 +31,31 @@ enableGitInfo = false
     [menu.main.params]
       icon = "fa-solid fa-code"
   [[menu.main]]
+    identifier = "learning-logs"
+    name = "Learning Logs"
+    url = "/learning-logs/"
+    weight = 3
+    [menu.main.params]
+      icon = "fa-solid fa-book"
+  [[menu.main]]
     identifier = "tags"
     name = "Tags"
     url = "/tags/"
-    weight = 3
+    weight = 4
     [menu.main.params]
       icon = "fa-solid fa-tags"
   [[menu.main]]
     identifier = "graph"
     name = "Graph"
     url = "/graph/"
-    weight = 4
+    weight = 5
     [menu.main.params]
       icon = "fa-solid fa-diagram-project"
   [[menu.main]]
     identifier = "about"
     name = "About"
     url = "/about/"
-    weight = 5
+    weight = 6
     [menu.main.params]
       icon = "fa-solid fa-user"
 

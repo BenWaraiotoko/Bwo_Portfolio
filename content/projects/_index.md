@@ -1,5 +1,5 @@
 ---
-title: "Projects"
+title: "Projects 🛠️"
 description: "My Data Engineering Projects — ETL, APIs, Dashboards"
 ---
 

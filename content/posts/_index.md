@@ -1,5 +1,5 @@
 ---
-title: "Blog"
+title: "Blog 📝"
 description: "Articles about my Data Engineering journey, tutorials, and experience sharing"
 ---
 
