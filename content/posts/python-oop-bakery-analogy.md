@@ -82,13 +82,15 @@ birthday_cake.sing_happy_birthday("Benjamin")
 ```
 
 **Output:**
-```
+
+```text
 Baking the strawberry cake...
 Cake is ready!
 🕯️ Added 25 candles!
 🎵 Happy Birthday to Benjamin! 🎵
 🎂 Enjoy your strawberry cake!
 ```
+
 
 The `BirthdayCake` gets all the basic cake functionality (baking, describing) plus its own special birthday features. That's inheritance!
 
@@ -155,11 +157,13 @@ for dessert in desserts:
 ```
 
 **Output:**
-```
+
+```text
 🧁 Baking Vanilla Cupcake at 175°C for 18-20 minutes
 🥧 Baking Apple Pie at 190°C for 45-50 minutes
 🍪 Baking Chocolate Chip Cookie at 180°C for 12-15 minutes
 ```
+
 
 ## Putting It All Together: A Bakery System
 
@@ -229,7 +233,8 @@ my_bakery.daily_report()
 ```
 
 **Output:**
-```
+
+```text
 ✅ Added Chocolate Éclair to inventory
 ✅ Added Strawberry Tart to inventory
 ✅ Added Croissant to inventory
@@ -248,10 +253,11 @@ Total Orders: 3
 Total Sales: $12.50
 ```
 
+
 ## The Cheat Sheet
 
 | OOP Concept | Bakery Analogy | What It Does |
-|------------|----------------|--------------|
+| --- | --- | --- |
 | **Class** | Cookie cutter | Template/blueprint |
 | **Object** | Actual cookie | Instance created from class |
 | **Attributes** | Ingredients | Data stored in object |
