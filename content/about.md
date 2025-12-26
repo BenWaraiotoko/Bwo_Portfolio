@@ -5,69 +5,65 @@ draft: false
 lightgallery: true
 ---
 
-## Hello, I'm Benjamin 👋 – Data Engineer in progress 🚀
+## Hey, I'm Ben 👋
 
 ![Profile Picture](/images/Portrait_Ben.png)
 
-**10+ years in video production & broadcast infrastructure. Now diving into data pipelines.**
-## Background
-I spent a decade working on extreme sports documentaries, TV production, and broadcast systems—managing everything from live encoding pipelines to complex infrastructure. **That's actually perfect training for data engineering.** Automating video workflows taught me to think in ETL. Managing distributed systems taught me about reliability at scale.
+**Broadcast infrastructure technician in Monaco. Learning data engineering to level up my technical game.**
 
-I currently work as a broadcast infrastructure technician near Monaco, managing VMware/vSphere infrastructure for linear television broadcasting.
-Now I'm formalizing those instincts with Python, SQL, and real data projects.
+## What I Do
 
----
+I am working on infrastructure for linear television broadcasting. Before that, spent 10+ years doing extreme sports documentaries, TV production, and supervising post production.
 
-## Why data?
+Turns out, managing live encoding pipelines and distributed broadcast infrastructure is basically ETL work in disguise. Who knew? 🤷‍♂️
 
-It's the natural next step. The problems are similar—**move data reliably, automate workflows, solve for scale**—but the sandbox is bigger and the tools are more interesting.
+## Why I'm Learning This Stuff
 
-I like learning. I like building things. This is both.
+Broadcast infrastructure already involves:
 
----
+- Moving data reliably (video streams, metadata, logs)
+- Automating workflows (transcoding, archiving, monitoring)
+- Solving for scale (live TV doesn't buffer)
 
-## What's my plan'
+So I'm formalizing those instincts with Python, SQL, and proper data engineering practices. Same problems, better tools, more automation possibilities.
 
-**Learning** — Codecademy Data Path (Python, SQL, analytics fundamentals)  
-**Bootcamp** — Le Wagon (autumn 2026) for intensive hands-on training  
-**Building** — ETL projects, data analysis, automation scripts  
-**Networking** — Connecting with data professionals to learn from their experiences
+Plus, it's fun to actually understand what's happening under the hood instead of just keeping systems running.
 
----
+## The Plan
+
+**Learning:** Codecademy Data Engineer path (Python, SQL, pandas, PySpark)
+**Building:** ETL projects, automation scripts, anything that makes work easier
+**Future:** Le Wagon bootcamp (2026) for intensive hands-on training
 
 ## Tech Stack
 
-### Actively Learning (Codecademy Data Engineer Path)
-- **Python** — Fundamentals, Intermediate, Advanced Python; Pandas for data manipulation
-- **SQL** — Fundamentals & Advanced SQL for data engineering
-- **Big Data** — PySpark for distributed data processing
-- **NoSQL** — MongoDB (CRUD operations, document databases)
-- **Version Control** — Git workflows, command line, deployment
-- **Data Engineering** — Data wrangling, cleaning, tidying; ETL pipelines
+**Currently learning:**
 
-### Current Expertise
-- **Infrastructure** — VMware, Docker, Linux, networking
-- **Broadcast** — Broadcast infrastructure, FFmpeg, live systems—still useful for understanding data flows under pressure.
+- Python (fundamentals → pandas → automation)
+- SQL (queries, optimization, data modeling)
+- Git (finally learning proper version control)
+- Data pipelines (cleaning, wrangling, ETL)
 
----
+**Already know:**
 
+- VMware/vSphere infrastructure
+- Docker, Linux, networking
+- Broadcast systems
+- Keeping live systems running when things break at 3am
 
-## What I value
+## What Matters to Me
 
-- **Systems thinking** — How pieces fit together matters more than individual tools
-- **Automation** — Manual work is a sign you haven't automated enough
-- **Learning by doing** — Theory is fine, but projects teach faster
-- **Reliability** — Broadcast taught me that "it usually works" isn't acceptable
+- **Systems thinking:** How pieces fit together > individual tools
+- **Automation:** If you do it twice, automate it
+- **Learning by doing:** Projects > tutorials
+- **Reliability:** "It usually works" isn't good enough
 
+## 📬 Get in Touch
 
-
-## 📬 Contact
-
-- **GitHub** — [BenWaraiotoko](https://github.com/BenWaraiotoko)
-- **Email** — bwonews@proton.me
+- **GitHub:** [BenWaraiotoko](https://github.com/BenWaraiotoko)
+- **Email:** mailto:bwonews@proton.me
+- **LinkedIn:** [Ben Waraiotoko](https://www.linkedin.com/in/benjamin-nardini-b60b9439a/)
 
 ---
-That's it. Let's build something.
----
 
-*This site is built with [Hugo](https://gohugo.io) and the [LoveIt](https://hugoloveit.com) theme, styled with the [Kanagawa](https://github.com/rebelot/kanagawa.nvim) palette, inspired by [ssp.sh](https://www.ssp.sh).*
+*This site: [Hugo](https://gohugo.io) + [LoveIt](https://hugoloveit.com) theme + [Kanagawa](https://github.com/rebelot/kanagawa.nvim) colors. Inspired by [ssp.sh](https://www.ssp.sh).*
