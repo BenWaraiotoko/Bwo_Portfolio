@@ -187,6 +187,15 @@ enableGitInfo = false
     
     [params.page.share]
       enable = true
+      Twitter = true
+      Facebook = true
+      Linkedin = true
+      Reddit = true
+      Telegram = true
+      HackerNews = true
+      Whatsapp = true
+      Line = false
+      Weibo = false
 
   # TypeIt config
   [params.typeit]
