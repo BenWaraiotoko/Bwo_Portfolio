@@ -5,6 +5,7 @@ draft: false
 description: "Broadcast infrastructure is basically ETL. Might as well learn the proper tools."
 tags: ["data-engineering", "broadcast", "learning"]
 categories: ["blog"]
+images: ["/images/avatar.jpg"]
 ---
 
 ## The Realization

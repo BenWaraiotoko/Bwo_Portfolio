@@ -77,11 +77,16 @@ enableGitInfo = false
   
   # Site description
   title = "Ben Warai Otoko | Data Engineer"
-  description = "Portfolio Data Engineering - Python, SQL, ETL, Cloud"
-  keywords = ["Data Engineer", "Python", "SQL", "ETL", "Portfolio"]
-  
+  description = "Broadcast infrastructure tech learning data engineering to automate more stuff"
+  keywords = ["Data Engineer", "Python", "SQL", "ETL", "Portfolio", "Broadcast"]
+
   # Images
   images = ["/images/avatar.jpg"]
+
+  # SEO config
+  [params.seo]
+    image = "/images/avatar.jpg"
+    thumbnailUrl = "/images/avatar.jpg"
 
   # Header config
   [params.header]

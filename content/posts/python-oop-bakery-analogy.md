@@ -4,6 +4,8 @@ date: 2025-12-26
 tags: ["python", "oop", "tutorial", "codecademy"]
 categories: ["blog"]
 draft: false
+description: "Classes are cookie cutters, objects are cookies. Understanding Python OOP through a bakery analogy."
+images: ["/images/avatar.jpg"]
 ---
 
 Ever tried to explain Object-Oriented Programming to someone and watched their eyes glaze over? Yeah, me too. So here's a different approach: let's talk about cakes.
