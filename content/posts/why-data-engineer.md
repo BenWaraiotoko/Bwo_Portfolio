@@ -1,46 +1,59 @@
 ---
-title: "Why I Try to Become a Data Engineer"
+title: "Why I'm Learning Data Engineering"
 date: 2025-12-23
 draft: false
-description: "My career transition journey: from broadcast technician to Data Engineer"
-tags: ["data-engineering", "career"]
+description: "Broadcast infrastructure is basically ETL. Might as well learn the proper tools."
+tags: ["data-engineering", "broadcast", "learning"]
 categories: ["blog"]
-featuredImage: "/images/posts/data-engineer-journey.png"
 ---
 
-## The Turning Point
+## The Realization
 
-After more than 15 years in video production, postproduction and now broadcast infrastructure, I want a new challenge and I want to learn new technologies.
+I've been doing broadcast infrastructure for years. Managing video streams, metadata pipelines, transcoding workflows, monitoring systems. Turns out, that's all just ETL with different names.
 
-<div class="intro-block">
+So why not learn how actual data engineers solve these problems?
 
-My passion for **automation** and **Python scripting** naturally led me toward Data Engineering — a field that combines infrastructure, code, and data.
+## What I'm Actually Doing
 
-</div>
+**Not:** Changing careers
+**Yes:** Learning better tools for stuff I already do
 
-## What Attracts Me to Data Engineering
+Broadcast infrastructure already involves:
+- Moving large amounts of data reliably (video files aren't small)
+- Transforming data (transcoding, metadata extraction)
+- Loading it somewhere useful (archives, CDNs, databases)
+- Monitoring everything so you know when it breaks
 
-### 1. Solving Real-World Problems
+That's literally Extract-Transform-Load. Just with video instead of CSV files.
 
-Building data pipelines is about solving complex puzzles: how to extract efficiently? How to transform cleanly? How to ensure quality?
+## Why This Makes Sense
 
-### 2. Large-Scale Automation
+### I Already Automate Stuff
 
-My infrastructure experience gives me a solid foundation for understanding distributed systems, orchestration, and monitoring — crucial skills in Data Engineering.
+I've been writing bash scripts and FFmpeg commands for years. Python is just better bash. SQL is just better grep. Might as well level up.
 
-### 3. A Growing Market
+### The Problems Are Similar
 
-Global data volumes are exploding. Companies need professionals capable of structuring, cleaning, and making this data actionable.
+How do you move 100GB video files reliably? Same way you move 100GB of database dumps - checksum verification, retry logic, monitoring.
 
+How do you process thousands of files without manual intervention? Same way you process thousands of database rows - automation, orchestration, error handling.
 
-## The Challenges
+### The Tools Are Better
 
-I won't lie: learning Python and SQL while working my current job requires discipline. But each small step forward brings me closer to my goal.
+Broadcast tech moves slow. Data engineering tools are modern, well-documented, and designed for automation. Why write custom bash scripts when I can use pandas?
 
-## Conclusion
+## The Reality
 
-Career transition is a marathon, not a sprint. This blog will document my journey, projects, and learnings. If you're in a similar situation, don't hesitate to reach out — we go further together.
+Learning while working full-time isn't easy. I can't spend 8 hours a day on Codecademy. But I can do 2-hour blocks in the evenings. Small progress beats no progress.
+
+Plus, everything I learn is immediately useful. Python script to parse log files? Helps at work right now. Understanding ETL patterns? Makes broadcast workflows make more sense.
+
+## What This Blog Is
+
+Documentation of learning Python, SQL, and data engineering concepts through the lens of someone who already deals with data pipelines - just the video kind.
+
+Not a motivational journey blog. Not career advice. Just notes on what I'm learning and how it applies to actual work.
 
 ---
 
-*Let's see...*
+*If you're doing broadcast tech and wondering if data engineering skills are useful - yes. Very yes.*
