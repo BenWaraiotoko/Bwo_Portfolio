@@ -15,8 +15,7 @@ So why not learn how actual data engineers solve these problems?
 
 ## What I'm Actually Doing
 
-**Not:** Changing careers
-**Yes:** Learning better tools for stuff I already do
+**Learning better tools for stuff I already do**
 
 Broadcast infrastructure already involves:
 - Moving large amounts of data reliably (video files aren't small)
@@ -28,9 +27,9 @@ That's literally Extract-Transform-Load. Just with video instead of CSV files.
 
 ## Why This Makes Sense
 
-### I Already Automate Stuff
+### I Like Finding Better Ways to Do Things
 
-I've been writing bash scripts and FFmpeg commands for years. Python is just better bash. SQL is just better grep. Might as well level up.
+I'm always looking for ways to automate repetitive tasks. Python seems like a much better tool for automation than cobbling together shell commands. SQL looks more powerful than manually parsing logs. Might as well learn the proper tools.
 
 ### The Problems Are Similar
 
