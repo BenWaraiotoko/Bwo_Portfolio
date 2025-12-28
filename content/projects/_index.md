@@ -1,14 +1,16 @@
 ---
 title: "Projects 🛠️"
-description: "My Data Engineering Projects — ETL, APIs, Dashboards"
+description: "Things I've built while learning data engineering"
 ---
 
-## My Data Engineering Projects
+## Stuff I've Built
 
-Here are the hands-on projects I develop as part of my training and self-learning journey. Each project is hosted on GitHub with source code and documentation.
+Projects I'm working on. Most are practical solutions to problems I've actually encountered.
 
 <div class="intro-block">
 
-These projects demonstrate my skills in **Python**, **SQL**, **ETL**, and **data orchestration**. They evolve as I continue learning.
+**Not polished portfolio pieces** — Real projects built while learning. Some work great, some are works in progress. All have messy commit histories.
+
+Code and documentation on GitHub. Expect rough edges.
 
 </div>
