@@ -53,21 +53,212 @@
   /* Fond général */
   --global-background-color: var(--kanagawa-bg-dark);
   --global-font-color: var(--kanagawa-fg);
-  
+
   /* Header */
   --header-background-color: var(--kanagawa-bg-darker);
   --header-hover-color: var(--kanagawa-accent);
-  
+
   /* Liens */
   --global-link-color: var(--kanagawa-link);
   --global-link-hover-color: var(--kanagawa-link-hover);
-  
+
   /* Code */
   --code-background-color: var(--kanagawa-bg-light);
   --code-color: var(--kanagawa-green);
-  
+
   /* Sélection */
   --selection-color: var(--kanagawa-accent);
+}
+
+/* ===========================================
+   OVERRIDE DU THEME LOVEIT - MODE CLAIR
+   =========================================== */
+
+[data-theme="light"] {
+  /* Fond général - tons crème/beige */
+  --global-background-color: #F2ECDC;
+  --global-font-color: #1F1F28;
+
+  /* Header */
+  --header-background-color: #DCD7BA;
+  --header-hover-color: var(--kanagawa-accent);
+
+  /* Liens - plus foncés pour contraste */
+  --global-link-color: #2D4F67;
+  --global-link-hover-color: var(--kanagawa-accent);
+
+  /* Code */
+  --code-background-color: #DCD7BA;
+  --code-color: #76946A;
+
+  /* Sélection */
+  --selection-color: var(--kanagawa-accent);
+}
+
+/* Body light theme */
+[data-theme="light"] body {
+  background-color: #F2ECDC !important;
+  color: #1F1F28 !important;
+}
+
+/* Header light theme */
+[data-theme="light"] .header-wrapper {
+  background-color: #DCD7BA !important;
+  border-bottom: 1px solid #C8C093;
+}
+
+[data-theme="light"] .header-title {
+  color: #1F1F28 !important;
+}
+
+[data-theme="light"] .menu-item a {
+  color: #2A2A37 !important;
+}
+
+[data-theme="light"] .menu-item a:hover,
+[data-theme="light"] .menu-item.active a {
+  color: var(--kanagawa-accent) !important;
+}
+
+/* Home page light theme */
+[data-theme="light"] .home {
+  background-color: #F2ECDC;
+}
+
+[data-theme="light"] .home .home-profile .home-title {
+  color: #1F1F28 !important;
+}
+
+[data-theme="light"] .home .home-profile .home-subtitle {
+  color: var(--kanagawa-accent) !important;
+}
+
+/* Cards light theme */
+[data-theme="light"] .content-card,
+[data-theme="light"] .category-card,
+[data-theme="light"] .archive .archive-item,
+[data-theme="light"] .single .post-card {
+  background-color: #DCD7BA !important;
+  border: 1px solid var(--kanagawa-accent) !important;
+}
+
+[data-theme="light"] .content-card:hover,
+[data-theme="light"] .archive .archive-item:hover {
+  border-color: var(--kanagawa-accent-bright) !important;
+  box-shadow: 0 4px 20px rgba(228, 104, 118, 0.15);
+}
+
+/* Content light theme */
+[data-theme="light"] .post-content {
+  color: #1F1F28 !important;
+}
+
+[data-theme="light"] .post-content a {
+  color: #2D4F67 !important;
+}
+
+[data-theme="light"] .post-content a:hover {
+  color: var(--kanagawa-accent) !important;
+}
+
+/* Code blocks light theme */
+[data-theme="light"] code:not(pre code) {
+  background-color: #DCD7BA !important;
+  color: #76946A !important;
+}
+
+[data-theme="light"] pre {
+  background-color: #E6E0C2 !important;
+  border: 1px solid #C8C093;
+}
+
+/* Blockquotes light theme */
+[data-theme="light"] .intro-block,
+[data-theme="light"] .about-block,
+[data-theme="light"] blockquote {
+  background-color: #DCD7BA;
+}
+
+/* Graph light theme */
+[data-theme="light"] .graph-container {
+  background-color: #DCD7BA;
+  border: 1px solid #C8C093;
+}
+
+[data-theme="light"] #knowledge-graph {
+  background-color: #E6E0C2;
+}
+
+/* TOC light theme */
+[data-theme="light"] .toc {
+  background-color: #DCD7BA;
+  border: 1px solid #C8C093;
+}
+
+[data-theme="light"] .toc a {
+  color: #2A2A37 !important;
+}
+
+[data-theme="light"] .toc a:hover,
+[data-theme="light"] .toc a.active {
+  color: var(--kanagawa-accent) !important;
+}
+
+/* Search light theme */
+[data-theme="light"] .search-input {
+  background-color: #DCD7BA !important;
+  border: 1px solid #C8C093 !important;
+  color: #1F1F28 !important;
+}
+
+/* Footer light theme */
+[data-theme="light"] footer,
+[data-theme="light"] .footer {
+  background-color: #DCD7BA !important;
+  border-top: 1px solid #C8C093;
+  color: #2A2A37 !important;
+}
+
+/* Enhanced archive items light theme */
+[data-theme="light"] .archive-item-enhanced {
+  background-color: #DCD7BA;
+  border: 1px solid #C8C093;
+}
+
+[data-theme="light"] .archive-item-enhanced:hover {
+  border-color: var(--kanagawa-accent);
+}
+
+[data-theme="light"] .archive-item-link {
+  color: #2D4F67 !important;
+}
+
+[data-theme="light"] .archive-item-link:hover {
+  color: var(--kanagawa-accent) !important;
+}
+
+[data-theme="light"] .archive-item-date,
+[data-theme="light"] .archive-category,
+[data-theme="light"] .archive-tag {
+  color: #727169 !important;
+}
+
+[data-theme="light"] .archive-category,
+[data-theme="light"] .archive-tag {
+  background: #E6E0C2;
+}
+
+/* Scrollbar light theme */
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: #E6E0C2;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #C8C093;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--kanagawa-accent);
 }
 
 /* ===========================================
@@ -282,6 +473,40 @@ h1, h2, h3, h4, h5, h6 {
 
 .post-content a:hover {
   color: var(--kanagawa-link-hover) !important;
+}
+
+/* ===========================================
+   IMAGES IN CONTENT
+   =========================================== */
+
+/* Profile pictures in about page */
+.post-content img[alt*="Profile"],
+.single .content img[alt*="Profile"] {
+  max-width: 200px;
+  height: auto;
+  border-radius: 50%;
+  border: 3px solid var(--kanagawa-accent);
+  display: block;
+  margin: 1.5rem auto;
+  box-shadow: 0 4px 12px rgba(228, 104, 118, 0.2);
+}
+
+/* General content images */
+.post-content img,
+.single .content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  display: block;
+}
+
+/* Images in blog posts - smaller size */
+.post-content img:not([alt*="Profile"]),
+.single .content img:not([alt*="Profile"]) {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ===========================================
