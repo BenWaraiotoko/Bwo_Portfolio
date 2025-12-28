@@ -7,8 +7,8 @@
   /* ===== FOND ===== */
   --kanagawa-bg-dark: #1F1F28;        /* sumiInk0 - fond principal */
   --kanagawa-bg-darker: #16161D;      /* sumiInk1 - fond plus sombre */
-  --kanagawa-bg-light: #2A2A37;       /* sumiInk3 - cartes, blocs */
-  --kanagawa-bg-highlight: #363646;   /* sumiInk4 - hover states */
+  --kanagawa-bg-light: #F2ECDC;       /* sumiInk3 - cartes, blocs */
+  --kanagawa-bg-highlight: #DCD7BA;   /* sumiInk4 - hover states */
   
   /* ===== TEXTE ===== */
   --kanagawa-fg: #DCD7BA;             /* fujiWhite - texte principal */
