@@ -61,7 +61,7 @@ Plus, it's fun to actually understand what's happening under the hood instead of
 ## 📬 Get in Touch
 
 - **GitHub:** [BenWaraiotoko](https://github.com/BenWaraiotoko)
-- **Email:** mailto:bwonews@proton.me
+- **Email:** bwonews@proton.me
 - **LinkedIn:** [Ben Waraiotoko](https://www.linkedin.com/in/benjamin-nardini-b60b9439a/)
 
 ---
