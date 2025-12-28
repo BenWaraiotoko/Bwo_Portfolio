@@ -38,24 +38,31 @@ enableGitInfo = false
     [menu.main.params]
       icon = "fa-solid fa-book"
   [[menu.main]]
+    identifier = "second-brain"
+    name = "Second Brain"
+    url = "/second-brain/"
+    weight = 4
+    [menu.main.params]
+      icon = "fa-solid fa-brain"
+  [[menu.main]]
     identifier = "tags"
     name = "Tags"
     url = "/tags/"
-    weight = 4
+    weight = 5
     [menu.main.params]
       icon = "fa-solid fa-tags"
   [[menu.main]]
     identifier = "graph"
     name = "Graph"
     url = "/graph/"
-    weight = 5
+    weight = 6
     [menu.main.params]
       icon = "fa-solid fa-diagram-project"
   [[menu.main]]
     identifier = "about"
     name = "About"
     url = "/about/"
-    weight = 6
+    weight = 7
     [menu.main.params]
       icon = "fa-solid fa-user"
 
@@ -250,6 +257,7 @@ enableGitInfo = false
 [permalinks]
   posts = ":year/:month/:contentbasename"
   projects = "projects/:contentbasename"
+  second-brain = "second-brain/:contentbasename"
 
 # Outputs
 [outputs]

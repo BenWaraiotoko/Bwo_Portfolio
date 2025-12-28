@@ -49,25 +49,67 @@ This creates a project showcase template with:
 - Setup & usage instructions
 - Future improvements
 
-### Weekly Learning Logs
+### Monthly Learning Logs
 
-Use the learning-log archetype for weekly reviews:
+Use the learning-log archetype for monthly reviews:
 
 ```bash
-hugo new learning-logs/week-2-dec-29-jan-4.md --kind learning-log
+hugo new learning-logs/month-2-january.md --kind learning-log
 ```
 
-**Naming Convention:** `week-X-[start-date]-[end-date].md`
+**Naming Convention:** `month-X-[month-name].md`
 
-Example: `week-2-dec-29-jan-4.md`
+Example: `month-2-january.md`
 
-This creates a comprehensive weekly log template with:
-- Progress tracking (Codecademy, professional development)
-- Projects worked on
-- Blockers & solutions
-- Metrics & analytics
-- Goals for next week
-- Reflection section
+This creates a monthly log template with:
+- Codecademy progress tracking (percentage completed)
+- Learning hours invested
+- Completed modules and courses
+- What you learned (key concepts)
+- Fun problems you solved (challenges and solutions)
+- Cool things you discovered
+- Next month goals
+- Monthly rating (out of 5 stars)
+
+### Second Brain (Knowledge & References)
+
+Use the second-brain archetype for personal notes and reference materials:
+
+```bash
+hugo new second-brain/python-basics.md --kind second-brain
+```
+
+This creates a structured note template with:
+- Overview section
+- Main content with subsections
+- Code examples (Python & SQL)
+- Key takeaways
+- Related topics
+- Source attribution
+
+**Two Categories:**
+
+1. **Knowledge** (`categories: ["knowledge"]`) - Personal notes and learning concepts
+   - Your own understanding of topics
+   - Learning summaries
+   - Personal insights and connections
+
+2. **References** (`categories: ["references"]`) - Cheatsheets, docs, and specs
+   - Quick reference guides
+   - Command cheatsheets
+   - Documentation summaries
+   - Technical specifications
+
+**Example:**
+```bash
+# Create a knowledge note
+hugo new second-brain/understanding-etl.md --kind second-brain
+# Edit: set categories: ["knowledge"]
+
+# Create a reference cheatsheet
+hugo new second-brain/git-commands.md --kind second-brain
+# Edit: set categories: ["references"]
+```
 
 ---
 
@@ -81,7 +123,8 @@ Archetypes are content templates that provide a consistent structure for your po
 
 1. **blog.md** - For learning posts and tutorials
 2. **project.md** - For project showcases
-3. **learning-log.md** - For weekly progress reviews
+3. **learning-log.md** - For monthly progress reviews
+4. **second-brain.md** - For personal notes and reference materials
 
 ### How Hugo Uses Archetypes
 
@@ -266,25 +309,29 @@ hugo server -D
    git push origin main
    ```
 
-### Weekly Learning Log Routine
+### Monthly Learning Log Routine
 
-**Every Sunday evening:**
+**End of each month:**
 
-1. Create new weekly log:
+1. Create new monthly log:
    ```bash
-   hugo new learning-logs/week-2-dec-29-jan-4.md --kind learning-log
+   hugo new learning-logs/month-2-january.md --kind learning-log
    ```
 
 2. Fill in the template:
-   - Review your Codecademy progress
-   - List projects worked on
-   - Document challenges and solutions
-   - Set goals for next week
+   - Review your Codecademy progress (percentage increase)
+   - Calculate total learning hours for the month
+   - List completed modules and courses
+   - Document key learnings and concepts
+   - Share fun problems you solved
+   - Note cool tools or techniques discovered
+   - Set goals for next month
+   - Rate your month (1-5 stars)
 
 3. Publish:
    ```bash
    git add content/learning-logs/
-   git commit -m "Week 2 learning log"
+   git commit -m "Month 2 (January) learning log"
    git push
    ```
 
@@ -295,6 +342,16 @@ hugo server -D
 - **External Links:** Link to documentation and resources
 - **Tags:** Use consistent tags for easy filtering
 - **Categories:** Use categories to organize content types
+
+### Second Brain Best Practices
+
+- **Knowledge Notes:** Write in your own words, explain concepts as you understand them
+- **References:** Keep cheatsheets concise and scannable, focus on most-used commands
+- **Linking:** Cross-reference related notes to build your knowledge graph
+- **Regular Updates:** Revise notes as your understanding deepens
+- **Tagging:** Tag with relevant technologies for easy filtering
+- **Examples:** Include practical code examples that you've actually used
+- **Source Attribution:** Always note where you learned something
 
 ### SEO Tips
 
@@ -341,8 +398,11 @@ hugo new posts/post-name.md
 # Project showcase
 hugo new projects/project-name.md
 
-# Learning log
-hugo new learning-logs/week-X-dates.md --kind learning-log
+# Monthly learning log
+hugo new learning-logs/month-X-monthname.md --kind learning-log
+
+# Second Brain note (knowledge or reference)
+hugo new second-brain/topic-name.md --kind second-brain
 ```
 
 ### Development
@@ -412,10 +472,10 @@ Now that you have all the tools set up:
    - Add architecture diagram
    - Include setup instructions
 
-3. ✅ **Update your weekly learning log**
-   - Fill in Week 1 with actual progress
-   - Set specific goals for Week 2
-   - Make it a Sunday evening routine
+3. ✅ **Update your monthly learning log**
+   - Fill in Month 1 with actual progress
+   - Set specific goals for Month 2
+   - Make it an end-of-month routine
 
 4. ✅ **Customize your About page**
    - Add your photo
