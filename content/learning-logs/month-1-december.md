@@ -1,6 +1,6 @@
 ---
 title: "Month 1 - Dec 02 - Dec 26"
-date: 2025-12-26
+date: 2025-12-27
 draft: false
 tags: ["learning-log", "codecademy", "python"]
 categories: ["Learning Logs"]

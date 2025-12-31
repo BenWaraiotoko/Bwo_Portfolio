@@ -1,6 +1,6 @@
 ---
 title: "Codecademy Exercise: Abruptly Goblins Game Night Planner"
-date: 2025-12-26
+date: 2025-12-28
 tags: ["python", "dictionaries", "list-comprehension", "functions", "codecademy"]
 categories: ["Learning Logs"]
 draft: false
