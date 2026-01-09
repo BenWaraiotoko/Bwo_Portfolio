@@ -1,0 +1,59 @@
+{{- /* Enhanced post metadata partial with Kanagawa styling */ -}}
+{{- $params := .Scratch.Get "params" -}}
+
+<div class="post-metadata-enhanced">
+    {{- /* Date and Reading Time Row */ -}}
+    <div class="metadata-row">
+        <div class="metadata-item">
+            <i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>
+            <time datetime="{{ .PublishDate }}">{{ .PublishDate.Format "January 2, 2006" }}</time>
+        </div>
+        <div class="metadata-item">
+            <i class="far fa-clock fa-fw" aria-hidden="true"></i>
+            <span>{{ .ReadingTime }} min read</span>
+        </div>
+        <div class="metadata-item">
+            <i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>
+            <span>{{ .WordCount }} words</span>
+        </div>
+    </div>
+
+    {{- /* Description */ -}}
+    {{- with $params.description -}}
+        <div class="metadata-description">
+            <i class="fas fa-quote-left fa-fw" aria-hidden="true"></i>
+            <span>{{ . }}</span>
+        </div>
+    {{- end -}}
+
+    {{- /* Categories and Tags Row */ -}}
+    <div class="metadata-taxonomy">
+        {{- /* Categories */ -}}
+        {{- with .Params.categories -}}
+            <div class="metadata-categories">
+                <i class="far fa-folder fa-fw" aria-hidden="true"></i>
+                <span class="taxonomy-label">Categories:</span>
+                <div class="taxonomy-items">
+                    {{- range . -}}
+                        {{- $category := partialCached "function/path.html" . . | printf "/categories/%v" | $.Site.GetPage -}}
+                        <a href="{{ $category.RelPermalink }}" class="category-badge">{{ $category.Title }}</a>
+                    {{- end -}}
+                </div>
+            </div>
+        {{- end -}}
+
+        {{- /* Tags */ -}}
+        {{- with .Params.tags -}}
+            <div class="metadata-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>
+                <span class="taxonomy-label">Tags:</span>
+                <div class="taxonomy-items">
+                    {{- range . -}}
+                        {{- $tag := partialCached "function/path.html" . . | printf "/tags/%v" | $.Site.GetPage -}}
+                        <a href="{{ $tag.RelPermalink }}" class="tag-badge">{{ $tag.Title }}</a>
+                    {{- end -}}
+                </div>
+            </div>
+        {{- end -}}
+    </div>
+</div>
