@@ -1,5 +1,5 @@
 baseURL = "https://bwo-portfolio.pages.dev"
-title = "Ben Warai Otoko | Data Engineer"
+title = "Ben Warai Otoko | Blog about technical stuff and Data Engineering"
 theme = "LoveIt"
 languageCode = "en"
 defaultContentLanguage = "en"
@@ -83,8 +83,8 @@ enableGitInfo = false
   dateFormat = "02/01/2006"
   
   # Site description
-  title = "Ben Warai Otoko | Data Engineer"
-  description = "Broadcast infrastructure tech learning data engineering to automate more stuff"
+  title = "Ben Warai Otoko | Blog about technical stuff and Data Engineering"
+  description = "Broadcast infrastructure tech & learning data engineering to automate more stuff"
   keywords = ["Data Engineer", "Python", "SQL", "ETL", "Portfolio", "Broadcast"]
 
   # Images
