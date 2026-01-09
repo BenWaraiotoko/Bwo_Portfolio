@@ -5,7 +5,7 @@ description: "Articles about my Data Engineering journey, tutorials, and homelab
 
 ## Data Engineering Blog
 
-Welcome to my blog where I share my career transition journey to Data Engineering, technical tutorials, and reflections on the data industry.
+Welcome to my blog where I share my journey to Data Engineering, technical tutorials and homelab experiments.
 
 <div class="intro-block">
 
