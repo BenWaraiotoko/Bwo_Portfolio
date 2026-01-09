@@ -162,7 +162,7 @@ enableGitInfo = false
       gravatarEmail = ""
       avatarURL = "/images/avatar.jpg"
       title = "Hi I'm Ben Warai Otoko"
-      subtitle = "Welcome to My Data Engineering Portfolio"
+      subtitle = "Welcome to My Blog and Data Engineering Portfolio/Journey"
       typeit = true
       social = true
       disclaimer = ""
@@ -249,7 +249,7 @@ enableGitInfo = false
 
 # Sitemap config
 [sitemap]
-  changefreq = "weekly"
+  changefreq = "monthly"
   filename = "sitemap.xml"
   priority = 0.5
 
