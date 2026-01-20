@@ -5,7 +5,7 @@ draft: false
 tags: ["learning-log", "codecademy", "python"]
 categories: ["Learning Logs"]
 description: "First month learning Python and data engineering - 16% through Codecademy and built this portfolio site."
-images: ["/images/avatar.jpg"]
+images: ["/images/avatar.webp"]
 ---
 
 ## What I Did This Month

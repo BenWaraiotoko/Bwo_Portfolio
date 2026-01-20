@@ -7,7 +7,7 @@ lightgallery: true
 
 ## Hey, I'm Ben 👋
 
-![Profile Picture](/images/Portrait_Ben.png)
+![Profile Picture](/images/Portrait_Ben.webp)
 
 **Broadcast infrastructure technician in Monaco. Learning data engineering to level up my technical game.**
 

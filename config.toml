@@ -88,19 +88,19 @@ enableGitInfo = false
   keywords = ["Data Engineer", "Python", "SQL", "ETL", "Portfolio", "Broadcast"]
 
   # Images
-  images = ["/images/avatar.jpg"]
+  images = ["/images/avatar.webp"]
 
   # SEO config
   [params.seo]
-    image = "/images/avatar.jpg"
-    thumbnailUrl = "/images/avatar.jpg"
+    image = "/images/avatar.webp"
+    thumbnailUrl = "/images/avatar.webp"
 
   # Header config
   [params.header]
     desktopMode = "fixed"
     mobileMode = "auto"
     [params.header.title]
-      logo = "/images/logo.png"
+      logo = "/images/logo.webp"
       name = "BWO"
       pre = ""
       post = ""
@@ -160,7 +160,7 @@ enableGitInfo = false
     [params.home.profile]
       enable = true
       gravatarEmail = ""
-      avatarURL = "/images/avatar.jpg"
+      avatarURL = "/images/avatar.webp"
       title = "Hi I'm Ben Warai Otoko"
       subtitle = "Welcome to My Blog and Data Engineering Portfolio/Journey"
       typeit = true
