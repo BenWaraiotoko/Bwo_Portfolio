@@ -5,6 +5,33 @@
   Automatically generates graph from all posts, projects, and tags
 */}}
 
+<style>
+  .graph-container {
+    position: relative;
+    z-index: 1;
+    margin: 1.5rem 0 2rem;
+    overflow: visible;
+  }
+  .graph-container .graph-title {
+    margin-bottom: 1rem;
+  }
+  #knowledge-graph {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  #knowledge-graph svg {
+    display: block;
+    pointer-events: all;
+  }
+  /* Ensure content after graph doesn't overlap */
+  .graph-container + * {
+    position: relative;
+    z-index: 0;
+  }
+</style>
+
 <div class="graph-container">
   <h3 class="graph-title">
     <i class="fa-solid fa-diagram-project"></i>
@@ -141,6 +168,33 @@ document.addEventListener('DOMContentLoaded', function() {
     centerNodeRadius: 12,
     linkDistance: 120,
     chargeStrength: -300
+  });
+
+  // Listen for theme switch to prevent animation glitches
+  const themeButtons = document.querySelectorAll('.theme-switch');
+  themeButtons.forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+      if (window.knowledgeGraph) {
+        window.knowledgeGraph.pause();
+      }
+    });
+    btn.addEventListener('mouseleave', () => {
+      if (window.knowledgeGraph) {
+        // Delay resume to allow theme transition to complete
+        setTimeout(() => {
+          window.knowledgeGraph.resume();
+        }, 300);
+      }
+    });
+    btn.addEventListener('click', () => {
+      if (window.knowledgeGraph) {
+        window.knowledgeGraph.pause();
+        // Resume after theme transition completes
+        setTimeout(() => {
+          window.knowledgeGraph.resume();
+        }, 500);
+      }
+    });
   });
 
   console.log('Knowledge graph initialized with', graphData.nodes.length, 'nodes and', graphData.links.length, 'links');

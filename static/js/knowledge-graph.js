@@ -35,6 +35,7 @@ class KnowledgeGraph {
     };
 
     this.hoveredNode = null;
+    this.isAnimating = false;
     this.init();
   }
 
@@ -268,6 +269,9 @@ class KnowledgeGraph {
   }
 
   handleNodeHover(event, d, isHover) {
+    // Prevent hover effects during animation or if simulation stopped
+    if (this.isAnimating) return;
+
     const node = d3.select(event.target);
     this.hoveredNode = isHover ? d : null;
 
@@ -376,6 +380,18 @@ class KnowledgeGraph {
       this.simulation.force('x', d3.forceX(this.options.width / 2).strength(0.05));
       this.simulation.alpha(0.3).restart();
     }
+  }
+
+  // Pause simulation (for theme switch)
+  pause() {
+    this.isAnimating = true;
+    this.simulation.stop();
+  }
+
+  // Resume simulation
+  resume() {
+    this.isAnimating = false;
+    this.simulation.alpha(0.1).restart();
   }
 }
 
