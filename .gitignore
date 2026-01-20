@@ -42,11 +42,6 @@ content/drafts/
 .env.local
 .env.*.local
 
-# Personal learning logs (use public versions only)
-# Keep _index.md but ignore detailed logs
-content/learning-logs/*.md
-!content/learning-logs/_index.md
-!content/learning-logs/*-public.md
 
 # Backup files
 *.bak
