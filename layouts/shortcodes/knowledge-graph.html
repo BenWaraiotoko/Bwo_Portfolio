@@ -62,6 +62,8 @@ document.addEventListener('DOMContentLoaded', function() {
       { id: 'about', label: 'About', url: '/about/', category: 'page' },
       { id: 'posts', label: 'Blog', url: '/posts/', category: 'page' },
       { id: 'projects', label: 'Projects', url: '/projects/', category: 'page' },
+      { id: 'learning-logs', label: 'Learning Logs', url: '/learning-logs/', category: 'page' },
+      { id: 'second-brain', label: 'Second Brain', url: '/second-brain/', category: 'page' },
 
       // Tags (generated from site taxonomies)
       {{ range $name, $taxonomy := .Site.Taxonomies.tags -}}
@@ -74,14 +76,14 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       {{ end -}}
 
-      // Posts and Projects
-      {{ range where .Site.RegularPages "Section" "in" (slice "posts" "projects") -}}
+      // Posts, Projects, Learning Logs, and Second Brain
+      {{ range where .Site.RegularPages "Section" "in" (slice "posts" "projects" "learning-logs" "second-brain") -}}
       {{ if not .Draft -}}
       {
         id: 'content-{{ .File.UniqueID }}',
         label: '{{ .Title }}',
         url: '{{ .RelPermalink }}',
-        category: '{{ if eq .Section "projects" }}project{{ else }}post{{ end }}',
+        category: '{{ if eq .Section "projects" }}project{{ else if eq .Section "learning-logs" }}learning{{ else if eq .Section "second-brain" }}brain{{ else }}post{{ end }}',
         tags: [{{ range .Params.tags }}'{{ . | urlize }}',{{ end }}]
       },
       {{ end -}}
@@ -93,6 +95,8 @@ document.addEventListener('DOMContentLoaded', function() {
       { source: 'center', target: 'about' },
       { source: 'center', target: 'posts' },
       { source: 'center', target: 'projects' },
+      { source: 'center', target: 'learning-logs' },
+      { source: 'center', target: 'second-brain' },
 
       // Center connects to primary skills
       {{ $primaryTags := slice "python" "sql" "data-engineering" "etl" "video" "broadcast" "ffmpeg" "automation" -}}
@@ -102,17 +106,21 @@ document.addEventListener('DOMContentLoaded', function() {
       {{ end -}}
       {{ end -}}
 
-      // Posts/Projects connect to their tags
-      {{ range where .Site.RegularPages "Section" "in" (slice "posts" "projects") -}}
+      // Content connects to their tags and parent sections
+      {{ range where .Site.RegularPages "Section" "in" (slice "posts" "projects" "learning-logs" "second-brain") -}}
       {{ if not .Draft -}}
       {{ $contentID := printf "content-%s" .File.UniqueID -}}
       {{ range .Params.tags -}}
       { source: '{{ $contentID }}', target: 'tag-{{ . | urlize }}' },
       {{ end -}}
 
-      // Posts connect to posts section, projects to projects section
+      // Content connects to its parent section
       {{ if eq .Section "projects" -}}
       { source: '{{ $contentID }}', target: 'projects' },
+      {{ else if eq .Section "learning-logs" -}}
+      { source: '{{ $contentID }}', target: 'learning-logs' },
+      {{ else if eq .Section "second-brain" -}}
+      { source: '{{ $contentID }}', target: 'second-brain' },
       {{ else -}}
       { source: '{{ $contentID }}', target: 'posts' },
       {{ end -}}
@@ -121,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // Create connections between related tags (tags that appear together)
       {{ $tagConnections := dict -}}
-      {{ range where .Site.RegularPages "Section" "in" (slice "posts" "projects") -}}
+      {{ range where .Site.RegularPages "Section" "in" (slice "posts" "projects" "learning-logs" "second-brain") -}}
       {{ if not .Draft -}}
       {{ $postTags := .Params.tags -}}
       {{ range $i, $tag1 := $postTags -}}

@@ -25,6 +25,8 @@ class KnowledgeGraph {
         pageNode: options.pageNodeColor || '#98BB6C',
         contentNode: options.contentNodeColor || '#7FB4CA',
         skillNode: options.skillNodeColor || '#957FB8',
+        learningNode: options.learningNodeColor || '#E6C384',  // Gold for learning logs
+        brainNode: options.brainNodeColor || '#D27E99',        // Pink for second brain
         link: options.linkColor || '#54546D',
         linkHighlight: options.linkHighlightColor || '#E6C384',
         text: options.textColor || '#DCD7BA',
@@ -147,6 +149,7 @@ class KnowledgeGraph {
     if (d.isCenter) return this.options.centerNodeRadius;
     if (d.category === 'page') return this.options.pageNodeRadius;
     if (d.category === 'post' || d.category === 'project') return this.options.contentNodeRadius;
+    if (d.category === 'learning' || d.category === 'brain') return this.options.contentNodeRadius;
     return this.options.nodeRadius;
   }
 
@@ -154,6 +157,8 @@ class KnowledgeGraph {
     if (d.isCenter) return this.options.colors.centerNode;
     if (d.category === 'page') return this.options.colors.pageNode;
     if (d.category === 'post' || d.category === 'project') return this.options.colors.contentNode;
+    if (d.category === 'learning') return this.options.colors.learningNode;
+    if (d.category === 'brain') return this.options.colors.brainNode;
     return this.options.colors.skillNode;
   }
 
@@ -161,6 +166,7 @@ class KnowledgeGraph {
     // Always show labels for important nodes
     if (d.isCenter || d.category === 'page') return true;
     if (d.category === 'post' || d.category === 'project') return true;
+    if (d.category === 'learning' || d.category === 'brain') return true;
     // Show skill labels only if hovered or connected to hovered
     return false;
   }
