@@ -1,11 +1,14 @@
 ---
-title: "SQL Quick Reference"
+title: SQL Quick Reference
 date: 2025-12-28
 publish: true
-description: "Essential SQL commands and syntax for data engineering"
-tags: ["sql", "cheatsheet", "reference"]
+description: Essential SQL commands and syntax for data engineering
+tags:
+  - sql
+  - cheatsheet
+  - reference
+category: second-brain
 ---
-
 ## Basic Queries
 
 ### SELECT
@@ -141,6 +144,13 @@ SELECT
     SUM(revenue) OVER (ORDER BY date) as cumulative
 FROM daily_sales;
 ```
+
+## Related
+
+- [[postgresql-data-pipeline-setup]]
+- [[10-Python-for-Data-Engineering]]
+- [[fundamentals]]
+- [[de-project-1-2-postgresql-in-docker]]
 
 ---
 

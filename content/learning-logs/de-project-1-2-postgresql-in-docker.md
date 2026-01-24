@@ -1,15 +1,17 @@
 ---
+
 title: "🐘 Project 1.2: PostgreSQL in Docker"
 date: 2026-01-14
 publish: true
 description: "Running PostgreSQL in Docker with Python client connection"
 tags: ["de-project", "docker", "postgresql", "python", "docker-compose", "january-2026"]
+category: learning-log
 series: ["DE Learning Projects"]
 project_number: "1.2"
 month: "January 2026"
 github: "https://github.com/BenWaraiotoko/DE-Learning-Projects/tree/main/1-2_PostgreSQL-in-Docker"
----
 
+---
 ## The Goal
 
 Run PostgreSQL in a Docker container and connect to it from Python. Add Adminer for a web UI. Use docker-compose to orchestrate multiple containers.
@@ -140,6 +142,14 @@ Table created and data inserted!
 ```
 
 Now I have a reusable database setup for all future projects.
+
+## Related
+
+- [[de-project-1-1-hello-docker]]
+- [[postgresql-data-pipeline-setup]]
+- [[sql-cheatsheet]]
+- [[10-Python-for-Data-Engineering]]
+- [[fundamentals]]
 
 ---
 

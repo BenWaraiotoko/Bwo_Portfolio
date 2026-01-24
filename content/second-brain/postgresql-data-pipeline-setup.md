@@ -1,11 +1,17 @@
 ---
-title: "PostgreSQL Data Pipeline Architecture"
+title: PostgreSQL Data Pipeline Architecture
 date: 2026-01-20
 publish: true
 description: "Complete init.sql guide for data engineering: schemas, tables, indexes, views, triggers, and functions"
-tags: ["sql", "postgresql", "data-engineering", "reference", "architecture"]
+tags:
+  - sql
+  - postgresql
+  - data-engineering
+  - reference
+  - architecture
+  - init-sql
+category: second-brain
 ---
-
 ## Overview
 
 This is a breakdown of a production-ready `init.sql` file that creates a complete data engineering infrastructure with three layers: staging, production, and analytics.
@@ -345,6 +351,14 @@ SET email = EXCLUDED.email;
 \di production.users     -- Show indexes
 \d+ production.users     -- Table details with comments
 ```
+
+## Related
+
+- [[sql-cheatsheet]]
+- [[10-Python-for-Data-Engineering]]
+- [[fundamentals]]
+- [[de-project-1-2-postgresql-in-docker]]
+- [[de-project-1-1-hello-docker]]
 
 ---
 

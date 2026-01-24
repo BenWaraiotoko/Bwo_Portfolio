@@ -135,8 +135,19 @@ def sync_file(src: Path, dst: Path, dry_run: bool = False) -> bool:
 
 
 def clean_orphans(publishable_files: list[tuple[Path, str]], dry_run: bool = False) -> int:
-    """Remove files in Quartz that are no longer in vault with publish: true."""
-    # Get set of expected destination files
+    """Remove files in Quartz that were synced from vault but no longer have publish: true.
+
+    Only removes files that have a matching source in the vault with publish: false/missing.
+    Files created directly in Quartz (no vault source) are preserved.
+    """
+    # Build lookup of vault files by name (to check if file came from vault)
+    vault_files_by_name = {}
+    for md_file in VAULT_PATH.rglob("*.md"):
+        if any(skip in md_file.parts for skip in SKIP_FOLDERS):
+            continue
+        vault_files_by_name[md_file.name] = md_file
+
+    # Get set of expected destination files (from publishable vault files)
     expected = set()
     for src, folder in publishable_files:
         dst = QUARTZ_CONTENT / folder / src.name
@@ -158,18 +169,21 @@ def clean_orphans(publishable_files: list[tuple[Path, str]], dry_run: bool = Fal
 
         for md_file in folder_path.glob("*.md"):
             if md_file not in expected:
-                if dry_run:
-                    print(f"  [REMOVE] {md_file.relative_to(QUARTZ_CONTENT)}")
-                else:
-                    md_file.unlink()
-                    print(f"  🗑 Removed: {md_file.relative_to(QUARTZ_CONTENT)}")
-                removed += 1
+                # Only remove if there's a matching vault file (that was unpublished)
+                # Preserve files created directly in Quartz (no vault source)
+                if md_file.name in vault_files_by_name:
+                    if dry_run:
+                        print(f"  [REMOVE] {md_file.relative_to(QUARTZ_CONTENT)}")
+                    else:
+                        md_file.unlink()
+                        print(f"  🗑 Removed: {md_file.relative_to(QUARTZ_CONTENT)}")
+                    removed += 1
 
     return removed
 
 
-def sync_all(dry_run: bool = False, clean: bool = False):
-    """Sync all publishable files."""
+def sync_all(dry_run: bool = False, clean: bool = True):
+    """Sync all publishable files. Cleans orphans by default."""
     print("=" * 50)
     print("Syncing Obsidian → Quartz")
     print(f"Vault: {VAULT_PATH}")
@@ -222,10 +236,10 @@ def main():
         description="Sync Obsidian vault to Quartz (publish: true anywhere)"
     )
     parser.add_argument("--dry", action="store_true", help="Preview changes")
-    parser.add_argument("--clean", action="store_true", help="Remove orphaned files")
+    parser.add_argument("--no-clean", action="store_true", help="Don't remove unpublished files")
     args = parser.parse_args()
 
-    sync_all(dry_run=args.dry, clean=args.clean)
+    sync_all(dry_run=args.dry, clean=not args.no_clean)
 
 
 if __name__ == "__main__":

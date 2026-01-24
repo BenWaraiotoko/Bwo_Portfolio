@@ -21,9 +21,9 @@ sync:
 sync-dry:
 	python3 scripts/sync-obsidian.py --dry
 
-# Sync and remove orphaned files
-sync-clean:
-	python3 scripts/sync-obsidian.py --clean
+# Sync without removing unpublished files
+sync-keep:
+	python3 scripts/sync-obsidian.py --no-clean
 
 # Build the site
 build:
@@ -55,9 +55,9 @@ help:
 	@echo "Quartz Portfolio Commands"
 	@echo "========================="
 	@echo ""
-	@echo "  make sync       Sync notes with 'publish: true' from Obsidian"
+	@echo "  make sync       Sync + auto-remove unpublished files"
 	@echo "  make sync-dry   Preview sync (no changes)"
-	@echo "  make sync-clean Sync + remove orphaned files"
+	@echo "  make sync-keep  Sync without removing files"
 	@echo "  make build      Build the site"
 	@echo "  make serve      Serve locally (http://localhost:8080)"
 	@echo "  make dev        Sync + serve (main development command)"

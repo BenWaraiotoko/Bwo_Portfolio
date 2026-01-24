@@ -1,13 +1,13 @@
 ---
+
 title: "Migrating 5,700 Photos to Immich (and Fixing Every Possible Issue)"
 date: 2025-12-30
 tags: ["docker", "self-hosted", "immich", "linux", "homelab"]
+category: posts
 publish: true
 description: "Connection refused, wrong ports, lost configs, and 62GB of photos to migrate. Here's what actually worked."
-aliases:
-  - /posts/fixing-immich-installation
----
 
+---
 ## The Problem
 
 I had Immich running on my home server. Then I lost the configuration files. But I still had 5,700+ photos sitting on a NAS somewhere, and I needed them back in a working Immich installation.
@@ -351,6 +351,14 @@ df -h /srv/immich
 - [Docker Compose Guide](https://docs.immich.app/install/docker-compose)
 - [Environment Variables](https://docs.immich.app/install/environment-variables/)
 - [CLI Documentation](https://docs.immich.app/features/command-line-interface/)
+
+## Related
+
+- [[de-project-1-1-hello-docker]]
+- [[de-project-1-2-postgresql-in-docker]]
+- [[proxmox]]
+- [[linux-networking]]
+- [[cli-tricks]]
 
 ---
 

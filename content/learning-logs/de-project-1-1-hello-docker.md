@@ -1,15 +1,17 @@
 ---
+
 title: "🐳 Project 1.1: Hello Docker"
 date: 2026-01-07
 publish: true
 description: "First container - Dockerfile that runs a Python script"
 tags: ["de-project", "docker", "python", "january-2026"]
+category: learning-log
 series: ["DE Learning Projects"]
 project_number: "1.1"
 month: "January 2026"
 github: "https://github.com/BenWaraiotoko/DE-Learning-Projects/tree/main/1-1_Hello-Docker"
----
 
+---
 ## The Goal
 
 Create and run my first Docker container. Simple goal: a Dockerfile that executes a Python "Hello World" script. No overthinking—just get containers working.
@@ -84,6 +86,13 @@ Container is working.
 ```
 
 Simple, but it works. Foundation for everything else.
+
+## Related
+
+- [[de-project-1-2-postgresql-in-docker]]
+- [[0-Data-Engineering-Fundamentals]]
+- [[10-Python-for-Data-Engineering]]
+- [[fixing-immich-installation]]
 
 ---
 
