@@ -1,10 +1,9 @@
 ---
 title: "SQL Quick Reference"
 date: 2025-12-28
-draft: false
+publish: true
 description: "Essential SQL commands and syntax for data engineering"
 tags: ["sql", "cheatsheet", "reference"]
-categories: ["references"]
 ---
 
 ## Basic Queries

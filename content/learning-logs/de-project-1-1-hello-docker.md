@@ -1,10 +1,9 @@
 ---
 title: "🐳 Project 1.1: Hello Docker"
 date: 2026-01-07
-draft: false
+publish: true
 description: "First container - Dockerfile that runs a Python script"
 tags: ["de-project", "docker", "python", "january-2026"]
-categories: ["Learning Logs"]
 series: ["DE Learning Projects"]
 project_number: "1.1"
 month: "January 2026"

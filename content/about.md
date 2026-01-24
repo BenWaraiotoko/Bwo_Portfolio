@@ -1,7 +1,7 @@
 ---
 title: "About"
 date: 2025-12-23
-draft: false
+publish: true
 lightgallery: true
 ---
 
@@ -66,4 +66,4 @@ Plus, it's fun to actually understand what's happening under the hood instead of
 
 ---
 
-*This site: [Hugo](https://gohugo.io) + [LoveIt](https://hugoloveit.com) theme + [Kanagawa](https://github.com/rebelot/kanagawa.nvim) colors. Inspired by [ssp.sh](https://www.ssp.sh).*
+*This site: [Quartz v4](https://quartz.jzhao.xyz) + [Kanagawa](https://github.com/rebelot/kanagawa.nvim) colors. Inspired by [ssp.sh](https://www.ssp.sh).*

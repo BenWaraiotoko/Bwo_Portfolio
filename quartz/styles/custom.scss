@@ -1,0 +1,601 @@
+@use "./base.scss";
+
+// ==========================================
+// SSP.SH-INSPIRED LAYOUT + KANAGAWA COLORS
+// Clean, centered, minimal design
+// ==========================================
+
+// ==========================================
+// LAYOUT - Centered Content Focus
+// ==========================================
+
+// Header styling - clean top bar like ssp.sh
+header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--lightgray);
+  background: var(--light);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  .page-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--secondary); // waveRed accent
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+
+  .spacer {
+    flex-grow: 1;
+  }
+
+  // Search and darkmode buttons
+  .search, .darkmode {
+    opacity: 0.7;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+// Main content - centered, readable width
+.center {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+article {
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+// Sidebars - subtle, not prominent
+.left-sidebar, .right-sidebar {
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+
+// ==========================================
+// TYPOGRAPHY - Clean and Readable
+// ==========================================
+
+h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--dark);
+}
+
+h2 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--dark);
+  border-bottom: 1px solid var(--lightgray);
+  padding-bottom: 0.5rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  color: var(--dark);
+}
+
+// Article title - prominent
+.article-title {
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.25rem;
+  }
+}
+
+// Meta info - subtle
+.content-meta {
+  color: var(--darkgray);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+// ==========================================
+// TABLE OF CONTENTS - Inline, Collapsible
+// ==========================================
+
+.toc {
+  background: var(--lightgray);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+
+  &-title {
+    font-weight: 600;
+    color: var(--secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.5rem;
+  }
+
+  li {
+    margin: 0.3rem 0;
+  }
+
+  a {
+    color: var(--dark);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--secondary);
+    }
+  }
+
+  // Depth styling
+  .depth-2 {
+    font-size: 0.95rem;
+  }
+
+  .depth-3 {
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+}
+
+// ==========================================
+// GRAPH - Bottom of Page, Full Width
+// ==========================================
+
+.graph {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  background: var(--lightgray);
+  border-radius: 12px;
+
+  h3 {
+    color: var(--secondary);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  & > svg {
+    border-radius: 8px;
+    background: var(--light);
+
+    // Default nodes - waveBlue
+    .node > circle {
+      fill: #7E9CD8 !important;
+      transition: all 0.2s ease;
+    }
+
+    // Current/active node - waveRed
+    .node.current > circle {
+      fill: #E46876 !important;
+      r: 6;
+    }
+
+    // Tag nodes - oniViolet
+    .node[data-tag] > circle {
+      fill: #957FB8 !important;
+    }
+
+    // Links - carpYellow
+    .link {
+      stroke: #E6C384 !important;
+      stroke-opacity: 0.5;
+    }
+
+    // Hovered state
+    .node:hover > circle {
+      fill: #E46876 !important;
+      transform: scale(1.2);
+    }
+
+    // Labels
+    .node > text {
+      fill: var(--dark) !important;
+      font-size: 0.75rem;
+    }
+  }
+}
+
+#global-graph-container {
+  background: var(--light);
+  border-radius: 12px;
+  border: 1px solid var(--lightgray);
+  padding: 1rem;
+}
+
+// ==========================================
+// BACKLINKS - Clean List at Bottom
+// ==========================================
+
+.backlinks {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: var(--lightgray);
+  border-radius: 12px;
+
+  h3 {
+    color: var(--secondary);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  li {
+    background: var(--light);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+
+    a {
+      color: var(--tertiary);
+      text-decoration: none;
+
+      &:hover {
+        color: var(--secondary);
+      }
+    }
+  }
+}
+
+// ==========================================
+// CODE BLOCKS - Kanagawa Syntax
+// ==========================================
+
+pre {
+  background: #16161D !important; // sumiInk0
+  border: 1px solid #2A2A37 !important;
+  border-radius: 8px;
+  padding: 1rem !important;
+  overflow-x: auto;
+  font-size: 0.9rem;
+}
+
+code {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+}
+
+// Inline code
+:not(pre) > code {
+  background: var(--lightgray);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  color: #98BB6C; // springGreen
+  font-size: 0.9em;
+}
+
+// ==========================================
+// CALLOUTS - Minimal, Clean
+// ==========================================
+
+.callout {
+  border-radius: 8px;
+  border-left: 4px solid var(--secondary);
+  background: var(--lightgray);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+
+  &-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  &[data-callout="note"] {
+    border-left-color: #7FB4CA; // crystalBlue
+  }
+
+  &[data-callout="warning"] {
+    border-left-color: #E6C384; // carpYellow
+  }
+
+  &[data-callout="danger"],
+  &[data-callout="error"] {
+    border-left-color: #E46876; // waveRed
+  }
+
+  &[data-callout="success"],
+  &[data-callout="tip"] {
+    border-left-color: #98BB6C; // springGreen
+  }
+
+  &[data-callout="info"] {
+    border-left-color: #957FB8; // oniViolet
+  }
+}
+
+// ==========================================
+// TAGS - Pill Style
+// ==========================================
+
+.tag, a[href^="/tags/"] {
+  display: inline-block;
+  background: var(--lightgray);
+  color: #957FB8; // oniViolet
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition: all 0.2s;
+  margin-right: 0.25rem;
+  margin-bottom: 0.25rem;
+
+  &:hover {
+    background: #957FB8;
+    color: var(--light);
+  }
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+// ==========================================
+// EXPLORER - Minimal Sidebar
+// ==========================================
+
+.explorer {
+  font-size: 0.9rem;
+
+  h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--darkgray);
+    margin-bottom: 0.75rem;
+  }
+
+  .folder-title {
+    color: var(--secondary);
+    font-weight: 500;
+  }
+
+  .folder-icon {
+    color: #E6C384; // carpYellow
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 1rem;
+  }
+
+  li {
+    margin: 0.3rem 0;
+  }
+
+  a {
+    color: var(--dark);
+    text-decoration: none;
+    opacity: 0.8;
+
+    &:hover {
+      opacity: 1;
+      color: var(--secondary);
+    }
+  }
+}
+
+// ==========================================
+// RECENT NOTES - Sidebar Widget
+// ==========================================
+
+.recent-notes {
+  font-size: 0.9rem;
+
+  h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--darkgray);
+    margin-bottom: 0.75rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li {
+    margin: 0.5rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--lightgray);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  a {
+    color: var(--tertiary);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--secondary);
+    }
+  }
+
+  .meta {
+    font-size: 0.8rem;
+    color: var(--darkgray);
+  }
+}
+
+// ==========================================
+// SEARCH
+// ==========================================
+
+#search-container {
+  input {
+    background: var(--lightgray);
+    border: 1px solid var(--gray);
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+
+    &:focus {
+      border-color: var(--secondary);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(228, 104, 118, 0.2);
+    }
+  }
+}
+
+// ==========================================
+// BREADCRUMBS
+// ==========================================
+
+.breadcrumb-container {
+  font-size: 0.9rem;
+  color: var(--darkgray);
+  margin-bottom: 1rem;
+
+  a {
+    color: var(--tertiary);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--secondary);
+    }
+  }
+
+  .separator {
+    margin: 0 0.5rem;
+    opacity: 0.5;
+  }
+}
+
+// ==========================================
+// FOOTER - Minimal
+// ==========================================
+
+footer {
+  margin-top: 4rem;
+  padding: 2rem;
+  border-top: 1px solid var(--lightgray);
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--darkgray);
+
+  a {
+    color: var(--tertiary);
+    text-decoration: none;
+    margin: 0 0.75rem;
+
+    &:hover {
+      color: var(--secondary);
+    }
+  }
+}
+
+// ==========================================
+// SELECTION & HIGHLIGHTS
+// ==========================================
+
+::selection {
+  background: rgba(230, 195, 132, 0.3); // carpYellow
+  color: var(--dark);
+}
+
+mark, .text-highlight {
+  background: rgba(230, 195, 132, 0.4);
+  padding: 0.1em 0.2em;
+  border-radius: 2px;
+}
+
+// ==========================================
+// LINKS
+// ==========================================
+
+article a {
+  color: var(--tertiary);
+  text-decoration: underline;
+  text-decoration-color: rgba(127, 180, 202, 0.3);
+  text-underline-offset: 2px;
+
+  &:hover {
+    color: var(--secondary);
+    text-decoration-color: var(--secondary);
+  }
+}
+
+// ==========================================
+// RESPONSIVE
+// ==========================================
+
+@media (max-width: 1200px) {
+  .left-sidebar, .right-sidebar {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 1rem;
+
+    .page-title {
+      font-size: 1.1rem;
+    }
+  }
+
+  .center {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  .graph {
+    padding: 1rem;
+    margin-top: 2rem;
+  }
+
+  .backlinks {
+    padding: 1rem;
+  }
+}
+
+// ==========================================
+// HOMEPAGE SPECIFIC
+// ==========================================
+
+.page[data-slug="index"] {
+  .content-meta {
+    display: none;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+}

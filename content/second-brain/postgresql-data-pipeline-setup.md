@@ -1,10 +1,9 @@
 ---
 title: "PostgreSQL Data Pipeline Architecture"
 date: 2026-01-20
-draft: false
+publish: true
 description: "Complete init.sql guide for data engineering: schemas, tables, indexes, views, triggers, and functions"
 tags: ["sql", "postgresql", "data-engineering", "reference", "architecture"]
-categories: ["references"]
 ---
 
 ## Overview

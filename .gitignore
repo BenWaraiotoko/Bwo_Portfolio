@@ -1,48 +1,11 @@
-# Hugo build artifacts
-public/
-resources/
-.hugo_build.lock
-
-# macOS
 .DS_Store
-
-# Editor
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# Logs
-*.log
-
-# Temporary files
-tmp/
-temp/
-
-# ======================================
-# PERSONAL & SENSITIVE CONTENT
-# ======================================
-
-# Claude Code instructions (contains full career plan)
-CLAUDE.md
-
-# Private notes and planning
-notes/
+.gitignore
+node_modules
+public
+prof
+tsconfig.tsbuildinfo
+.obsidian
+.quartz-cache
 private/
-personal/
-*.private.md
-*-private.md
-
-# Drafts with sensitive information
-content/drafts/
-
-# Environment files
-.env
-.env.local
-.env.*.local
-
-
-# Backup files
-*.bak
-*~
+.replit
+replit.nix

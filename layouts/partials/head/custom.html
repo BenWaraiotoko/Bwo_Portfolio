@@ -1,8 +1,0 @@
-{{/* Custom Kanagawa CSS */}}
-{{- $kanagawaCSS := resources.Get "css/kanagawa.css" -}}
-{{- if $kanagawaCSS -}}
-  {{- if hugo.IsProduction -}}
-    {{- $kanagawaCSS = $kanagawaCSS | minify | fingerprint -}}
-  {{- end -}}
-  <link rel="stylesheet" href="{{ $kanagawaCSS.RelPermalink }}">
-{{- end -}}

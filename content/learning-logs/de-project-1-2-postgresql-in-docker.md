@@ -1,10 +1,9 @@
 ---
 title: "🐘 Project 1.2: PostgreSQL in Docker"
 date: 2026-01-14
-draft: false
+publish: true
 description: "Running PostgreSQL in Docker with Python client connection"
 tags: ["de-project", "docker", "postgresql", "python", "docker-compose", "january-2026"]
-categories: ["Learning Logs"]
 series: ["DE Learning Projects"]
 project_number: "1.2"
 month: "January 2026"

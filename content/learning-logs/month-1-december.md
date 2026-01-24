@@ -1,9 +1,8 @@
 ---
 title: "Month 1 - Dec 02 - Dec 26"
 date: 2025-12-27
-draft: false
+publish: true
 tags: ["learning-log", "codecademy", "python"]
-categories: ["Learning Logs"]
 description: "First month learning Python and data engineering - 16% through Codecademy and built this portfolio site."
 images: ["/images/avatar.webp"]
 ---

@@ -2,8 +2,7 @@
 title: "Codecademy Exercise: Coded Correspondence"
 date: 2025-12-28
 tags: ["python", "cryptography", "strings", "algorithms", "codecademy"]
-categories: ["Learning Logs"]
-draft: false
+publish: true
 description: "Python string manipulation and cryptography through Caesar and Vigenère cipher implementations."
 ---
 
