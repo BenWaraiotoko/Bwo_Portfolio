@@ -1,9 +1,15 @@
 ---
 title: "Codecademy Exercise: Abruptly Goblins Game Night Planner"
 date: 2025-12-28
-tags: ["python", "dictionaries", "list-comprehension", "functions", "codecademy"]
+tags:
+  - python
+  - dictionaries
+  - list-comprehension
+  - functions
+  - codecademy
 publish: true
-description: "Python dictionaries, list comprehensions, and functions through a tabletop game scheduling problem."
+description: Python dictionaries, list comprehensions, and functions through a tabletop game scheduling problem.
+category: learning-log
 ---
 
 This learning log documents my version of the Codecademy "Abruptly Goblins Planner" exercise, which teaches Python fundamentals including dictionaries, list comprehensions, and function design through a practical scheduling problem.

@@ -1,9 +1,15 @@
 ---
 title: "Codecademy Exercise: Coded Correspondence"
 date: 2025-12-28
-tags: ["python", "cryptography", "strings", "algorithms", "codecademy"]
+tags:
+  - python
+  - cryptography
+  - strings
+  - algorithms
+  - codecademy
 publish: true
-description: "Python string manipulation and cryptography through Caesar and Vigenère cipher implementations."
+description: Python string manipulation and cryptography through Caesar and Vigenère cipher implementations.
+category: learning-log
 ---
 
 This learning log documents my version of the Codecademy "Coded Correspondence" exercise, which teaches Python fundamentals including string manipulation, modular arithmetic, and cryptography algorithms through practical cipher implementation.
