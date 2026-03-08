@@ -2,8 +2,12 @@
 title: "Why I'm Learning Data Engineering"
 date: 2025-12-23
 publish: true
+category: posts
 description: "Broadcast infrastructure is basically ETL. Might as well learn the proper tools."
-tags: ["data-engineering", "broadcast", "learning"]
+tags:
+  - data-engineering
+  - broadcast
+  - learning
 image: "/images/posts/data-engineer-journey.webp"
 aliases:
   - /posts/why-data-engineer

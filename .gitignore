@@ -9,3 +9,12 @@ tsconfig.tsbuildinfo
 private/
 .replit
 replit.nix
+claude.md
+.claude
+.quartz
+src/
+```
+
+The `.DS_Store` file is a macOS system file that stores custom attributes of a folder, such as the position of icons or the background image. It's not needed for the project and can be safely deleted.
+
+The `.gitignore` file specifies which files and directories

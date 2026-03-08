@@ -1,12 +1,15 @@
 ---
-
 title: "Migrating 5,700 Photos to Immich (and Fixing Every Possible Issue)"
 date: 2025-12-30
-tags: ["docker", "self-hosted", "immich", "linux", "homelab"]
-category: posts
 publish: true
+category: posts
 description: "Connection refused, wrong ports, lost configs, and 62GB of photos to migrate. Here's what actually worked."
-
+tags:
+  - docker
+  - self-hosted
+  - immich
+  - linux
+  - homelab
 ---
 ## The Problem
 

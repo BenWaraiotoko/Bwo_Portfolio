@@ -21,7 +21,9 @@ import shutil
 from pathlib import Path
 
 # Configuration
-VAULT_PATH = Path.home() / "Documents" / "bwo-second-brain"
+VAULT_PATH = (
+    Path.home() / "Library" / "Mobile Documents" / "iCloud~md~obsidian" / "Documents" / "bwo-second-brain"
+)
 QUARTZ_CONTENT = Path(__file__).parent.parent / "content"
 
 # Folders to skip in vault
@@ -122,13 +124,14 @@ def sync_file(src: Path, dst: Path, dry_run: bool = False) -> bool:
         if src_mtime <= dst_mtime:
             return False  # Already up to date
 
+    is_new = not dst.exists()
     if dry_run:
-        action = "update" if dst.exists() else "create"
+        action = "create" if is_new else "update"
         print(f"  [{action.upper()}] {dst.relative_to(QUARTZ_CONTENT)}")
     else:
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, dst)
-        action = "Updated" if dst.exists() else "Created"
+        action = "Created" if is_new else "Updated"
         print(f"  ✓ {action}: {dst.relative_to(QUARTZ_CONTENT)}")
 
     return True
