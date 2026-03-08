@@ -1,9 +1,16 @@
 ---
-title: "📼 Broadcast SDI Capture System"
+title: 📼 Broadcast SDI Capture System
 date: 2025-12-24
 publish: true
-description: "Real-time professional video capture from SDI to MXF OP1a format for Apple Silicon"
-tags: ["video", "broadcast", "ffmpeg", "automation", "infrastructure", "macos"]
+description: Real-time professional video capture from SDI to MXF OP1a format for Apple Silicon
+tags:
+  - video
+  - broadcast
+  - ffmpeg
+  - automation
+  - infrastructure
+  - macos
+category: project
 ---
 
 ## The Problem

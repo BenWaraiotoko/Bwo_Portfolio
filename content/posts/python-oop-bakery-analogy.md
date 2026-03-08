@@ -1,14 +1,16 @@
 ---
-title: "Learning Python OOP Through Baking 🍰"
+title: Learning Python OOP Through Baking 🍰
 date: 2025-12-26
-tags: ["python", "oop", "tutorial", "codecademy"]
+tags:
+  - python
+  - oop
+  - tutorial
+  - codecademy
+category: posts
 publish: true
-description: "Classes are cookie cutters, objects are cookies. Understanding Python OOP through a bakery analogy."
-image: "/images/posts/cake-OOP.webp"
-aliases:
-  - /posts/python-oop-bakery-analogy
+description: Classes are cookie cutters, objects are cookies. Understanding Python OOP through a bakery analogy.
+featuredImage: /images/posts/cake-OOP.webp
 ---
-
 Ever tried to explain Object-Oriented Programming to someone and watched their eyes glaze over? Yeah, me too. So here's a different approach: let's talk about cakes.
 
 ## Classes Are Cookie Cutters
@@ -289,6 +291,13 @@ Here are some practice ideas:
 
 The full interactive notebook with all examples and exercises is available here:
 [View on Google Colab](https://drive.google.com/file/d/1ItxuEx4mcq8jVx3CN04btcKpOWpTBkwn/view?usp=sharing)
+
+## Related
+
+- [[Python-Data-Structures]]
+- [[Python-for-Data-Engineering]]
+- [[Python-Modules-Functions-Lists]]
+- [[0-Inbox]]
 
 ---
 

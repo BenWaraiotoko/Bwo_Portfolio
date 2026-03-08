@@ -148,7 +148,7 @@ Now I have a reusable database setup for all future projects.
 - [[de-project-1-1-hello-docker]]
 - [[postgresql-data-pipeline-setup]]
 - [[sql-cheatsheet]]
-- [[10-Python-for-Data-Engineering]]
+- [[Python-for-Data-Engineering]]
 - [[fundamentals]]
 
 ---

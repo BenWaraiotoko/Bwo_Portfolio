@@ -355,8 +355,8 @@ SELECT * FROM {{ ref('stg_users') }}        -- Transformed
 
 ## Related
 
-- [[03-SQL-Aggregations]] — SQL in dbt models
-- [[04-SQL-Window-Functions]] — Advanced dbt queries
+- [[SQL-Aggregations]] — SQL in dbt models
+- [[SQL-Window-Functions]] — Advanced dbt queries
 - [[Apache-Airflow]] — Airflow triggers dbt
 - [[Docker-Compose]] — dbt in containers
 - [[TOOLS-Learning-Roadmap]] — Your complete tools learning path

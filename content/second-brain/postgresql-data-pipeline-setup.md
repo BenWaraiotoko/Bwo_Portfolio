@@ -355,7 +355,7 @@ SET email = EXCLUDED.email;
 ## Related
 
 - [[sql-cheatsheet]]
-- [[10-Python-for-Data-Engineering]]
+- [[Python-for-Data-Engineering]]
 - [[fundamentals]]
 - [[de-project-1-2-postgresql-in-docker]]
 - [[de-project-1-1-hello-docker]]

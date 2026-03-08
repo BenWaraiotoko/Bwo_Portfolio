@@ -428,8 +428,8 @@ ti.xcom_push(key='data', value=large_dataframe)  # Use files instead
 ## Related
 
 - [[Docker-Compose]] — Run Airflow in containers
-- [[10-Python-for-Data-Engineering]] — Write Python operators
-- [[05-PostgreSQL-for-Data-Engineering]] — Airflow with PostgreSQL
+- [[Python-for-Data-Engineering]] — Write Python operators
+- [[PostgreSQL-for-Data-Engineering]] — Airflow with PostgreSQL
 - [[TOOLS-Learning-Roadmap]] — Your complete tools learning path
 
 ---

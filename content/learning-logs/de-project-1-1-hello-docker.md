@@ -90,8 +90,8 @@ Simple, but it works. Foundation for everything else.
 ## Related
 
 - [[de-project-1-2-postgresql-in-docker]]
-- [[0-Data-Engineering-Fundamentals]]
-- [[10-Python-for-Data-Engineering]]
+- [[Data-Engineering-Fundamentals]]
+- [[Python-for-Data-Engineering]]
 - [[fixing-immich-installation]]
 
 ---

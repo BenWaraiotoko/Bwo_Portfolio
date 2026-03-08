@@ -223,7 +223,7 @@ CSV data cleaned and loaded into PostgreSQL, all containerized. ✅
 - [[de-project-1-1-hello-docker]]
 - [[sql-cheatsheet]]
 - [[sql-relationships]]
-- [[10-Python-for-Data-Engineering]]
+- [[Python-for-Data-Engineering]]
 - [[fundamentals]]
 
 ---

@@ -1,9 +1,16 @@
 ---
-title: "🖥️ Mac Auto Setup"
+title: 🖥️ Mac Auto Setup
 date: 2026-01-14
 publish: true
-description: "Automated macOS development environment with keyboard-driven workflow, tiling window manager, and declarative dotfile management"
-tags: ["automation", "macos", "dotfiles", "shell", "infrastructure", "devtools"]
+description: Automated macOS development environment with keyboard-driven workflow, tiling window manager, and declarative dotfile management
+tags:
+  - automation
+  - macos
+  - dotfiles
+  - shell
+  - infrastructure
+  - devtools
+category: project
 ---
 
 ## The Problem

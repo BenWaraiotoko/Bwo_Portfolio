@@ -148,7 +148,7 @@ FROM daily_sales;
 ## Related
 
 - [[postgresql-data-pipeline-setup]]
-- [[10-Python-for-Data-Engineering]]
+- [[Python-for-Data-Engineering]]
 - [[fundamentals]]
 - [[de-project-1-2-postgresql-in-docker]]
 

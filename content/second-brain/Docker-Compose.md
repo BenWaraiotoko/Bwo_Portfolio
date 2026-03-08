@@ -491,7 +491,7 @@ ports:
 
 - [[Docker-Fundamentals]] — Single containers, images, volumes
 - [[Apache-Airflow]] — Airflow with Docker Compose
-- [[05-PostgreSQL-for-Data-Engineering]] — Database in Compose
+- [[PostgreSQL-for-Data-Engineering]] — Database in Compose
 - [[TOOLS-Learning-Roadmap]] — Your complete tools learning path
 
 ---

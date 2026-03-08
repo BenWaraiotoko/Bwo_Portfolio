@@ -389,7 +389,7 @@ COPY . .
 
 - [[Docker-Compose]] — Run multi-container applications
 - [[Apache-Airflow]] — Airflow runs in Docker
-- [[05-PostgreSQL-for-Data-Engineering]] — Database in Docker
+- [[PostgreSQL-for-Data-Engineering]] — Database in Docker
 - [[TOOLS-Learning-Roadmap]] — Your complete tools learning path
 
 ---
