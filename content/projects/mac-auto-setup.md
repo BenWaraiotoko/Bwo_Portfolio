@@ -1,6 +1,6 @@
 ---
 title: 🖥️ Mac Auto Setup
-date: 2026-01-14
+date: 2026-03-08
 publish: true
 description: Automated macOS development environment with keyboard-driven workflow, tiling window manager, and declarative dotfile management
 tags:
@@ -32,6 +32,8 @@ I built a two-tier bootstrap system that configures a keyboard-driven macOS work
 - **Declarative dependencies** — Brewfile manages all packages and applications
 - **Dotfile management** — GNU Stow for symlink-based configuration deployment
 - **SuperClaude Framework** — 30+ slash commands for Claude Code enhancement
+- **Rich terminal toolkit** — glow, ranger, btop, chafa, csvlens, eza and more
+- **AI tooling** — llmfit, models (2000+ model TUI), taproom for Homebrew browsing
 
 ### Technical Architecture
 
@@ -49,9 +51,12 @@ Bootstrap Script → Homebrew → Brewfile → Packages/Apps
 - **Powerlevel10k** — Fast, customizable prompt
 - **Aerospace** — Tiling window manager for macOS
 - **Neovim + LazyVim** — Modern Vim distribution with IDE features
+- **Zed** — Fast, collaborative code editor (replaced VS Code)
 - **GNU Stow** — Symlink farm manager for dotfiles
 - **Homebrew** — Package manager with Brewfile declarative installs
 - **Ghostty / Warp** — Modern terminal emulators
+- **1Password** — Password manager with CLI integration
+- **Serena** — AI coding agent with LSP-aware project context
 
 ## Implementation Details
 
@@ -67,12 +72,15 @@ The system handles two scenarios:
 
 ```text
 dotfiles/
-├── aerospace/    → ~/.config/aerospace/
-├── nvim/         → ~/.config/nvim/
-├── zsh/          → ~/.zshrc, ~/.zprofile
-├── git/          → ~/.gitconfig
-├── ghostty/      → ~/.config/ghostty/
-└── claude/       → ~/.claude/
+├── aerospace/      → ~/.config/aerospace/
+├── nvim/           → ~/.config/nvim/
+├── zsh/            → ~/.zshrc, ~/.zprofile
+├── git/            → ~/.gitconfig
+├── ghostty/        → ~/.config/ghostty/
+├── zed/            → ~/.config/zed/
+├── sublime-text/   → Sublime Text config
+├── obsidian/       → Obsidian config
+└── claude/         → ~/.claude/
 ```
 
 GNU Stow creates symlinks from the repo to home directory locations. Change a config in the repo, it's live everywhere.
@@ -105,9 +113,10 @@ Setup scripts that fail halfway are painful to debug. Solution: Every step check
 The system sets up a complete development environment in under 15 minutes. Every configuration is version-controlled, so rolling back changes or onboarding new machines is trivial.
 
 **Setup time**: ~15 minutes (mostly download time)
-**Packages managed**: 50+ CLI tools and applications
+**Packages managed**: 60+ CLI tools and applications
 **Dotfiles tracked**: 10+ configurations
 **Re-run safe**: Yes, fully idempotent
+**Documentation**: `docs/TOOLS.md` — full categorized reference of every tool
 
 ## Project Links
 
