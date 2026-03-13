@@ -27,14 +27,6 @@ Quick references, cheatsheets, and knowledge base entries.
 
 ---
 
-## Current Focus
-
-- **Learning:** Python, SQL, and data pipelines through Codecademy (Data Engineer path)
-- **Building:** ETL projects and automation scripts
-- **Next:** Le Wagon bootcamp (2026)
-
----
-
 ## Recent Notes
 
 Check the sidebar for the latest updates, or explore the graph below to see how everything connects.
