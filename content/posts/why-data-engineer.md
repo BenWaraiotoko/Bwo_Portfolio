@@ -1,64 +1,61 @@
 ---
-title: "Why I'm Learning Data Engineering"
+title: "Why I'm Learning Data Engineering (Hint: I Already Was)"
 date: 2025-12-23
 publish: true
-category: posts
-description: "Broadcast infrastructure is basically ETL. Might as well learn the proper tools."
-tags:
-  - data-engineering
-  - broadcast
-  - learning
-image: "/images/posts/data-engineer-journey.webp"
+description: Turns out broadcast infrastructure is just ETL with a better wardrobe.
+tags: [data-engineering, broadcast, learning]
+image: /images/posts/data-engineer-journey.webp
 aliases:
   - /posts/why-data-engineer
+category: posts
 ---
 
-## The Realization
+So here's the thing — I've been doing data engineering for years. I just didn't know it had a name.
 
-I've been doing broadcast infrastructure for years. Managing video streams, metadata pipelines, transcoding workflows, monitoring systems. Turns out, that's all just ETL with different names.
+Broadcast infrastructure. Video streams, metadata pipelines, transcoding workflows, monitoring systems. Move files, transform them, load them somewhere. Repeat until something breaks at 2am.
 
-So why not learn how actual data engineers solve these problems?
+That's ETL. Just with video instead of CSV files.
 
-## What I'm Actually Doing
+## The Penny Drop
 
-**Learning better tools for stuff I already do**
+One day I was debugging a transcoding pipeline — files coming in from one format, getting processed, landing in an archive — and it hit me: this is just a data pipeline. A janky, broadcast-specific one, but a pipeline nonetheless.
 
-Broadcast infrastructure already involves:
-- Moving large amounts of data reliably (video files aren't small)
-- Transforming data (transcoding, metadata extraction)
-- Loading it somewhere useful (archives, CDNs, databases)
-- Monitoring everything so you know when it breaks
+The difference? Data engineers have *proper tools* for this. Tools that are documented, maintained, and designed by people who've thought hard about scale, reliability, and automation.
 
-That's literally Extract-Transform-Load. Just with video instead of CSV files.
+Meanwhile I was cobbling together shell scripts and hoping they'd still work after a software update.
 
-## Why This Makes Sense
+## What Broadcast Already Taught Me
 
-### I Like Finding Better Ways to Do Things
+The problems aren't that different:
 
-I'm always looking for ways to automate repetitive tasks. Python seems like a much better tool for automation than cobbling together shell commands. SQL looks more powerful than manually parsing logs. Might as well learn the proper tools.
+- Moving 100GB video files reliably? Same as moving 100GB database dumps — checksum verification, retry logic, monitoring.
+- Processing thousands of files without touching them manually? Same as processing thousands of database rows — orchestration, error handling, idempotency.
+- Knowing when your pipeline breaks *before* someone calls you? Monitoring. Same everywhere.
 
-### The Problems Are Similar
+The skills transfer. The tools are just... nicer on the data side.
 
-How do you move 100GB video files reliably? Same way you move 100GB of database dumps - checksum verification, retry logic, monitoring.
+## Why Now
 
-How do you process thousands of files without manual intervention? Same way you process thousands of database rows - automation, orchestration, error handling.
+Broadcast tech moves slow. Painfully slow. You're often stuck with tools from 2015 because "that's what the broadcast standard requires."
 
-### The Tools Are Better
+Data engineering tools are modern, open source, actively maintained, and designed for automation. Why hand-roll a file watcher in bash when Airflow exists? Why parse logs manually when I could actually query them?
 
-Broadcast tech moves slow. Data engineering tools are modern, well-documented, and designed for automation. Why write custom bash scripts when I can use pandas?
+I like finding better ways to do things. Python and SQL are objectively better tools for most of what I do. Might as well learn them properly.
 
-## The Reality
+## The Reality Check
 
-Learning while working full-time isn't easy. I can't spend 8 hours a day on Codecademy. But I can do 2-hour blocks in the evenings. Small progress beats no progress.
+Learning while working full-time isn't glamorous. I'm not doing 8-hour study sessions. I'm doing 2-hour blocks in the evenings, sometimes less.
 
-Plus, everything I learn is immediately useful. Python script to parse log files? Helps at work right now. Understanding ETL patterns? Makes broadcast workflows make more sense.
+But here's the upside: everything I learn is immediately useful. A Python script to parse log files? Already helps at work. Understanding ETL patterns? Makes existing broadcast workflows click in a new way.
 
-## What This Blog Is
+It's not a leap into the unknown. It's building a bridge from where I already am.
 
-Documentation of learning Python, SQL, and data engineering concepts through the lens of someone who already deals with data pipelines - just the video kind.
+## What This Blog Actually Is
 
-Not a motivational journey blog. Not career advice. Just notes on what I'm learning and how it applies to actual work.
+Documentation of learning Python, SQL, and data engineering through the lens of someone who already deals with data pipelines — just the video kind.
+
+Not a motivation blog. Not career advice. Just notes on what I'm figuring out, what broke, and how it connects to real work.
 
 ---
 
-*If you're doing broadcast tech and wondering if data engineering skills are useful - yes. Very yes.*
+*If you're in broadcast tech wondering if data engineering skills translate — yes. Very yes.*
