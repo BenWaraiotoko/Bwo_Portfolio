@@ -12,16 +12,20 @@ month: "January 2026"
 github: "https://github.com/BenWaraiotoko/DE-Learning-Projects/tree/main/1-1_Hello-Docker"
 
 ---
+Everyone talks about Docker like it's some rite of passage. You hear "just containerize it" thrown around in job descriptions, tutorials, Stack Overflow answers. So I finally sat down and did the most basic thing possible: made it print "Hello from Docker!" and run cleanly.
+
+Glamorous? No. Necessary? Absolutely.
+
 ## The Goal
 
-Create and run my first Docker container. Simple goal: a Dockerfile that executes a Python "Hello World" script. No overthinking—just get containers working.
+Get one container running. A Dockerfile, a Python script, a `docker run` that works. No overthinking — just enough to understand what's actually happening when people talk about images and containers.
 
 ## What I Built
 
 A minimal Docker setup that:
 - Builds an image from a Dockerfile
 - Runs a Python script inside the container
-- Outputs "Hello World" (and proves I understand the basics)
+- Outputs something to the terminal (and exits without drama)
 
 ### Tech Stack
 
@@ -62,22 +66,20 @@ docker run hello-docker
 
 ## What I Learned
 
-- **Docker fundamentals**: Images vs containers, build vs run
-- **Dockerfile syntax**: FROM, WORKDIR, COPY, CMD
-- **Layer caching**: Order matters in Dockerfiles
-- **Image tagging**: How `-t` names your images
+- **Images vs containers**: An image is the blueprint; a container is the running instance. `docker build` creates the image, `docker run` spins up a container from it. Obvious in hindsight, confusing when you start.
+- **Dockerfile syntax**: `FROM` picks your base, `WORKDIR` sets your directory, `COPY` moves files in, `CMD` defines what runs. That's the whole thing for a basic script.
+- **Layer caching**: Order matters. Put things that change often (your script) at the bottom. Docker caches layers from top to bottom and rebuilds from the first change onward.
+- **Image tagging**: The `-t hello-docker` flag is just a name so you don't have to remember a hash. Use it.
 
 ## Challenges
 
-**Challenge:** Docker Desktop eating RAM on my Mac.
-**Solution:** Adjusted resource limits in Docker Desktop settings. 4GB RAM is enough for basic containers.
+**Challenge:** Docker Desktop was eating an embarrassing amount of RAM on my Mac.
+**Solution:** Adjusted resource limits in Docker Desktop settings. 4GB is plenty for this kind of work. I had left the defaults which were way too generous.
 
-**Challenge:** Forgetting to rebuild after changes.
-**Solution:** `docker build` doesn't auto-detect changes. Need to rebuild manually (or use docker-compose later).
+**Challenge:** Edited the Python script, ran the container, nothing changed.
+**Solution:** `docker build` doesn't watch for file changes. You have to rebuild manually every time. Later I'll use docker-compose to make this less painful, but for now — muscle memory.
 
 ## Result
-
-Container runs, prints output, exits cleanly. First Docker project: done. ✅
 
 ```
 $ docker run hello-docker
@@ -85,7 +87,7 @@ Hello from Docker!
 Container is working.
 ```
 
-Simple, but it works. Foundation for everything else.
+It ran. It printed. It exited cleanly. That's it — that's the whole win for project 1.1. And honestly? That clean exit felt satisfying after fumbling through the concepts. Foundation laid.
 
 ## Related
 

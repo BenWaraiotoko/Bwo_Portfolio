@@ -11,7 +11,7 @@ category: second-brain
 ---
 # Git Cheatsheet
 
-Quick command reference. For detailed explanations, see [[Git-GitHub]].
+You don't need to memorise all of Git — you need to find the right command before the panic sets in. Keep this open when you're mid-merge and things go sideways. For the full story behind each command, see [[Git-GitHub]].
 
 ---
 
@@ -389,5 +389,7 @@ git commit -m "docs: update README with Airflow setup"
 - [[TOOLS-Learning-Roadmap]] — Your complete tools learning path
 
 ---
+
+The commands you'll use 90% of the time fit on half a page. The emergency section at the bottom exists because everyone, eventually, commits to the wrong branch.
 
 *Last updated: Jan 22, 2026*

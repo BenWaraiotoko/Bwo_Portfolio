@@ -10,7 +10,7 @@ tags:
   - fundamentals
 category: second-brain
 ---
-**Joins** are how you combine data from multiple tables. In data engineering, you'll spend 40% of your time writing joins. Master these four patterns and you can solve almost any problem.
+So here's the thing about SQL JOINs — everyone acts like they're scary, but they're just Venn diagrams with attitude. In data engineering, you'll spend 40% of your time writing joins, so you might as well get comfortable: master these four patterns and you can solve almost any data combination problem you'll encounter.
 
 ---
 

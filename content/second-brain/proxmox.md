@@ -14,7 +14,7 @@ publish: true
 ---
 ## Summary
 
-Proxmox VE is an open-source virtualization platform that combines KVM hypervisor and LXC containers with a web-based management interface. It's ideal for homelab environments, providing enterprise-grade features without licensing costs.
+Proxmox is what you use when you want a proper hypervisor and don't want to pay VMware prices. It combines KVM full virtualization with LXC containers under one web interface, and the fact that it's free (with optional enterprise support) makes it the obvious choice for homelab setups. You get snapshots, clustering, live migration, and ZFS storage out of the box — no license negotiations required.
 
 ## Key concepts
 
@@ -409,6 +409,8 @@ for i in {1..5}; do
   pct start $((200+i))
 done
 ```
+
+LXC containers are often overlooked in favor of VMs, but for lightweight Linux services they're significantly more efficient — worth using whenever you don't need full OS isolation.
 
 ## Resources
 

@@ -12,7 +12,7 @@ publish: true
 ---
 ## Summary
 
-Linux networking fundamentals covering network configuration, troubleshooting, monitoring, and essential tools. Critical knowledge for system administration, homelab management, and understanding how systems communicate.
+Linux networking is one of those things that's simple in theory and will absolutely humble you in practice. Interfaces, routing tables, DNS resolution, firewall rules — each layer is straightforward on its own until something breaks and you're tracing packets at midnight. This reference covers the tools and concepts that actually matter: from reading an IP address to capturing traffic with tcpdump.
 
 ## Key concepts
 
@@ -322,6 +322,8 @@ ssh -L 8080:localhost:80 user@remote
 tcpdump -n src 192.168.1.100
 tcpdump -n dst 192.168.1.100
 ```
+
+When in doubt: `ss -tunlp` to see what's listening, `tcpdump` to see what's actually moving, `ip route show` to understand where traffic is going. Three commands that will solve 80% of your networking mysteries.
 
 ## Resources
 

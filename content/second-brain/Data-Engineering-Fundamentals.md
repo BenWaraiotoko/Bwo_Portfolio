@@ -13,7 +13,7 @@ category: second-brain
 ---
 # Data Engineering Fundamentals
 
-Data engineering builds the systems that collect, store, transform, and deliver data reliably at scale. It's the foundation enabling analytics, machine learning, and business intelligence.
+Data engineering is the plumbing nobody sees but everyone depends on — the systems that get raw, messy data from wherever it lives to wherever it needs to be, reliably, at scale. Without it, the data scientist has nothing to analyse, the dashboard shows yesterday's numbers, and the ML model trains on garbage. This is the foundation: pipelines, storage, transformations, and orchestration, all working together so the rest of the business can pretend data just magically appears.
 
 ---
 

@@ -12,7 +12,7 @@ publish: true
 ---
 ## Summary
 
-Git is a distributed version control system that tracks changes in source code during software development. Understanding Git is essential for modern development workflows, collaboration, and maintaining code history.
+Git is one of those tools where you think you know it until you're in the middle of a bad rebase at 11pm and suddenly you don't. It's the backbone of every serious development workflow — and the difference between "I lost three hours of work" and "I just need to roll back one commit."
 
 ## Key concepts
 
@@ -247,6 +247,8 @@ git bisect reset                  # Return to original state
 - [Learn Git Branching](https://learngitbranching.js.org/) - Interactive tutorial
 - [GitHub Git Cheat Sheet](https://education.github.com/git-cheat-sheet-education.pdf)
 - [Atlassian Git Tutorials](https://www.atlassian.com/git/tutorials)
+
+Spend time understanding `rebase`, `bisect`, and `stash` — they look scary but they're what separates people who fight Git from people who actually use it.
 
 ## Related
 

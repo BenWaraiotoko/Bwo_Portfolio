@@ -11,7 +11,9 @@ tags:
   - mypy
 category: second-brain
 ---
-**Type hints** tell Python (and other developers) what types your variables, parameters, and return values should be. While basic type hints (`x: int`, `def func(a: str) -> bool:`) are straightforward, advanced hints unlock IDE intelligence, catch bugs before runtime, and make code self-documenting—essential for production data pipelines.
+# Python Type Hints (Advanced)
+
+Type hints don't make Python typed — they make your future self less confused. There's a difference. While basic hints (`x: int`, `def func(a: str) -> bool:`) are easy, advanced hints like `Optional`, `Union`, and `Callable` unlock IDE intelligence, let mypy catch bugs before they hit production, and turn your function signatures into documentation. Essential for anyone writing pipelines that other people (or future-you) will need to debug.
 
 ---
 

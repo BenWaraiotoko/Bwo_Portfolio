@@ -11,7 +11,7 @@ tags:
   - data-engineering
 category: second-brain
 ---
-**Window functions** and **CTEs** are where SQL stops being simple and becomes powerful. These patterns let you do complex analytics that would be impossible (or slow) with GROUP BY alone.
+Window functions are the moment SQL goes from "useful tool" to "okay, this is genuinely impressive." GROUP BY collapses your rows into buckets — window functions let you run calculations across rows while keeping every single one of them. Pair that with CTEs for readable, layered queries, and you're writing the kind of SQL that makes senior engineers nod approvingly.
 
 ---
 

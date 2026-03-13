@@ -9,6 +9,8 @@ tags:
   - reference
 category: second-brain
 ---
+When you just need the syntax and you need it now — this is that page. No theory, no deep dives, just the SQL patterns you'll actually type over and over again in a data engineering context.
+
 ## Basic Queries
 
 ### SELECT
@@ -154,4 +156,4 @@ FROM daily_sales;
 
 ---
 
-*Quick reference for common SQL patterns. Based on PostgreSQL syntax.*
+Bookmark this, come back constantly. The goal isn't to memorize all of it — it's to know where to look when your brain goes blank mid-query.

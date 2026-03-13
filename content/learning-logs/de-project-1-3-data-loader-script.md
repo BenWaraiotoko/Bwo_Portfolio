@@ -12,18 +12,20 @@ month: "January 2026"
 github: "https://github.com/BenWaraiotoko/DE-Learning-Projects/tree/main/1-3_Data-Loader-Script"
 
 ---
+If project 1.2 was "get a database running," this one is "actually put data in it." And not just data you type by hand — data from a CSV file that you need to clean first, because real-world data is never clean.
+
+This is where data engineering starts to feel like data engineering.
+
 ## The Goal
 
-Build a Python script that reads a CSV file, cleans the data, and loads it into a PostgreSQL table. Run everything in Docker so the pipeline is reproducible.
-
-Building on Project 1.2's database setup, this adds the data ingestion layer.
+Read a CSV, clean it up, load it into PostgreSQL. Containerize the whole thing so it's reproducible — same command, same result, anywhere. Project 1.2 gave me the database; this one gives me the ingestion layer on top of it.
 
 ## What I Built
 
 A containerized CSV-to-PostgreSQL loader with:
-- Python script that reads, cleans, and inserts data
-- PostgreSQL container with auto-initialized schema
-- Docker Compose orchestrating both services
+- A Python script handling read, clean, and insert in three separate functions
+- PostgreSQL container with a schema initialized automatically on first start
+- Docker Compose wiring both services together
 
 ### Tech Stack
 
@@ -179,26 +181,24 @@ docker-compose exec loader python loader.py
 
 ## What I Learned
 
-- **pandas for cleaning**: `str.strip()` removes whitespace, `fillna()` handles missing values, `dropna()` removes incomplete rows
-- **init.sql with Docker**: Mounting SQL files to `/docker-entrypoint-initdb.d/` auto-runs them on first container start
-- **Environment variables**: `.env` file + `python-dotenv` keeps credentials out of code, `env_file` in Compose passes them to containers
-- **Container hostnames**: The loader connects to `db` (the service name), not `localhost`—Docker Compose creates a shared network
-- **Parameterized queries**: Using `%s` placeholders with psycopg2 prevents SQL injection
+- **pandas for cleaning**: `str.strip()` trims whitespace, `fillna()` handles missing values, `dropna()` removes rows that are too incomplete to save. Three lines that do a lot of the actual work in a real pipeline.
+- **init.sql with Docker**: Drop a `.sql` file into `/docker-entrypoint-initdb.d/` and Postgres runs it automatically on first start. Schema provisioning for free, no manual setup needed.
+- **Environment variables**: Hardcoded credentials in source code is a bad habit to build. `.env` + `python-dotenv` keeps them out of the code, and `env_file` in Compose passes them to containers cleanly. The `.env` file stays in `.gitignore`.
+- **Container hostnames**: Still gets me every time I forget — the loader connects to `db` (the service name in Compose), not `localhost`. Docker Compose sets up a shared network with DNS based on service names.
+- **Parameterized queries**: Using `%s` with psycopg2 instead of string formatting is not optional. It prevents SQL injection and it's the correct way to pass values to queries, full stop.
 
 ## Challenges
 
-**Challenge:** The loader container started before PostgreSQL was ready to accept connections.
-**Solution:** `depends_on` only waits for the container to start, not for the service to be ready. Needed to handle connection retries or add a healthcheck.
+**Challenge:** The loader container kept failing immediately — couldn't connect to Postgres.
+**Solution:** `depends_on` waits for the container to start, not for the service to actually be ready. Postgres takes a second or two to initialize. I handled it with connection retries in the script. The clean solution is a health check in Compose, which I'll implement in a later project.
 
-**Challenge:** Carol White's email had extra whitespace in the CSV (`  carol@example.com  `).
-**Solution:** Added `str.strip()` to the cleaning step. This is why data cleaning matters—raw data is rarely clean.
+**Challenge:** Carol White's email had leading and trailing whitespace in the CSV — `  carol@example.com  `.
+**Solution:** Added `str.strip()` to the email column in `clean_data()`. This is one of those things that looks trivial in a sample file but causes real failures in production when a `UNIQUE` constraint kicks back an error because two emails that look identical have different whitespace. Clean your data.
 
-**Challenge:** Credentials were hardcoded at first.
-**Solution:** Moved to `.env` file with `python-dotenv`. The `.env` file is in `.gitignore` so secrets don't end up in the repo.
+**Challenge:** I had the Postgres credentials typed directly into `loader.py` on my first pass.
+**Solution:** Moved everything to a `.env` file within the hour. It's the kind of thing where you know it's wrong as you're doing it.
 
 ## Result
-
-A working CSV-to-PostgreSQL data loader running entirely in Docker. Data is cleaned and inserted with a single `docker-compose up`.
 
 ```
 $ docker-compose up -d
@@ -215,7 +215,7 @@ $ docker-compose logs loader
 Data inserted successfully!
 ```
 
-CSV data cleaned and loaded into PostgreSQL, all containerized. ✅
+One command. CSV in, clean data out, Postgres populated. The whole thing runs in Docker so it works the same everywhere. That's what "reproducible" actually means in practice.
 
 ## Related
 

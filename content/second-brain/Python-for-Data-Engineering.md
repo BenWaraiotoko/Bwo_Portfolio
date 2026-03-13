@@ -11,7 +11,9 @@ tags:
   - etl
 category: second-brain - references
 ---
-**Data Engineering in Python** means moving data reliably from source to destination, transforming it along the way, and doing it at scale. This page covers the libraries, patterns, and practices you'll use every day in production pipelines—from pandas DataFrames to PySpark clusters to Airflow orchestration.
+# Python for Data Engineering (Complete)
+
+Data engineering is, at its core, moving data from A to B without losing or breaking anything — then doing it again tomorrow, at 10x the scale. This page covers the libraries, patterns, and practices you'll actually use in production pipelines: pandas DataFrames, PySpark clusters, retry logic, incremental loading, and structured logging. Everything before this note was fundamentals. This is where it gets applied.
 
 ---
 

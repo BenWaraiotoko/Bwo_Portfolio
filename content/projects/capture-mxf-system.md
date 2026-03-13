@@ -1,109 +1,98 @@
 ---
-title: 📼 Broadcast SDI Capture System
+title: "Broadcast SDI Capture System"
 date: 2025-12-24
 publish: true
-description: Real-time professional video capture from SDI to MXF OP1a format for Apple Silicon
-tags:
-  - video
-  - broadcast
-  - ffmpeg
-  - automation
-  - infrastructure
-  - macos
+description: Real-time SDI video capture to MXF OP1a on Apple Silicon — because editors shouldn't wait for transcoding.
+tags: [video, broadcast, ffmpeg, automation, infrastructure, macos]
 category: project
 ---
 
-## The Problem
+If you've worked in broadcast, you know the drill: capture card in the rack, video coming in, and someone needs to edit it *right now*. Not after a 45-minute transcode. Now.
 
-Professional broadcast environments need to capture SDI video feeds in real-time and deliver files that editors can start working with immediately—not after lengthy transcoding. Standard tools either lack proper codec support, produce incompatible file formats, or require manual post-processing.
+Standard tools either don't support the right codecs, produce formats that break in professional editors, or require post-processing that kills the workflow. So I built my own.
 
-The challenge: **capture broadcast-quality DNxHD video from Blackmagic SDI devices directly to MXF OP1a format on Apple Silicon Macs, with live editing capability.**
+## What It Does
 
-## The Solution
+A custom FFmpeg-based capture system for Apple Silicon Macs that:
 
-I built a custom FFmpeg-based capture system that compiles FFmpeg 7.1 with DeckLink support for Apple Silicon (M1-M4). The system captures 1080i50 SDI video with embedded timecode and PCM audio, writes partial indexes for live editing, and outputs broadcast-standard MXF OP1a files compatible with Adobe Premiere Pro.
+- Captures 1080i50 SDI video in real-time from Blackmagic devices
+- Encodes directly to DNxHD 120 Mb/s (broadcast-grade compression)
+- Outputs MXF OP1a containers (what editors actually want)
+- Writes partial indexes during capture so editors can start working within 30 seconds
+- Handles embedded timecode and PCM audio properly
 
-### Key Features
-
-- **Real-time SDI capture** — DNxHD 120 Mb/s encoding with proper field ordering
-- **Live editing capability** — Partial index writing allows editors to start working within 30 seconds
-- **Broadcast compatibility** — MXF OP1a format, DNxHD codec, embedded timecode
-- **System validation** — Automated testing to verify capture pipeline integrity
-- **Automated launcher** — macOS application bundle for one-click operation
-
-### Technical Architecture
+The pipeline in one line:
 
 ```text
-SDI Source → Blackmagic Device → FFmpeg (DeckLink) → DNxHD 120 → MXF OP1a → SSD
-             (UltraStudio)        (arm64 compiled)     (1080i50)   (54GB/hour)
+SDI Source → Blackmagic UltraStudio → FFmpeg (arm64 + DeckLink) → DNxHD 120 → MXF OP1a → SSD
 ```
 
-### Technologies Used
+54GB per hour. Zero dropped frames. Editors happy.
 
-- **FFmpeg 7.1** — Custom compilation with DeckLink SDK for Apple Silicon
-- **Blackmagic DeckLink SDK** — SDI device integration and timecode handling
-- **DNxHD codec** — Professional broadcast compression (120 Mb/s)
-- **MXF OP1a container** — Industry-standard broadcast format
-- **Shell scripting** — Automation, validation, and system integration
+## The Stack
 
-## Implementation Details
+| Component | Why |
+|-----------|-----|
+| FFmpeg 7.1 | Custom build with DeckLink SDK — no off-the-shelf binary has this |
+| Blackmagic DeckLink SDK | SDI device integration and timecode extraction |
+| DNxHD codec | 120 Mb/s, professional compression, Avid's standard |
+| MXF OP1a | Industry-standard broadcast container |
+| Shell scripting | Automation, validation, launcher |
 
-### Build Process
+## The Hard Parts
 
-The system requires compiling FFmpeg from source with specific flags for Apple Silicon and DeckLink support. This took research into codec compatibility, container format specifications, and hardware driver integration.
+### Apple Silicon + DeckLink
 
-### Performance Requirements
+Standard FFmpeg builds don't include DeckLink support for arm64. There's no pre-built binary for this. The solution is compiling FFmpeg from source with architecture-specific flags and the DeckLink SDK linked in.
+
+It's the kind of thing you do once, document carefully, and never want to do again.
+
+### Live Editing During Capture
+
+MXF files normally need a complete index before any NLE can open them. That means you wait for the capture to finish before editing starts.
+
+The fix: FFmpeg's `-write_index` flag writes partial index metadata during capture. Editors can open the file 30 seconds after you hit record, while it's still being written to disk.
+
+This matters a lot in live broadcast environments where turnaround time is measured in minutes.
+
+### Broadcast Format Compliance
+
+Wrong codec + wrong container = file that opens in one tool and silently breaks in another. MXF OP1a with DNxHD needs specific muxing parameters and correct field ordering for interlaced video (top field first for 1080i50).
+
+I validated against Adobe Premiere Pro, Avid Media Composer, and DaVinci Resolve before calling it production-ready.
+
+## Performance Numbers
 
 - **Storage throughput**: 54GB/hour (15MB/s sustained write)
 - **Capture latency**: <100ms from SDI input to file write
-- **Field ordering**: Proper interlaced video handling (top field first)
-- **Index writing**: Partial metadata for live editorial workflows
+- **Edit-ready**: 30 seconds from capture start
+- **Reliability**: Zero dropped frames across 8-hour continuous captures
+- **Compatibility**: Premiere Pro, Avid, DaVinci Resolve
 
-### Real-World Use Cases
+## Real-World Use
 
-1. **Live broadcast archival** — Continuous SDI capture for compliance recording
-2. **Multi-camera ingest** — Parallel capture from multiple SDI sources
-3. **Proxy-free workflows** — Edit-ready files without transcoding delays
+This runs in production, handling live broadcast archival and multi-camera ingest. The automated launcher wraps it in a macOS application bundle — one click for operators who don't want to touch a terminal.
 
-## Challenges & Learnings
+## Project
 
-### Challenge: Apple Silicon Compatibility
+**GitHub**: [capture-mxf-system](https://github.com/BenWaraiotoko/capture-mxf-system)
 
-Standard FFmpeg builds lack DeckLink support for arm64. Solution: Custom compilation with SDK integration and architecture-specific flags.
+Full setup guide, validation scripts, and troubleshooting docs included.
 
-### Challenge: Live Editing Requirements
+## Why This Matters for Data Engineering
 
-MXF files need complete indexes before playback. Solution: Implemented partial index writing during capture using FFmpeg's `-write_index` flag.
+This is the project that made me realize broadcast infrastructure and data engineering are solving the same problems.
 
-### Challenge: Broadcast Format Compliance
+Building a reliable video pipeline requires the same thinking as building a data pipeline:
 
-Wrong container/codec combinations fail in professional tools. Solution: Researched MXF OP1a specifications and validated with Adobe Premiere Pro.
+- Understanding data flow architecture end-to-end
+- Optimizing for throughput and latency under real constraints
+- Ensuring format compatibility across downstream systems
+- Building validation to catch failures before humans notice
+- Automating everything that can be automated
 
-## Results
-
-The system runs in production environments, capturing hundreds of hours of broadcast content. Editors can start working 30 seconds after capture begins, eliminating post-processing bottlenecks.
-
-**File size**: 54GB/hour at DNxHD 120 Mb/s
-**Format compatibility**: Adobe Premiere Pro, Avid Media Composer, DaVinci Resolve
-**Reliability**: Zero dropped frames in sustained 8-hour captures
-
-## Project Links
-
-- **GitHub Repository**: [capture-mxf-system](https://github.com/BenWaraiotoko/capture-mxf-system)
-- **Documentation**: Full setup guide, validation scripts, troubleshooting
-
-## What This Project Demonstrates
-
-This project shows **systems thinking**, **automation**, and **infrastructure work**—the same skills that translate to data engineering. Just like building reliable video pipelines, data pipelines require:
-
-- Understanding data flow architecture
-- Optimizing for throughput and latency
-- Ensuring format compatibility across systems
-- Building validation and monitoring
-- Automating repetitive processes
-
-The difference? Data engineering operates at larger scales with more interesting tools. But the fundamentals are the same: **move data reliably, solve for scale, automate everything.**
+The difference is scale and tooling. Data engineering operates at larger scales with more interesting abstractions. But the fundamentals — **move data reliably, handle failures gracefully, automate the boring parts** — are identical.
 
 ---
 
-*Built with FFmpeg, Blackmagic SDK, and a lot of shell scripting. Runs on Apple Silicon.*
+*Built with FFmpeg, Blackmagic SDK, and a lot of shell scripting. Runs on Apple Silicon (M1–M4).*

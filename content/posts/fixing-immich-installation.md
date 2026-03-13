@@ -1,83 +1,75 @@
 ---
-title: "Migrating 5,700 Photos to Immich (and Fixing Every Possible Issue)"
+title: "Migrating 5,700 Photos to Immich (And Fixing Every Possible Issue)"
 date: 2025-12-30
 publish: true
+description: Connection refused, wrong ports, lost configs, and 62GB of photos to migrate. Here's what actually worked.
+tags: [docker, self-hosted, immich, linux, homelab]
 category: posts
-description: "Connection refused, wrong ports, lost configs, and 62GB of photos to migrate. Here's what actually worked."
-tags:
-  - docker
-  - self-hosted
-  - immich
-  - linux
-  - homelab
 ---
-## The Problem
 
-I had Immich running on my home server. Then I lost the configuration files. But I still had 5,700+ photos sitting on a NAS somewhere, and I needed them back in a working Immich installation.
+I had Immich running. Then I lost the config files. The photos were still there — 5,700 of them, 62GB, sitting on a NAS — but the setup was gone.
 
-Also, the new Immich v2.4.1 setup wouldn't connect. Connection refused. Great start.
+New Immich install: connection refused. Classic.
 
-## Fixing Connection Issues
+Here's everything I broke and how I fixed it.
 
-### Issue #1: Missing Hostname Variables
+## The Connection Refused Rabbit Hole
 
-After running `docker compose up`, the web interface wouldn't load. Checking logs revealed:
+### Problem 1: Missing Hostname Variables
+
+`docker compose up` ran fine. The web interface didn't load. Logs said:
 
 ```bash
 docker compose logs immich-server
 # Error: getaddrinfo EAI_AGAIN database
 ```
 
-The containers were looking for a host called `database`, but my PostgreSQL container was named `immich_postgres`.
+The containers were looking for a host called `database`. My PostgreSQL container was named `immich_postgres`.
 
-**Fix:** Added these to `.env`:
+**Fix:** Two lines in `.env`:
 
 ```bash
 DB_HOSTNAME=immich_postgres
 REDIS_HOSTNAME=immich_redis
 ```
 
-### Issue #2: Wrong Port Mapping
+### Problem 2: Wrong Port (v1.x Habits Die Hard)
 
-Still getting connection resets. Turns out I was using the old v1.x port configuration.
+Still getting connection resets. Turns out I was using the old port config:
 
-**My broken config:**
 ```yaml
 ports:
-  - 2283:3001  # WRONG
+  - 2283:3001  # Outdated. Will break silently.
 ```
 
-**What actually works in v2.4+:**
+Immich v2.4+ changed the internal port from 3001 to 2283:
+
 ```yaml
 ports:
-  - 2283:2283  # CORRECT
+  - 2283:2283  # This is what you want.
 ```
 
-Immich v2.4+ changed the internal port from 3001 to 2283. If you're migrating from an older version, this will break things.
+If you're coming from an older install, this one will absolutely catch you.
 
-### Issue #3: Outdated Volume Paths
+### Problem 3: Volume Paths Changed Too
 
-Another v2.4+ breaking change:
+Same version, same surprise:
 
-**Before:**
 ```yaml
+# Before
 volumes:
   - /srv/immich:/usr/src/app/upload
-```
 
-**After:**
-```yaml
+# After (v2.4+)
 volumes:
   - /srv/immich:/data
 ```
 
-New versions use `/data` as the base path. Update your docker-compose.yml or nothing will work.
+The cool part is that once you've fixed all three of these, everything works. The frustrating part is finding all three.
 
-## Working Configuration
+## The Working Config
 
-Here's the final setup that actually works:
-
-### docker-compose.yml
+Here's the full `docker-compose.yml` that actually runs:
 
 ```yaml
 name: immich
@@ -152,7 +144,7 @@ networks:
     driver: bridge
 ```
 
-### .env
+And the `.env`:
 
 ```bash
 UPLOAD_LOCATION=/usr/src/app/upload
@@ -168,97 +160,75 @@ TZ=Europe/Paris
 IMMICH_VERSION=release
 ```
 
-## Migrating the Photo Library
+## Now For the Fun Part: 62GB of Photos
 
-Now comes the fun part - migrating 62GB of photos from the old installation.
+Immich is running. Time to get 5,742 photos back into it.
 
-### Step 1: Mount the Old NFS Share
+### Step 1: Mount the NAS
 
-My old photos were on a Synology NAS. First, check what's available:
-
-```bash
-showmount -e 10.10.37.10
-```
-
-Then mount it:
+Photos were on a Synology NAS over NFS:
 
 ```bash
+showmount -e NAS-IP
+
 sudo mkdir -p /mnt/old-immich
 sudo mount -t nfs4 NAS-IP:/volume1/FOLDER /mnt/old-immich
 ```
 
-### Step 2: Count What You're Dealing With
+### Step 2: Know What You're Dealing With
 
 ```bash
-find /mnt/old-immich/IMMICH/library -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.heic" -o -iname "*.mp4" -o -iname "*.mov" \) | wc -l
-# Result: 5,742 files
+find /mnt/old-immich/IMMICH/library -type f \
+  \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \
+     -o -iname "*.heic" -o -iname "*.mp4" -o -iname "*.mov" \) | wc -l
+# 5,742 files
 
 du -sh /mnt/old-immich/IMMICH/library
-# Result: 62GB
+# 62GB
 ```
 
-**Breakdown:**
-- JPG/JPEG: 2,658
-- HEIC: 1,476
-- MOV: 1,186
-- MP4: 405
-- PNG: 15
+**Breakdown:** 2,658 JPG, 1,476 HEIC, 1,186 MOV, 405 MP4, 15 PNG.
 
-### Step 3: Don't Just Copy Files (I Tried, It Didn't Work)
+### Step 3: Don't Just Copy Files (I Did, It Doesn't Work)
 
-My first attempt was copying photos directly to `/srv/immich/library`:
+First instinct: `rsync` everything into `/srv/immich/library`. Reasonable, right?
 
 ```bash
 sudo rsync -avh --progress /mnt/old-immich/IMMICH/library/ /srv/immich/library/
 ```
 
-**Problem:** Immich won't automatically scan these files. The `/data/library` folder is only for External Libraries, which have their own configuration system.
+Problem: Immich ignores files dropped directly into the library folder. It only manages content it imported itself. The `/data/library` path is for External Libraries — a different thing entirely.
 
-You need to use the **Immich CLI** for proper importing.
+You need the **Immich CLI**.
 
-### Step 4: Using Immich CLI
+### Step 4: Use the CLI Properly
 
-The CLI handles everything properly:
-- Hashes files to detect duplicates
-- Creates database entries
-- Generates thumbnails
-- Extracts EXIF metadata
+The CLI handles everything the right way: hashes files, creates database entries, generates thumbnails, extracts EXIF.
 
-#### Get an API Key
+**Get an API key:** Open `http://127.0.0.1:2283` → Account Settings → API Keys → New API Key.
 
-1. Open http://127.0.0.1:2283
-2. Go to **Account Settings** → **API Keys**
-3. Click **"New API Key"**
-4. Copy the key
-
-#### Authenticate
+**Authenticate:**
 
 ```bash
 docker exec immich_server immich login-key http://localhost:2283 YOUR_API_KEY
 ```
 
-#### The Upload Problem
+**The problem with uploading 5,700+ files at once:** it hung on "Crawling for assets..." over NFS and never moved.
 
-Tried uploading all 5,742 files at once:
+**The fix:** upload folder by folder.
 
-```bash
-docker exec immich_server immich upload --recursive /data/library/admin
-```
-
-It hung on "Crawling for assets..." when scanning 5,700+ files over NFS.
-
-**Solution:** Upload folder by folder instead.
-
-Testing a single folder worked fine:
+Testing a single folder:
 
 ```bash
 docker exec immich_server immich upload --recursive /data/library/admin/2024/2024-09-25
 # Successfully uploaded 9 new assets (92.1 MB)
 ```
 
-### Step 5: Bulk Upload Script
+That worked fine.
 
-Created a script to upload all 532 folders sequentially:
+### Step 5: Script the Bulk Upload
+
+532 folders to process. Time for a loop:
 
 ```bash
 #!/bin/bash
@@ -282,55 +252,36 @@ done
 echo "$(date): Upload completed!" | tee -a "$LOG_FILE"
 ```
 
-Run it:
+Run it in the background and watch the log:
 
 ```bash
 chmod +x /tmp/immich-bulk-upload.sh
 nohup /tmp/immich-bulk-upload.sh > /tmp/immich-upload.log 2>&1 &
-```
 
-Monitor progress:
-
-```bash
 tail -f /tmp/immich-upload-progress.log
 ```
 
-**Time estimate:** About 1.5-2 hours for 532 folders.
+About 1.5-2 hours for 532 folders. Go touch grass.
 
-## Cleanup After Migration
+## Cleanup
 
-Once everything's uploaded and verified:
+Once you've verified everything landed correctly:
 
 ```bash
-# Remove temporary copy (recovers 62GB)
-sudo rm -rf /srv/immich/library/admin/
-
-# Unmount NFS share
+sudo rm -rf /srv/immich/library/admin/   # Recovers 62GB
 sudo umount /mnt/old-immich
 sudo rmdir /mnt/old-immich
 ```
 
-**Disk space recovered:** ~124GB (original + temporary copy removed)
+Total recovered: ~124GB (original + the temporary copy).
 
-## What I Learned
-
-1. **Check documentation for version changes** - Port mappings and paths change between versions. Don't assume your old config will work.
-
-2. **Environment variables matter** - Missing `DB_HOSTNAME` and `REDIS_HOSTNAME` will break everything if your container names aren't the defaults.
-
-3. **Use the CLI for bulk imports** - Direct file copying doesn't work. The CLI handles hashing, metadata extraction, and database entries properly.
-
-4. **Batch large uploads** - Uploading 5,700+ files at once times out. Process folder by folder instead.
-
-5. **Always verify before deleting** - Check that your photos are actually in Immich before removing originals.
-
-## Quick Reference Commands
+## Quick Reference
 
 ```bash
-# Check container status
+# Container status
 docker compose ps
 
-# View logs
+# Server logs
 docker compose logs immich-server --tail 50
 
 # Test API
@@ -339,34 +290,30 @@ curl http://127.0.0.1:2283/api/server/ping
 
 # Check version
 curl http://127.0.0.1:2283/api/server/version
-# Expected: {"major":2,"minor":4,"patch":1}
 
-# Monitor upload progress
+# Monitor upload
 tail -f /tmp/immich-upload-progress.log
 
-# Check disk usage
+# Disk usage
 df -h /srv/immich
 ```
 
-## Useful Resources
+## What I Learned
 
-- [Immich Official Documentation](https://docs.immich.app/)
+1. **Check the changelog when upgrading** — ports and paths changed between v1.x and v2.4. Old configs will break quietly.
+2. **Environment variables matter** — Missing `DB_HOSTNAME` is an easy one to miss, a painful one to debug.
+3. **Use the CLI for imports** — Don't drop files directly. The CLI handles metadata, hashing, and deduplication properly.
+4. **Batch large uploads** — 5,700 files over NFS at once will time out. Folder by folder is the move.
+5. **Verify before deleting** — Obvious in hindsight, painful if skipped.
+
+## Resources
+
+- [Immich Documentation](https://docs.immich.app/)
 - [Docker Compose Guide](https://docs.immich.app/install/docker-compose)
-- [Environment Variables](https://docs.immich.app/install/environment-variables/)
 - [CLI Documentation](https://docs.immich.app/features/command-line-interface/)
-
-## Related
-
-- [[de-project-1-1-hello-docker]]
-- [[de-project-1-2-postgresql-in-docker]]
-- [[proxmox]]
-- [[linux-networking]]
-- [[cli-tricks]]
 
 ---
 
-**Bottom line:** Immich is solid once you get past the version migration quirks. Breaking down the upload into smaller chunks made all the difference. If you're migrating a large library, don't try to do it all at once.
+Immich is solid once you get past the version migration landmines. The folder-by-folder upload approach is what made the difference. If you're migrating a large library, don't try to do it all at once.
 
-**Published:** December 30, 2025
-**Immich Version:** v2.4.1
-**Platform:** Docker Compose on Ubuntu Server
+**Immich Version:** v2.4.1 — **Platform:** Docker Compose on Ubuntu Server

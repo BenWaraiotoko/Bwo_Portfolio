@@ -10,11 +10,11 @@ tags:
   - le-wagon-prep
 category: second-brain
 ---
-## Overview
+# Python Modules, Functions & Lists
 
-**Modules**, **functions**, and **lists** form the backbone of Python development in Data Engineering. Modules organize code into reusable components; functions encapsulate logic with clear inputs/outputs; lists are the workhorse for batch data processing. Mastery of these three concepts is a prerequisite for Le Wagon bootcamp and daily pipeline work.
+These three concepts are where Python stops being a calculator and starts being a real codebase. Modules give your code structure, functions make logic reusable, and lists are how you move batches of records before handing them off to a DataFrame. Without a solid grip on all three, you'll find yourself copy-pasting logic across files and wondering why debugging takes three times longer than it should.
 
-Why it matters: Production ETL pipelines live inside modules (e.g., `extractors.py`, `transformers.py`). Each transformation is a function with type hints. Data moves through lists (before DataFrames). Without solid fundamentals here, debugging and refactoring become painful.
+Production ETL pipelines live inside modules (`extractors.py`, `transformers.py`). Each transformation is a function with type hints. Data moves through lists first. Get these fundamentals right and everything that follows — classes, decorators, Airflow DAGs — makes much more sense.
 
 ---
 
@@ -153,7 +153,12 @@ hot_celsius = [c for c in celsius if c >= 20]  # [20, 30, 40]
 
 ## Related
 
-- [[Python-oop-bakery-analogy]] 
+- [[Python-oop-bakery-analogy]]
 - [Official Python Modules Tutorial](https://docs.python.org/3/tutorial/modules.html)
 - [PEP 8 – Style Guide for Python Code](https://peps.python.org/pep-0008/)
 - [Real Python: Importing Modules](https://realpython.com/python-import/)
+
+---
+
+**Key Takeaway:**
+Organize your code into modules, wrap your logic in typed functions, and move your data through lists. These three habits separate readable, maintainable pipelines from scripts that only the original author can debug — and only on a good day.

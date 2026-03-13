@@ -12,7 +12,7 @@ category: second-brain
 ---
 # TOOLS Learning Roadmap
 
-This roadmap organizes **7 comprehensive guides** into a structured learning path for production data engineering tools. Follow this sequence to master the complete stack for Le Wagon bootcamp and beyond.
+The modern data stack is not one tool — it's seven, and they only make sense once you know the order to learn them. This roadmap connects Docker, Compose, Git, Airflow, dbt, PySpark, and cloud warehouses into a sequence that builds on itself, so by the time you hit Le Wagon you're not learning the tools for the first time, you're just using them faster.
 
 ---
 
@@ -349,6 +349,8 @@ By the end of this roadmap, you'll be able to:
 **Questions?** Review the "Related" section at the bottom of each page for cross-references.
 
 ---
+
+27 hours is a small investment to show up to a bootcamp already knowing the tools. Build the projects, push them to GitHub, and you'll walk in with a portfolio instead of just a plan.
 
 *This roadmap is designed for data engineers preparing for Le Wagon bootcamp and job market entry. Total time investment: ~27 hours to master production-grade modern data engineering tools.*
 

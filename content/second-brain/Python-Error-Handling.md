@@ -11,7 +11,7 @@ tags:
   - data-engineering
 category: second-brain
 ---
-**Error handling** is about anticipating what can go wrong and gracefully managing failures instead of crashing. In Data Engineering, pipelines fail for many reasons—API timeouts, corrupted data, missing files. Robust error handling means your pipeline logs the problem, tries again, or fails safely without losing progress.
+Error handling is the part of Python everyone skips until something breaks in production. In Data Engineering, pipelines fail constantly — API timeouts, corrupted CSV rows, database hiccups, missing files. The difference between a fragile script and a production pipeline is whether you anticipated those failures. Robust error handling means your code logs the problem, retries intelligently, or fails safely without losing progress.
 
 ---
 

@@ -307,3 +307,8 @@ df.to_parquet("staging/orders_cleaned.parquet", index=False)
 
 **Last Updated:** 2026-03-08
 **Status:** Reference note
+
+---
+
+**Key Takeaway:**
+Pandas is where you turn messy CSV files into something a pipeline can actually use. Learn the cleaning and aggregation patterns cold, stay vectorized, and know when to hand off to PySpark — that combination covers the vast majority of real-world data wrangling you'll ever need to do.

@@ -10,7 +10,7 @@ tags:
   - fundamentals
 category: second-brain
 ---
-**Control flow** is how your program makes decisions. Instead of executing code line-by-line, conditionals let you say: "If this is true, do that. Otherwise, do something else." This is the foundation of all decision-making in programming—used everywhere from validating data to routing requests in pipelines.
+Control flow is how your program stops being a linear script and starts making decisions. `if/elif/else` sounds trivial until you realize it's the backbone of every validation check, every routing rule, every data quality gate in your pipeline. Get this right and your code reads like clear logic. Get it wrong and you end up with deeply nested conditions nobody — including you — wants to debug.
 
 ---
 

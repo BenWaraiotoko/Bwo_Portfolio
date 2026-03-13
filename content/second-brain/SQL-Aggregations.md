@@ -10,7 +10,7 @@ tags:
   - data-engineering
 category: second-brain
 ---
-**Aggregations** turn raw rows into insights. Instead of "show me every transaction", you ask "what's our daily revenue?" GROUP BY does the heavy lifting.
+If you've ever needed to count, sum, or average things in SQL and felt like you were missing a piece, GROUP BY is what you were looking for. Aggregations are what turn a table full of raw transactions into the "daily revenue" number your boss actually cares about — and once you understand the GROUP BY / HAVING split, everything else clicks into place.
 
 ---
 

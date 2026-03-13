@@ -12,7 +12,7 @@ tags:
   - data-engineering
 category: second-brain
 ---
-**Cloud Data Warehouses** are scalable, managed databases for analytics. Instead of managing servers, you pay for compute and storage on-demand. Industry standard for modern data teams.
+**Cloud data warehouses** are what happened when the industry decided that managing your own analytics infrastructure was a terrible use of everyone's time. Snowflake, BigQuery, and Redshift all do roughly the same thing — run SQL on enormous datasets without you touching a server — but they make different tradeoffs on pricing, ecosystem, and architecture that matter the moment you're building something real.
 
 ---
 

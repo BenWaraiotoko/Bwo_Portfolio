@@ -10,7 +10,7 @@ tags:
   - collaboration
 category: second-brain
 ---
-**Git** is how you track code changes, collaborate, and maintain history. Every data engineer uses it daily. GitHub is the cloud platform where teams collaborate.
+**Git** is how you stop overwriting your own work at 2 AM and start collaborating without destroying things. Every data pipeline, every DAG, every dbt model lives in a Git repo — because code without version control is just a file waiting to get lost. GitHub is where your team reviews, ships, and occasionally argues about formatting.
 
 ---
 

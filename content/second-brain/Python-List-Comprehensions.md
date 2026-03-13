@@ -10,7 +10,9 @@ tags:
   - performance
 category: second-brain
 ---
-A **list comprehension** is a concise, readable way to create a new list by transforming or filtering elements from an existing iterable—all in a single line. It's one of the most powerful (and Pythonic) features of Python, and it's 30-50% faster than an equivalent `for` loop.
+# Python List Comprehensions
+
+List comprehensions are one of those Python features that look weird until you write your first one — then you can't stop. A single line that transforms, filters, and returns a new list; 30-50% faster than an equivalent `for` loop; and widely considered the most Pythonic way to process collections. Once it clicks, you'll start seeing loops you wrote last week as unnecessary noise.
 
 ---
 

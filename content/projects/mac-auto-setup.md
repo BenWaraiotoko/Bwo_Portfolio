@@ -1,74 +1,54 @@
 ---
-title: 🖥️ Mac Auto Setup
+title: "Mac Auto Setup"
 date: 2026-03-08
 publish: true
-description: Automated macOS development environment with keyboard-driven workflow, tiling window manager, and declarative dotfile management
-tags:
-  - automation
-  - macos
-  - dotfiles
-  - shell
-  - infrastructure
-  - devtools
+description: Fresh Mac to fully configured dev environment in one command. Because doing it manually twice is once too many.
+tags: [automation, macos, dotfiles, shell, infrastructure, devtools]
 category: project
 ---
 
-## The Problem
+You know that feeling when you get a new machine and spend two days reinstalling everything, hunting for config files, wondering why your terminal looks wrong?
 
-Setting up a new Mac for development is tedious. Installing tools manually, configuring preferences, symlinking dotfiles—it takes hours of repetitive work. And when something breaks or you get a new machine, you start from scratch.
+I got tired of that. So I automated it.
 
-The challenge: **automate the entire macOS setup process so a fresh machine becomes a fully configured development environment in one command.**
+## What It Does
 
-## The Solution
+One command turns a factory-fresh Mac into a fully configured keyboard-driven development environment. Tiling window manager, modern shell, Neovim as a full IDE, all dotfiles in place, 60+ tools installed.
 
-I built a two-tier bootstrap system that configures a keyboard-driven macOS workflow. It installs a tiling window manager, modern shell environment, Neovim as a full IDE, and manages all dotfiles through GNU Stow. Everything is declarative and version-controlled.
+```bash
+curl -fsSL https://raw.githubusercontent.com/BenWaraiotoko/BWO-MacAutoSetup/main/bootstrap.sh | bash
+```
 
-### Key Features
+That's it. Go make coffee. Come back to a working setup.
 
-- **One-command setup** — Fresh Mac to productive environment in minutes
-- **Tiling window manager** — Aerospace with i3-inspired keyboard navigation
-- **Modern shell** — Zsh + Oh-My-Zsh + Powerlevel10k for enhanced terminal UX
-- **Neovim IDE** — LazyVim configuration with LSP, completions, and fuzzy finding
-- **Declarative dependencies** — Brewfile manages all packages and applications
-- **Dotfile management** — GNU Stow for symlink-based configuration deployment
-- **SuperClaude Framework** — 30+ slash commands for Claude Code enhancement
-- **Rich terminal toolkit** — glow, ranger, btop, chafa, csvlens, eza and more
-- **AI tooling** — llmfit, models (2000+ model TUI), taproom for Homebrew browsing
+## The Stack
 
-### Technical Architecture
+| Tool | Role |
+|------|------|
+| Homebrew + Brewfile | Declarative package management — one file, all dependencies |
+| GNU Stow | Symlink-based dotfile deployment |
+| Aerospace | Tiling window manager with i3-style keyboard navigation |
+| Zsh + Oh-My-Zsh + Powerlevel10k | Shell that doesn't make you sad |
+| Neovim + LazyVim | Full IDE, keyboard-first |
+| Zed | Fast editor for when you want something lighter |
+| Ghostty / Warp | Terminals worth using |
+
+## The Architecture
 
 ```text
-Bootstrap Script → Homebrew → Brewfile → Packages/Apps
+Bootstrap Script → Homebrew → Brewfile → Packages & Apps
                       ↓
                  GNU Stow → Dotfiles → ~/.config/*
                       ↓
-               Aerospace + Ghostty + Neovim → Keyboard-driven workflow
+               Aerospace + Ghostty + Neovim → Keyboard workflow
 ```
 
-### Technologies Used
+The bootstrap handles two scenarios:
 
-- **Zsh + Oh-My-Zsh** — Shell framework with plugins and themes
-- **Powerlevel10k** — Fast, customizable prompt
-- **Aerospace** — Tiling window manager for macOS
-- **Neovim + LazyVim** — Modern Vim distribution with IDE features
-- **Zed** — Fast, collaborative code editor (replaced VS Code)
-- **GNU Stow** — Symlink farm manager for dotfiles
-- **Homebrew** — Package manager with Brewfile declarative installs
-- **Ghostty / Warp** — Modern terminal emulators
-- **1Password** — Password manager with CLI integration
-- **Serena** — AI coding agent with LSP-aware project context
+1. **Fresh macOS** — No Git, no Xcode CLI tools, nothing. A curl-able script installs prerequisites, then hands off to the main setup.
+2. **Existing system** — Clone the repo, run directly. Safe to re-run as many times as you want.
 
-## Implementation Details
-
-### Two-Tier Bootstrap
-
-The system handles two scenarios:
-
-1. **Fresh macOS** — No Git, no Xcode CLI tools. A curl-able bootstrap script installs prerequisites then hands off to the main setup.
-
-2. **Existing systems** — Clone the repo and run the bootstrap directly. Idempotent—safe to re-run.
-
-### Dotfile Structure
+## Dotfile Structure
 
 ```text
 dotfiles/
@@ -83,58 +63,62 @@ dotfiles/
 └── claude/         → ~/.claude/
 ```
 
-GNU Stow creates symlinks from the repo to home directory locations. Change a config in the repo, it's live everywhere.
+GNU Stow creates symlinks from the repo to the right home directory locations. Change a config in the repo — it's live everywhere, instantly.
 
-### Keyboard-Driven Philosophy
+## The Keyboard-First Philosophy
 
-The entire workflow optimizes for keyboard navigation:
+The whole workflow is optimized for staying on the keyboard:
 
-- **Aerospace** — Window tiling and workspace management without touching the mouse
-- **Neovim** — Modal editing with full IDE capabilities
-- **fzf** — Fuzzy finding for files, history, and commands
-- **Zsh keybindings** — Vi mode in the shell
+- **Aerospace** — Switch workspaces, resize windows, move apps. No mouse required.
+- **Neovim** — Modal editing with LSP, fuzzy finding, completions. Full IDE, no Electron.
+- **fzf** — Fuzzy finding for files, command history, anything.
+- **Vi mode in Zsh** — Because consistency matters.
 
-## Challenges & Learnings
+It sounds extreme until you try it. Then going back feels slow.
 
-### Challenge: Fresh Mac Bootstrap
+Full disclosure though: I'm still actively learning Neovim. The config is there, the keybindings are set up, the plugins are loaded — and I still occasionally stare at the screen wondering how to exit a buffer. So "keyboard-driven" is the goal, not the current reality. Ask me again in six months (or more 😜).
 
-New Macs have no Git, no package manager, no developer tools. Solution: A minimal bootstrap script that only uses built-in macOS commands (`curl`, `bash`) to install Xcode CLI tools and Homebrew first.
+## The Interesting Problems
 
-### Challenge: Dotfile Portability
+### Bootstrapping From Zero
 
-Hardcoding paths breaks across machines. Solution: GNU Stow's relative symlinks work regardless of username or directory structure.
+A brand new Mac has no Git, no package manager, no developer tools. The bootstrap script can only use what macOS ships with (`curl`, `bash`). It installs Xcode CLI tools, then Homebrew, then clones the repo and hands off. The rest runs from there.
 
-### Challenge: Idempotency
+### Idempotency
 
-Setup scripts that fail halfway are painful to debug. Solution: Every step checks if it's already done before executing. Re-running the script is always safe.
+A setup script that fails halfway and leaves your system in an unknown state is worse than no script at all. Every step checks if it's already done before running. Re-running the script after an interruption picks up where it left off without breaking anything.
 
-## Results
+### Dotfile Portability
 
-The system sets up a complete development environment in under 15 minutes. Every configuration is version-controlled, so rolling back changes or onboarding new machines is trivial.
+Hardcoded paths break across machines with different usernames or directory structures. GNU Stow's relative symlinks sidestep this entirely — same repo works everywhere.
 
-**Setup time**: ~15 minutes (mostly download time)
-**Packages managed**: 60+ CLI tools and applications
-**Dotfiles tracked**: 10+ configurations
-**Re-run safe**: Yes, fully idempotent
-**Documentation**: `docs/TOOLS.md` — full categorized reference of every tool
+## Numbers
 
-## Project Links
+- **Setup time**: ~15 minutes (mostly downloads)
+- **Packages managed**: 60+ CLI tools and applications
+- **Dotfiles tracked**: 10+ configurations
+- **Re-run safe**: Yes, fully idempotent
+- **Documentation**: `docs/TOOLS.md` — full categorized reference for every tool in the Brewfile
 
-- **GitHub Repository**: [BWO-MacAutoSetup](https://github.com/BenWaraiotoko/BWO-MacAutoSetup)
-- **Documentation**: Setup guide, customization options, troubleshooting
+## Project
 
-## What This Project Demonstrates
+**GitHub**: [BWO-MacAutoSetup](https://github.com/BenWaraiotoko/BWO-MacAutoSetup)
 
-This project shows **automation mindset**, **infrastructure as code**, and **developer experience optimization**—skills that translate directly to data engineering:
+Setup guide, customization options, and troubleshooting docs included.
 
-- Treating configuration as code
-- Building idempotent, reproducible systems
-- Declarative dependency management
-- Automation over manual processes
-- Documentation for future maintainability
+## Why This Connects to Data Engineering
 
-The same principles apply to data pipelines: **define the desired state, automate the path to get there, make it repeatable.**
+Infrastructure as code. Declarative configuration. Idempotent automation.
+
+Those aren't just DevOps buzzwords — they're the same principles behind reliable data pipelines:
+
+- Define the desired state, not the steps to get there
+- Make it reproducible from any starting point
+- Automate the path, document the decisions
+- Version control everything
+
+The difference between a good setup script and a good data pipeline is mostly just the domain. The thinking is the same.
 
 ---
 
-*Built with shell scripting, GNU Stow, and a preference for keyboard-driven workflows. Runs on Apple Silicon.*
+*Built with shell scripting, GNU Stow, and a strong preference for keeping hands on the keyboard. Runs on Apple Silicon.*

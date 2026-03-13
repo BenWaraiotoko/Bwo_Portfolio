@@ -10,7 +10,9 @@ tags:
   - fundamentals
 category: second-brain - references
 ---
-**String formatting** is how you build messages, logs, and output from variables. **String methods** help you clean, transform, and validate text data. In Data Engineering, you'll constantly parse CSVs, validate input, construct SQL queries, and log pipeline events—all requiring solid string skills.
+# Python String Formatting & Methods
+
+Strings are everywhere in data engineering — log messages, SQL queries, CSV parsing, email validation, config values. Getting comfortable with f-strings and string methods is one of those things that quietly saves you hours. It's not glamorous, but messy string handling is the source of more silent bugs than most people admit.
 
 ---
 

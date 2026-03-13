@@ -1,42 +1,49 @@
 ---
-title: 🐧 Omarchy Auto Setup
+title: "Omarchy Auto Setup"
 date: 2026-03-08
 publish: true
-description: Post-install customization layer for Omarchy (Arch Linux + Hyprland), extending the base system with personal dotfiles, CLI toolkit, and AI-enhanced workflow
-tags:
-  - automation
-  - linux
-  - arch
-  - dotfiles
-  - shell
-  - infrastructure
-  - devtools
+description: Same productive environment on Linux as on macOS. Because good tooling shouldn't be platform-exclusive.
+tags: [automation, linux, arch, dotfiles, shell, infrastructure, devtools]
 category: project
 ---
 
-## The Problem
+[Omarchy](https://omarchy.org) gives you a great starting point: Arch Linux, Hyprland, Neovim, the full keyboard-driven setup. But a fresh install still needs your personal tooling, your configs, your themes before it actually feels like *your* machine.
 
-Omarchy gives you a solid keyboard-driven Linux base — Arch, Hyprland, Neovim — but a fresh install still needs layers of personal tooling, dotfiles, and configurations to become a productive daily driver.
+Doing that manually every time is exactly as tedious as it sounds.
 
-The challenge: **automate the post-install setup so any Omarchy machine gets the same consistent environment in one script.**
+This project automates it.
 
-## The Solution
+## What It Does
 
-A post-install automation layer that runs on top of a working Omarchy installation. It installs extra CLI tools, deploys personal dotfiles via copy-based deployment, applies a consistent Catppuccin Mocha theme across all editors, and brings in the same AI-enhanced workflow I use on macOS.
+A post-install script that runs on top of a working Omarchy installation. One command, and you get:
 
-This project mirrors the [BWO-MacAutoSetup](https://github.com/BenWaraiotoko/BWO-MacAutoSetup) — the same philosophy, adapted for Linux.
+- 30+ extra CLI tools installed via pacman and AUR
+- Personal dotfiles deployed across all editors and the terminal
+- Catppuccin Mocha theme applied consistently everywhere
+- The same AI-enhanced workflow I run on macOS
 
-### Key Features
+It's the Linux counterpart to [BWO-MacAutoSetup](https://github.com/BenWaraiotoko/BWO-MacAutoSetup) — same philosophy, adapted for Arch.
 
-- **One-script setup** — Post-Omarchy to fully personalized environment in one command
-- **30+ extra CLI tools** — lazysql, git-delta, ranger, csvlens, glow, chafa and more
-- **Consistent theming** — Catppuccin Mocha across Neovim, Zed, and Ghostty
-- **Cross-platform parity** — Same tools and workflow as the macOS setup
-- **SuperClaude Framework** — 30+ slash commands for Claude Code enhancement
-- **Cloud/DevOps tooling** — AWS CLI v2, kubectl, Tailscale pre-configured
-- **AI tooling** — Claude Code with SuperClaude Framework integration
+## Quick Start
 
-### Technical Architecture
+```bash
+git clone https://github.com/BenWaraiotoko/BWO-Omarchy-AutoSetup.git ~/Projects/BWO-Omarchy-AutoSetup
+cd ~/Projects/BWO-Omarchy-AutoSetup
+./install.sh
+```
+
+## The Stack
+
+| Tool | Role |
+|------|------|
+| Arch Linux + Hyprland | Base OS with tiling compositor |
+| pacman + yay (AUR) | Package management |
+| Neovim + LazyVim | IDE with Catppuccin Mocha |
+| Zed | Fast editor, cross-platform consistent |
+| Ghostty | GPU-accelerated terminal |
+| AWS CLI v2 / kubectl / Tailscale | Cloud and DevOps tooling |
+
+## The Architecture
 
 ```text
 Omarchy Base (Arch + Hyprland + Neovim)
@@ -47,103 +54,70 @@ Omarchy Base (Arch + Hyprland + Neovim)
           ↓
    dotfiles/ → copy-based deployment → ~/.config/*
           ↓
-  Ghostty + Zed + Neovim → Catppuccin Mocha theme
+  Ghostty + Zed + Neovim → Catppuccin Mocha
 ```
 
-### Technologies Used
+### Why Copy Instead of Symlinks?
 
-- **Arch Linux + Hyprland** — Base OS with tiling compositor
-- **Bash** — Shell and scripting environment
-- **Neovim + LazyVim** — IDE with Catppuccin Mocha theme
-- **Zed** — Fast, collaborative code editor
-- **Ghostty** — GPU-accelerated terminal emulator
-- **pacman / yay (AUR)** — Package management
-- **SuperClaude Framework** — AI workflow enhancement for Claude Code
-- **AWS CLI v2 / kubectl / Tailscale** — Cloud and DevOps tooling
+The macOS setup uses GNU Stow for symlinks. Omarchy has its own dotfile management approach, so this script uses direct file copying instead — targeting the same standard config paths without conflicting with anything Omarchy manages.
 
-## Implementation Details
-
-### Post-Install Approach
-
-Unlike the macOS counterpart which bootstraps from zero, this script assumes Omarchy is already installed. It extends the base system rather than replacing it — additive, not destructive.
-
-```bash
-git clone https://github.com/BenWaraiotoko/BWO-Omarchy-AutoSetup.git ~/Projects/BWO-Omarchy-AutoSetup
-cd ~/Projects/BWO-Omarchy-AutoSetup
-./install.sh
-```
-
-### Dotfile Structure
+## Dotfile Structure
 
 ```text
 dotfiles/
 ├── bash/       → ~/.bashrc.d/ (aliases, exports)
-├── vim/        → ~/.vimrc (minimal Vim config)
+├── vim/        → ~/.vimrc
 ├── nvim/       → ~/.config/nvim/ (Catppuccin theme)
 ├── ghostty/    → ~/.config/ghostty/
 └── zed/        → ~/.config/zed/
 ```
 
-Deployment uses file copying rather than symlinks, compatible with Omarchy's own config management approach.
+## Catppuccin Mocha, Everywhere
 
-### Keyboard-Driven Philosophy
-
-```text
-Super+T           → Launch Ghostty
-Super+Shift+T     → Open Alacritty
-```
-
-The full workflow stays keyboard-first: Hyprland for window/workspace management, Neovim for editing, fzf and ranger for navigation.
-
-### Theming Consistency
-
-Catppuccin Mocha applied uniformly:
+One aesthetic decision applied consistently:
 
 - **Neovim** — colorscheme via LazyVim plugin
 - **Ghostty** — terminal colors
 - **Zed** — editor theme
 
-One aesthetic, everywhere.
+It's a small thing, but visual consistency across tools matters more than it should for focus and flow.
 
-## Challenges & Learnings
+Side note: the whole setup is built around staying on the keyboard. Hyprland, Neovim, fzf, vi mode everywhere. The philosophy is solid. My Neovim skills, on the other hand, are still very much a work in progress. I'm learning. Slowly. I can do the basics without Googling, which I'm choosing to count as a win.
 
-### Challenge: macOS → Linux Parity
+## The Interesting Problems
 
-The macOS setup uses GNU Stow for symlinks; Omarchy has its own dotfile management. Solution: copy-based deployment instead of symlinks, targeting the same standard config paths.
+### Additive, Not Destructive
 
-### Challenge: AUR Package Reliability
+Unlike the macOS setup that bootstraps from zero, this script assumes Omarchy is already installed. It extends the base system — adds tools, deploys configs, applies themes. It doesn't touch what Omarchy set up. If you run it on a machine with existing configs, it overwrites only the files it manages.
 
-AUR packages can break between installs. Solution: `bwo-packages.txt` as a versioned package list — easy to audit, update, or selectively install.
+### AUR Reliability
 
-### Challenge: Cross-Platform Workflow
+AUR packages occasionally break between installs. The solution is `bwo-packages.txt` — a versioned, human-readable list of every package. Easy to audit, easy to update, easy to selectively comment out if something breaks.
 
-Maintaining the same productive environment across macOS and Linux requires deliberate tool choices. Solution: prioritize tools available on both platforms (Neovim, Zed, Ghostty, Claude Code) and keep configs in sync across both repos.
+### Cross-Platform Parity
 
-## Results
+Maintaining the same productive environment on macOS and Linux requires deliberate tool choices. Neovim, Zed, Ghostty, and Claude Code all run on both platforms. The configs live in separate repos but stay in sync. Same muscle memory, same workflow, regardless of which machine I'm on.
 
-A fresh Omarchy install becomes a fully personalized development environment with one command. The same tools, same themes, and same AI-enhanced workflow as the macOS setup.
+## Numbers
 
-**Base system**: Omarchy (Arch + Hyprland + Neovim)
-**Extra packages**: 30+ CLI tools and applications
-**Dotfiles deployed**: 5+ configurations
-**Theme**: Catppuccin Mocha, consistent across all editors and terminal
+- **Base system**: Omarchy (Arch + Hyprland + Neovim)
+- **Extra packages**: 30+ CLI tools and applications
+- **Dotfiles deployed**: 5+ configurations
+- **Theme**: Catppuccin Mocha, applied across all editors and terminal
 
-## Project Links
+## Project
 
-- **GitHub Repository**: [BWO-Omarchy-AutoSetup](https://github.com/BenWaraiotoko/BWO_Omarchy_AutoSetup)
-- **Related project**: [BWO-MacAutoSetup](https://github.com/BenWaraiotoko/BWO-MacAutoSetup)
+**GitHub**: [BWO-Omarchy-AutoSetup](https://github.com/BenWaraiotoko/BWO_Omarchy_AutoSetup)
 
-## What This Project Demonstrates
+**Related**: [BWO-MacAutoSetup](https://github.com/BenWaraiotoko/BWO-MacAutoSetup)
 
-This project shows the same **infrastructure as code** mindset as the macOS setup, extended to Linux:
+## Why This Matters
 
-- Cross-platform environment parity
-- Treating configuration as code, version-controlled and reproducible
-- Package management on Arch (pacman + AUR)
-- Consistent developer experience across operating systems
-- Automation over manual post-install tinkering
+Same thing as the macOS setup, but the cross-platform angle adds something: the ability to spin up the same environment on any machine — different OS, different hardware — and have it just work.
 
-The ability to spin up the same productive environment on any machine — macOS or Linux — reflects the same thinking behind reproducible data pipelines.
+That's reproducibility. That's the same thinking behind good data pipelines: define the desired state, automate the path to it, make it repeatable anywhere.
+
+The domain is developer environments. The principle transfers everywhere.
 
 ---
 

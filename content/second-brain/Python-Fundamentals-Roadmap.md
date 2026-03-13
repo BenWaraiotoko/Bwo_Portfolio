@@ -12,7 +12,7 @@ category: second-brain - roadmap
 ---
 # Python Fundamentals: Complete Learning Roadmap
 
-Welcome to your second brain Python reference library. This page organizes **11 comprehensive guides** into a structured learning path. Follow this sequence to build unshakeable Python fundamentals before Le Wagon bootcamp (October 2026).
+26 hours of Python, organized so you don't have to guess what to study next. This page maps **11 comprehensive guides** into a structured learning path — from basic loops to production ETL patterns. Work through it in sequence and you'll arrive at Le Wagon bootcamp (October 2026) ahead of the curve, not scrambling to keep up.
 
 ---
 

@@ -14,7 +14,7 @@ category: second-brain
 ---
 ## Overview
 
-This is a breakdown of a production-ready `init.sql` file that creates a complete data engineering infrastructure with three layers: staging, production, and analytics.
+Here's something nobody tells you when you're starting out: a well-structured `init.sql` file is basically the blueprint of your entire data engineering operation. This is a breakdown of a production-ready `init.sql` that creates a complete three-layer infrastructure — staging, production, and analytics — the kind of setup you'll see (and build) on real pipelines.
 
 ---
 
@@ -362,4 +362,4 @@ SET email = EXCLUDED.email;
 
 ---
 
-*Complete PostgreSQL setup for data engineering pipelines. Based on the three-layer architecture pattern.*
+Get this architecture right once and every pipeline you build on top of it will thank you. The three-layer pattern isn't just convention — it's the difference between a database and an actual data system.

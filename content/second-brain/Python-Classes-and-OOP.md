@@ -13,7 +13,7 @@ category: second-brain
 ---
 # Python Classes & Object-Oriented Programming
 
-**OOP** lets you organize code into reusable, maintainable objects. Instead of writing procedural scripts, you build abstractions that model real-world concepts. Essential for production data engineering code.
+OOP is the point where Python stops feeling like a scripting language and starts feeling like engineering. Instead of writing procedural scripts that grow into 500-line spaghetti, you build abstractions that model real-world concepts — and suddenly your pipeline code is readable, testable, and reusable. Every serious DE framework (Airflow, dbt, PySpark) is built on these patterns.
 
 ---
 
@@ -624,5 +624,5 @@ class DataPipeline:
 
 ---
 
-**Key Takeaway:**  
-OOP = organize code into reusable objects. Use classes for data structures, inheritance for code reuse, polymorphism for flexibility. Master OOP and you'll write production-grade data engineering code.
+**Key Takeaway:**
+OOP = organize code into reusable objects. Use classes for data structures, inheritance for code reuse, polymorphism for flexibility. Master OOP and you'll write production-grade data engineering code. The difference between a script and a pipeline is usually just a well-designed class hierarchy.

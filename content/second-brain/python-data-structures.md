@@ -9,7 +9,9 @@ tags:
   - fundamentals
 category: second-brain
 ---
-**Data structures** are the containers you use to store and organize data. Each has different trade-offs: lists are flexible, dicts are fast lookups, sets remove duplicates, tuples are immutable. Choosing the right structure makes your code faster and more readable.
+# Python Data Structures (Comprehensive)
+
+Picking the wrong data structure doesn't just slow your code — it makes it hard to reason about. Lists, dicts, sets, and tuples each have a distinct job: lists hold ordered sequences, dicts give you O(1) lookups, sets eliminate duplicates in one line, tuples enforce immutability. Know which tool to reach for, and your code will be faster and clearer without extra effort.
 
 ---
 

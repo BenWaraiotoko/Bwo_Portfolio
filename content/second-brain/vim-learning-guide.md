@@ -13,7 +13,7 @@ publish: true
 ---
 # 🎓 Vim Learning Guide for Complete Beginners
 
-This guide helps you progress from Vim beginner to LazyVim power user.
+Vim has a reputation for being impossible to exit. That's not wrong. But I'm learning it myself, and what I can tell you is this: the first two weeks are genuinely uncomfortable, and then something clicks. This guide is the path I'm following — from zero to LazyVim, one command at a time.
 
 ## 📍 Where You Are Now
 
@@ -206,6 +206,8 @@ After 2-3 weeks:
 - You'll understand why developers love Vim
 
 **Stick with it! The initial learning curve is steep but absolutely worth it.**
+
+The thing nobody tells you: Vim is less about memorizing commands and more about building a physical reflex. Two weeks in, your hands start making decisions before your brain does. That's when it gets fun.
 
 ---
 

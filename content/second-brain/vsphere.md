@@ -14,7 +14,7 @@ publish: true
 ---
 ## Summary
 
-VMware vSphere is an enterprise virtualization platform consisting of ESXi hypervisor and vCenter Server management. It's the industry standard for enterprise virtualization, offering advanced features like vMotion, DRS, and HA for production workloads.
+VMware vSphere is the enterprise virtualization platform that most large companies run their infrastructure on. ESXi plus vCenter gives you live VM migration, automatic load balancing, and high availability — features that were genuinely impressive when they launched and still matter in production. It's expensive, Broadcom has made it more so, but knowing it is still a valuable skill if you're working in enterprise environments.
 
 ## Key concepts
 
@@ -409,6 +409,8 @@ Format-Table -AutoSize
 Get-Datastore | Where-Object {$_.FreeSpaceGB -lt 100} |
 Select-Object Name, CapacityGB, FreeSpaceGB
 ```
+
+PowerCLI is the part most people skip, but it's how you actually manage vSphere at scale — learn it if you're dealing with more than a handful of VMs.
 
 ## Resources
 

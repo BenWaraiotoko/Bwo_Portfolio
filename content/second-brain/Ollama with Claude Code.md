@@ -22,7 +22,7 @@ description: This guide walks you through installing and using **Claude Code**�
 
 # Claude Code
 
-Claude Code is Anthropic's agentic coding tool that can read, modify, and execute code in your working directory.
+Claude Code is Anthropic's agentic coding tool that can read, modify, and execute code in your working directory. What makes this interesting is that you're not locked into Anthropic's API — Ollama exposes an Anthropic-compatible endpoint, so you can point Claude Code at local open models and run the whole thing offline. Useful for privacy, cost control, or just because running AI tooling on your own hardware is satisfying.
 
 Open models can be used with Claude Code through Ollama's Anthropic-compatible API, enabling you to use models such as `glm-4.7`, `qwen3-coder`, `gpt-oss`.
 
@@ -91,4 +91,4 @@ ANTHROPIC_AUTH_TOKEN=ollama ANTHROPIC_BASE_URL=http://localhost:11434 ANTHROPIC_
 
 Cloud models are also available at [ollama.com/search?c=cloud](https://ollama.com/search?c=cloud).
 
-
+The 64k context window requirement is a real constraint — smaller models will struggle. Start with `qwen3-coder` or `gpt-oss:20b` and go bigger if you need it.

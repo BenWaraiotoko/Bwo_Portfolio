@@ -9,12 +9,9 @@ tags:
   - fundamentals
 category: second-brain
 ---
-A loop is simply telling Python: "Repeat this block of code multiple times for me."
+# Python Loops
 
-## Basic Idea
-
-Without a loop, Python reads your code line by line, once.  
-With a loop, you take a block of code and say: "Do it again, and again… until I tell you to stop."
+Loops are the first thing that makes programming feel genuinely useful — suddenly you can process a thousand records with the same three lines you'd write for one. Python gives you two flavors: `for` when you're iterating over a known collection, `while` when you're waiting on a condition to change. Master both, and half of data processing becomes mechanical.
 
 ## Two Types You Need to Know
 

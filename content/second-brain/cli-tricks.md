@@ -12,7 +12,7 @@ publish: true
 ---
 ## Summary
 
-Essential command-line tricks, shortcuts, and productivity enhancers for working efficiently in the terminal. These techniques help reduce typing, improve workflow speed, and leverage the full power of the shell.
+Most people use the terminal like a typewriter — one command at a time, no memory, no shortcuts, arrow keys everywhere. This is not that. These tricks are the difference between someone who uses the command line and someone who actually lives in it.
 
 ## Key concepts
 
@@ -152,6 +152,8 @@ cp config.yml{,.backup}
 ```bash
 timeout 10s command
 ```
+
+If you take one thing from this: `Ctrl+R` for history search and `!!` for repeating the last command. Once those are muscle memory, the rest follows naturally.
 
 ## Resources
 

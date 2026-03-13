@@ -12,18 +12,22 @@ month: "January 2026"
 github: "https://github.com/BenWaraiotoko/DE-Learning-Projects/tree/main/1-2_PostgreSQL-in-Docker"
 
 ---
+Running a single container with a Python script is a nice party trick. But the moment you need a database, you're in multi-container territory — and that's where Docker Compose enters the picture.
+
+This project felt like a real step up. I wasn't just packaging a script anymore; I was spinning up actual infrastructure. A Postgres instance, a web UI, and a Python client all talking to each other inside Docker. That's closer to how things actually work in the wild.
+
 ## The Goal
 
-Run PostgreSQL in a Docker container and connect to it from Python. Add Adminer for a web UI. Use docker-compose to orchestrate multiple containers.
+Run PostgreSQL in a Docker container, connect to it from Python, and throw in Adminer as a web UI so I can actually see what's going on in the database without writing SELECT queries by hand. Use docker-compose to orchestrate the whole thing.
 
-This is the foundation for every data pipeline: a database running in a container.
+This is the foundational setup that every data pipeline eventually needs.
 
 ## What I Built
 
 A docker-compose setup with:
-- PostgreSQL container (database)
-- Adminer container (web UI for database management)
-- Python script that creates tables and inserts data
+- PostgreSQL container (the database)
+- Adminer container (a lightweight web UI — think phpMyAdmin but not terrible)
+- Python script that creates a table and inserts a row
 
 ### Tech Stack
 
@@ -113,23 +117,21 @@ python insert_data.py
 
 ## What I Learned
 
-- **docker-compose**: Define multi-container apps in YAML
-- **Named volumes**: Data persists even when container stops (`pgdata:/var/lib/postgresql/data`)
-- **Container networking**: Services can reference each other by name (`postgres` not `localhost`)
-- **psycopg2**: Python's PostgreSQL adapter—parameterized queries prevent SQL injection
-- **depends_on**: Control container startup order
+- **docker-compose**: You define your whole multi-container setup in a single YAML file, then `docker-compose up -d` handles the rest. It creates a shared network, starts everything in order, and manages volumes. One command. Pretty neat.
+- **Named volumes**: This one bit me before I understood it. Without a named volume, your data lives in an anonymous volume that evaporates on `docker-compose down`. With `pgdata:/var/lib/postgresql/data`, it persists. Add this to everything that has a database.
+- **Container networking**: Inside the Compose network, containers talk to each other by service name. So Python doesn't connect to `localhost:5432` — it connects to `postgres:5432`. Took me a minute to internalize this.
+- **psycopg2**: Python's PostgreSQL adapter. The key thing is parameterized queries with `%s` — never concatenate user input into SQL strings, even in toy projects. Build the habit early.
+- **depends_on**: Controls startup order, but it's not a health check. Just because Postgres container started doesn't mean Postgres is *ready*. Which brings me to...
 
 ## Challenges
 
-**Challenge:** Python script couldn't connect—"connection refused."
-**Solution:** Containers weren't ready yet. Added a simple retry loop. Later learned about `depends_on` with health checks.
+**Challenge:** The Python script threw "connection refused" immediately.
+**Solution:** The container was up but PostgreSQL itself wasn't ready yet. Added a simple retry loop as a quick fix. Later I learned about health checks in Compose — `depends_on` with a `condition: service_healthy` — but that's for a later project.
 
-**Challenge:** Data disappeared after `docker-compose down`.
-**Solution:** Needed named volumes. Without them, data lives in anonymous volumes that get deleted.
+**Challenge:** All my data vanished after `docker-compose down`.
+**Solution:** I had forgotten to add a named volume. Anonymous volumes are ephemeral. This is the kind of thing you only learn by losing data once — even test data. Lesson learned.
 
 ## Result
-
-PostgreSQL running in Docker, accessible from Python and Adminer. Data persists across restarts. ✅
 
 ```
 $ docker-compose up -d
@@ -141,7 +143,7 @@ $ python insert_data.py
 Table created and data inserted!
 ```
 
-Now I have a reusable database setup for all future projects.
+Postgres running in Docker, accessible from Python, data visible in Adminer at `localhost:8080`, and it all survives a container restart. This setup became the base for every project that came after it.
 
 ## Related
 
