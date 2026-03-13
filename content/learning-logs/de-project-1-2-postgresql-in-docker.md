@@ -1,6 +1,6 @@
 ---
 
-title: "🐘 Project 1.2: PostgreSQL in Docker"
+title: "Project 1.2: PostgreSQL in Docker"
 date: 2026-01-14
 publish: true
 description: "Running PostgreSQL in Docker with Python client connection"

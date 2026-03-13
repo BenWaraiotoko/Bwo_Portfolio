@@ -1,6 +1,6 @@
 ---
 
-title: "🐳 Project 1.1: Hello Docker"
+title: "Project 1.1: Hello Docker"
 date: 2026-01-07
 publish: true
 description: "First container - Dockerfile that runs a Python script"

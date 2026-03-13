@@ -1,6 +1,6 @@
 ---
 
-title: "📂 Project 1.3: Data Loader Script"
+title: "Project 1.3: Data Loader Script"
 date: 2026-01-21
 publish: true
 description: "Python script to load CSV data into PostgreSQL with Docker"
