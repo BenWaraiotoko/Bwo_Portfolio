@@ -33,7 +33,6 @@ Plus, it's fun to actually understand what's happening under the hood instead of
 
 **Learning:** Codecademy Data Engineer path (Python, SQL, pandas, PySpark)
 **Building:** ETL projects, automation scripts, anything that makes work easier
-**Future:** Le Wagon bootcamp (2026) for intensive hands-on training
 
 ## Tech Stack
 

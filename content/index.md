@@ -27,8 +27,5 @@ Quick references, cheatsheets, and knowledge base entries.
 
 ---
 
-## Recent Notes
+### [[about|More about me]]
 
-Check the sidebar for the latest updates, or explore the graph below to see how everything connects.
-
-→ [[about|More about me]]
