@@ -10,6 +10,8 @@ tags:
   - fundamentals
 category: second-brain
 ---
+# Python Control Flow (if/elif/else)
+
 Control flow is how your program stops being a linear script and starts making decisions. `if/elif/else` sounds trivial until you realize it's the backbone of every validation check, every routing rule, every data quality gate in your pipeline. Get this right and your code reads like clear logic. Get it wrong and you end up with deeply nested conditions nobody — including you — wants to debug.
 
 ---
