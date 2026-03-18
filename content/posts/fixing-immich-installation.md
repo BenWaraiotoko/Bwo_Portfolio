@@ -6,7 +6,6 @@ description: Connection refused, wrong ports, lost configs, and 62GB of photos t
 tags: [docker, self-hosted, immich, linux, homelab]
 category: posts
 ---
-
 I had Immich running. Then I lost the config files. The photos were still there — 5,700 of them, 62GB, sitting on a NAS — but the setup was gone.
 
 New Immich install: connection refused. Classic.
