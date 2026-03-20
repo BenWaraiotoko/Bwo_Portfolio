@@ -1,5 +1,5 @@
 ---
-title: Learning Python OOP Through Baking 🍰
+title: Learning Python OOP Through Baking
 date: 2025-12-26
 tags:
   - python
