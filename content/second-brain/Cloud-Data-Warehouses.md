@@ -327,25 +327,6 @@ IAM_ROLE 'arn:aws:iam::ACCOUNT:role/RedshiftRole'
 PARQUET;
 ```
 
----
-
-## Comparison for Your Context
-
-### For Le Wagon Bootcamp
-
-**Snowflake** is most likely used because:
-- Clean SQL interface
-- Easy to learn
-- Free tier available (12-month trial)
-- Widely adopted in industry
-
-### Setup Cost
-
-| Platform | Free Trial | Startup Cost |
-|----------|-----------|--------------|
-| **Snowflake** | 12 months, $400 credits | ✅ Free |
-| **BigQuery** | $300 credits | ✅ Free tier (1 TB/month free) |
-| **Redshift** | 2 months, 2 months 2 nodes | ❌ ~$200/month minimum |
 
 ---
 
@@ -475,7 +456,7 @@ load = PythonOperator(
 - [[dbt-Data-Build-Tool]] — Transforms in cloud warehouses
 - [[Apache-Airflow]] — Orchestrates cloud pipelines
 - [[PySpark-Fundamentals]] — Alternative for very large scale
-- [[TOOLS-Learning-Roadmap]] — Your complete tools learning path
+- [[TOOLS-Learning-Roadmap]] — Complete tools learning path
 
 ---
 

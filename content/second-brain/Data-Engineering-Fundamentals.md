@@ -572,6 +572,3 @@ All versioned in Git, packaged in Docker
 - [Start Data Engineering](https://www.startdataengineering.com)
 
 ---
-
-**Last Updated:** Jan 22, 2026  
-**Status:** Production-ready for Le Wagon prep (Oct 31, 2026)
