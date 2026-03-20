@@ -7,57 +7,56 @@ lightgallery: true
 
 ## Hey, I'm Ben 👋
 
-![Profile Picture](/images/Portrait_Ben.webp)
 
-**Broadcast infrastructure technician in Monaco. Learning data engineering to level up my technical game.**
+So here's the thing — I spent over a decade making extreme sports documentaries and supervising post-production, then somehow ended up running live broadcast infrastructure in Monaco.
 
-## What I Do
+And now I'm learning data engineering.
 
-I am working on infrastructure for linear television broadcasting. Before that, spent 10+ years doing extreme sports documentaries, TV production, and supervising post production.
+Makes total sense, right?
 
-Turns out, managing live encoding pipelines and distributed broadcast infrastructure is basically ETL work in disguise. Who knew? 🤷‍♂️
+## What I Actually Do
 
-## Why I'm Learning This Stuff
+I keep linear television on the air. Live encoding pipelines, distributed broadcast infrastructure, the kind of systems where "it'll probably be fine" is not an acceptable answer.
 
-Broadcast infrastructure already involves:
+Before that: 10+ years of cameras, deadlines, and the controlled chaos of TV production.
 
-- Moving data reliably (video streams, metadata, logs)
-- Automating workflows (transcoding, archiving, monitoring)
-- Solving for scale (live TV doesn't buffer)
+Turns out, broadcast infrastructure is basically ETL in disguise. You're moving data (video streams, metadata, logs), automating workflows (transcoding, archiving, monitoring), and solving for scale — because live TV doesn't buffer. 🤷‍♂️
 
-So I'm formalizing those instincts with Python, SQL, and proper data engineering practices. Same problems, better tools, more automation possibilities.
+Nobody tells you that when you're carrying a camera up a mountain.
 
-Plus, it's fun to actually understand what's happening under the hood instead of just keeping systems running.
+## Why Data Engineering
 
-## The Plan
+I've been doing the *concepts* for years without the vocabulary.
 
-**Learning:** Codecademy Data Engineer path (Python, SQL, pandas, PySpark)
-**Building:** ETL projects, automation scripts, anything that makes work easier
+So now I'm formalizing it: Python, SQL, proper data engineering practices. Same problems I've always solved, but with better tools and a clearer mental model of what's actually happening under the hood.
 
-## Tech Stack
+Plus, honestly? It's just fun to finally understand the *why* instead of just keeping things running.
 
-**Currently learning:**
+## The Stack
 
+**Learning right now:**
 - Python (fundamentals → pandas → automation)
 - SQL (queries, optimization, data modeling)
-- Git (finally learning proper version control)
+- Git (yes, properly — not just `git push --force` and pray)
 - Data pipelines (cleaning, wrangling, ETL)
 
-**Already know:**
-
+**Already in the toolkit:**
 - VMware/vSphere infrastructure
 - Docker, Linux, networking
-- Broadcast systems
-- Keeping live systems running when things break at 3am
+- Broadcast systems (all the weird ones)
+- Keeping live systems alive at 3am when everything breaks at once
 
-## What Matters to Me
+## What Drives Me
 
-- **Systems thinking:** How pieces fit together > individual tools
-- **Automation:** If you do it twice, automate it
-- **Learning by doing:** Projects > tutorials
-- **Reliability:** "It usually works" isn't good enough
+**Systems thinking** — How pieces fit together matters more than any individual tool.
 
-## 📬 Get in Touch
+**Automation** — If you do it twice, you should automate it. If you do it once, you should probably still automate it.
+
+**Learning by doing** — Projects beat tutorials every time. You learn what actually breaks in production.
+
+**Reliability** — "It usually works" is not a success metric. It's an accident waiting to happen.
+
+## Find Me Here
 
 - **GitHub:** [BenWaraiotoko](https://github.com/BenWaraiotoko)
 - **Email:** bwonews@proton.me
@@ -65,4 +64,4 @@ Plus, it's fun to actually understand what's happening under the hood instead of
 
 ---
 
-*This site: [Quartz v4](https://quartz.jzhao.xyz) + [Kanagawa](https://github.com/rebelot/kanagawa.nvim) colors. Inspired by [ssp.sh](https://www.ssp.sh).*
+*This site runs on [Quartz v4](https://quartz.jzhao.xyz) with [Kanagawa](https://github.com/rebelot/kanagawa.nvim) colors. Inspired by [ssp.sh](https://www.ssp.sh).*
