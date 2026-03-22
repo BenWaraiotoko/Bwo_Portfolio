@@ -9,6 +9,8 @@ Files are organized by their `category` frontmatter field:
   - category: project      → content/projects/
   - category: second-brain → content/second-brain/ (default)
 
+Also copies images referenced in published notes to content/<folder>/assets/.
+
 Usage:
     python scripts/sync-obsidian.py          # Sync all
     python scripts/sync-obsidian.py --dry    # Preview changes
@@ -19,6 +21,9 @@ import argparse
 import re
 import shutil
 from pathlib import Path
+
+# Image extensions to handle
+IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".bmp", ".tiff", ".avif"}
 
 # Configuration
 VAULT_PATH = (
@@ -96,6 +101,128 @@ def get_target_folder(frontmatter: dict) -> str:
         category = frontmatter.get("type", "").lower()
 
     return CATEGORY_MAP.get(category, DEFAULT_CATEGORY)
+
+
+def extract_image_refs(file_path: Path) -> list[str]:
+    """Extract image filenames/paths from a markdown file.
+
+    Handles both:
+      - Obsidian wiki-links: ![[image.png]]
+      - Standard markdown:   ![alt](path/to/image.png)
+    """
+    content = file_path.read_text(encoding="utf-8")
+    refs: list[str] = []
+
+    # Wiki-link embeds: ![[some image.png]]
+    for m in re.finditer(r"!\[\[([^\]]+\.(png|jpg|jpeg|gif|svg|webp|bmp|tiff|avif))\]\]", content, re.IGNORECASE):
+        refs.append(m.group(1))
+
+    # Standard markdown images: ![alt](path/to/image.png) — skip external URLs
+    for m in re.finditer(r"!\[[^\]]*\]\(([^)]+\.(png|jpg|jpeg|gif|svg|webp|bmp|tiff|avif))\)", content, re.IGNORECASE):
+        ref = m.group(1)
+        if not ref.startswith(("http://", "https://")):
+            refs.append(ref)
+
+    return refs
+
+
+def find_image_in_vault(image_ref: str, note_path: Path) -> Path | None:
+    """Locate an image file in the vault.
+
+    Search order:
+      1. Relative to the note's directory (Obsidian default: note-dir/assets/)
+      2. Vault-wide rglob (fallback)
+    """
+    image_name = Path(image_ref).name  # Strip any path prefix from the ref
+
+    # 1. Look in assets/ next to the note
+    candidate = note_path.parent / "assets" / image_name
+    if candidate.exists():
+        return candidate
+
+    # 2. Look directly next to the note
+    candidate = note_path.parent / image_name
+    if candidate.exists():
+        return candidate
+
+    # 3. Full vault search
+    for found in VAULT_PATH.rglob(image_name):
+        if found.is_file():
+            return found
+
+    return None
+
+
+def sync_images(src_note: Path, target_folder: str, dry_run: bool = False) -> tuple[int, int]:
+    """Copy images referenced in src_note to content/<target_folder>/assets/.
+
+    Returns (copied_count, missing_count).
+    """
+    refs = extract_image_refs(src_note)
+    if not refs:
+        return 0, 0
+
+    copied = 0
+    missing = 0
+    assets_dst = QUARTZ_CONTENT / target_folder / "assets"
+
+    for ref in refs:
+        src_img = find_image_in_vault(ref, src_note)
+        if src_img is None:
+            print(f"  ⚠ Missing image: {ref!r} (referenced in {src_note.name})")
+            missing += 1
+            continue
+
+        dst_img = assets_dst / src_img.name
+        if dst_img.exists():
+            src_mtime = src_img.stat().st_mtime
+            dst_mtime = dst_img.stat().st_mtime
+            if src_mtime <= dst_mtime:
+                continue  # Already up to date
+
+        is_new = not dst_img.exists()
+        if dry_run:
+            action = "create" if is_new else "update"
+            print(f"  [{action.upper()}] {target_folder}/assets/{src_img.name}")
+        else:
+            assets_dst.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(src_img, dst_img)
+            action = "Created" if is_new else "Updated"
+            print(f"  ✓ {action}: {target_folder}/assets/{src_img.name}")
+
+        copied += 1
+
+    return copied, missing
+
+
+def clean_orphan_images(publishable_files: list[tuple[Path, str]], dry_run: bool = False) -> int:
+    """Remove images from content assets/ that are no longer referenced by any published note."""
+    # Build set of all referenced image names across published notes
+    referenced: dict[str, set[str]] = {}  # folder → set of image filenames
+    for src, folder in publishable_files:
+        refs = extract_image_refs(src)
+        if folder not in referenced:
+            referenced[folder] = set()
+        for ref in refs:
+            referenced[folder].add(Path(ref).name)
+
+    removed = 0
+    for folder in ["posts", "projects", "learning-logs", "second-brain"]:
+        assets_dir = QUARTZ_CONTENT / folder / "assets"
+        if not assets_dir.exists():
+            continue
+        expected_names = referenced.get(folder, set())
+        for img in assets_dir.iterdir():
+            if img.is_file() and img.suffix.lower() in IMAGE_EXTENSIONS:
+                if img.name not in expected_names:
+                    if dry_run:
+                        print(f"  [REMOVE] {folder}/assets/{img.name}")
+                    else:
+                        img.unlink()
+                        print(f"  🗑 Removed: {folder}/assets/{img.name}")
+                    removed += 1
+
+    return removed
 
 
 def find_publishable_files() -> list[tuple[Path, str]]:
@@ -211,6 +338,21 @@ def sync_all(dry_run: bool = False, clean: bool = True):
     if synced == 0:
         print("  (no changes)")
 
+    # Sync images
+    print("\n🖼 Syncing images...")
+    total_img_copied = 0
+    total_img_missing = 0
+
+    for src, folder in publishable:
+        img_copied, img_missing = sync_images(src, folder, dry_run)
+        total_img_copied += img_copied
+        total_img_missing += img_missing
+
+    if total_img_copied == 0 and total_img_missing == 0:
+        print("  (no image changes)")
+    if total_img_missing > 0:
+        print(f"  ⚠ {total_img_missing} image(s) not found in vault")
+
     # Show summary by folder
     print("\n📊 Summary:")
     for folder, count in sorted(by_folder.items()):
@@ -218,19 +360,27 @@ def sync_all(dry_run: bool = False, clean: bool = True):
 
     # Clean orphans if requested
     removed = 0
+    removed_imgs = 0
     if clean:
         print("\n🧹 Cleaning orphaned files...")
         removed = clean_orphans(publishable, dry_run)
         if removed == 0:
             print("  (no orphans)")
 
+        print("\n🧹 Cleaning orphaned images...")
+        removed_imgs = clean_orphan_images(publishable, dry_run)
+        if removed_imgs == 0:
+            print("  (no orphaned images)")
+
     print("\n" + "=" * 50)
     if dry_run:
-        print(f"[DRY RUN] Would sync {synced}, remove {removed}")
+        print(f"[DRY RUN] Would sync {synced} file(s), {total_img_copied} image(s); remove {removed} file(s), {removed_imgs} image(s)")
     else:
-        print(f"✅ Synced {synced} file(s)")
+        print(f"✅ Synced {synced} file(s), {total_img_copied} image(s)")
         if removed:
-            print(f"🗑 Removed {removed} orphan(s)")
+            print(f"🗑 Removed {removed} orphan file(s)")
+        if removed_imgs:
+            print(f"🗑 Removed {removed_imgs} orphaned image(s)")
     print("=" * 50)
 
 
