@@ -289,6 +289,37 @@ docker-compose exec etl_pipeline bash
 docker-compose run etl_pipeline python script.py
 ```
 
+### Cleanup & Removal
+
+```bash
+# Remove stopped containers
+docker container prune
+
+# Remove dangling images (untagged, not used)
+docker image prune
+
+# Remove ALL images not used by an active container
+docker image prune -a
+
+# Remove unused volumes
+docker volume prune
+
+# Remove unused networks
+docker network prune
+
+# Clean everything at once (containers, images, networks — keeps volumes)
+docker system prune
+
+# Clean everything including volumes (⚠️ data loss)
+docker system prune -a --volumes
+
+# Show disk usage by Docker resources
+docker system df
+docker system df -v  # detailed view per image/container/volume
+```
+
+> [!warning] `docker system prune -a --volumes` removes ALL data in volumes not attached to a running container — irreversible.
+
 ### Build & Push
 
 ```bash
