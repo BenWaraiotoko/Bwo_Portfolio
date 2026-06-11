@@ -10,6 +10,10 @@ export const sharedPageComponents: SharedLayout = {
   header: [
     Component.PageTitle(),
     Component.Spacer(),
+    Component.DesktopOnly(
+      Component.Breadcrumbs({ rootName: "Home" }),
+    ),
+    Component.Spacer(),
     Component.Search(),
     Component.Darkmode(),
   ],
@@ -54,10 +58,6 @@ export const sharedPageComponents: SharedLayout = {
 // components for pages that display a single page (e.g. a single note)
 export const defaultContentPageLayout: PageLayout = {
   beforeBody: [
-    Component.ConditionalRender({
-      component: Component.Breadcrumbs(),
-      condition: (page) => page.fileData.slug !== "index",
-    }),
     Component.ArticleTitle(),
     Component.ContentMeta(),
     Component.TagList(),
@@ -76,9 +76,13 @@ export const defaultContentPageLayout: PageLayout = {
   right: [
     Component.DesktopOnly(
       Component.RecentNotes({
-        title: "Recent Notes",
-        limit: 4,
-        showTags: false,
+        title: "Recent Posts",
+        limit: 6,
+        showTags: true,
+        filter: (f) => {
+          const category = f.frontmatter?.category
+          return category === "posts" || (f.tags ?? []).includes("homelab")
+        },
       }),
     ),
   ],
@@ -87,7 +91,6 @@ export const defaultContentPageLayout: PageLayout = {
 // components for pages that display lists of pages (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
   beforeBody: [
-    Component.Breadcrumbs(),
     Component.ArticleTitle(),
     Component.ContentMeta(),
   ],
