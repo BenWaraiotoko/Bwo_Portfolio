@@ -39,8 +39,8 @@ AdGuard Home is a single Go binary. No PHP, no lighttpd, no dependencies. That a
 ```
                 ┌─────────────────────┐
                 │   Router / DHCP     │
-                │   DNS 1: 10.10.37.32:3000  │
-                │   DNS 2: 10.10.37.33:3001  │
+                │   DNS 1: 192.168.1.10:3000  │
+                │   DNS 2: 192.168.1.11:3001  │
                 └──────────┬──────────┘
                            │
               ┌────────────┴────────────┐
@@ -48,7 +48,7 @@ AdGuard Home is a single Go binary. No PHP, no lighttpd, no dependencies. That a
     ┌─────────▼─────────┐    ┌──────────▼────────┐
     │   PRIMARY          │    │   SECONDARY        │
     │   ubu-serv-2       │    │   ubu-serv-3       │
-    │   10.10.37.32:3000 │    │   10.10.37.33:3001 │
+    │   192.168.1.10:3000 │    │   192.168.1.11:3001 │
     │                    │    │                     │
     │   Sync: push ──────┼───►│   Sync: receive     │
     └────────────────────┘    └─────────────────────┘
@@ -105,8 +105,8 @@ docker run -d \
 On your router (UniFi in my case), set both DNS servers:
 
 ```
-Primary DNS:   10.10.37.32
-Secondary DNS: 10.10.37.33
+Primary DNS:   192.168.1.10
+Secondary DNS: 192.168.1.11
 ```
 
 Every device that gets a DHCP lease now knows about both DNS servers. If the primary doesn't respond, the OS automatically falls back to the secondary.
@@ -127,8 +127,8 @@ Wrote a script to sync filter lists and blocklist settings via the API:
 
 ```bash
 #!/bin/bash
-PRIMARY="http://10.10.37.32:3000"
-SECONDARY="http://10.10.37.33:3001"
+PRIMARY="http://192.168.1.10:3000"
+SECONDARY="http://192.168.1.11:3001"
 PRIMARY_AUTH="username:password"
 SECONDARY_AUTH="username:password"
 
@@ -149,11 +149,11 @@ But here's the pitfall nobody mentions: **the sync API endpoint uses different p
 
 ```bash
 # On the SECONDARY instance, configure it to pull from primary
-curl -X POST "http://10.10.37.33:3001/control/sync/set_config" \
+curl -X POST "http://192.168.1.11:3001/control/sync/set_config" \
   -H "Content-Type: application/json" \
   -u "username:password" \
   -d '{
-    "sync_url": "http://10.10.37.32:3000",
+    "sync_url": "http://192.168.1.10:3000",
     "sync_username": "admin",
     "sync_password": "yourpassword",
     "sync_interval": 300,
@@ -185,8 +185,8 @@ Just to be safe, I added a health check:
 
 ```bash
 # /etc/cron.d/adguard-sync-check
-*/10 * * * * root curl -sf http://10.10.37.32:3000/control/status > /dev/null || echo "PRIMARY DNS DOWN" | logger -t adguard
-*/10 * * * * root curl -sf http://10.10.37.33:3001/control/status > /dev/null || echo "SECONDARY DNS DOWN" | logger -t adguard
+*/10 * * * * root curl -sf http://192.168.1.10:3000/control/status > /dev/null || echo "PRIMARY DNS DOWN" | logger -t adguard
+*/10 * * * * root curl -sf http://192.168.1.11:3001/control/status > /dev/null || echo "SECONDARY DNS DOWN" | logger -t adguard
 ```
 
 If either goes down, it shows up in syslog. Simple, reliable, no alerting subscription needed.
@@ -238,7 +238,7 @@ Default is 90 days of query logs. For a home lab, that's overkill:
 
 ```bash
 # Set query log retention to 7 days via API
-curl -X POST "http://10.10.37.32:3000/control/querylog_config" \
+curl -X POST "http://192.168.1.10:3000/control/querylog_config" \
   -u "username:password" \
   -H "Content-Type: application/json" \
   -d '{"interval": 7, "anonymize_client_ip": true}'
@@ -257,19 +257,19 @@ Don't wait for a real outage to find out if failover works. Test it.
 docker stop adguard-primary
 
 # From another machine, test DNS resolution
-nslookup google.com 10.10.37.32  # Should timeout (primary down)
-nslookup google.com 10.10.37.33  # Should work (secondary up)
+nslookup google.com 192.168.1.10  # Should timeout (primary down)
+nslookup google.com 192.168.1.11  # Should work (secondary up)
 
 # Check from a client device
-dig @10.10.37.33 google.com
+dig @192.168.1.11 google.com
 # Should return an IP address
 
 # Restart primary
 docker start adguard-primary
 
 # Verify sync caught up
-curl -s http://10.10.37.32:3000/control/filtering/status | jq '.rules | length'
-curl -s http://10.10.37.33:3001/control/filtering/status | jq '.rules | length'
+curl -s http://192.168.1.10:3000/control/filtering/status | jq '.rules | length'
+curl -s http://192.168.1.11:3001/control/filtering/status | jq '.rules | length'
 # Both should return the same number
 ```
 

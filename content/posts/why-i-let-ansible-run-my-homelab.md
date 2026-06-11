@@ -79,7 +79,7 @@ all:
     ubuntu_servers:
       hosts:
         ubu-serv-2:
-          ansible_host: 10.10.37.32
+          ansible_host: 192.168.1.10
           hw_model: "HP Pro Mini 400"
           hw_cpu: "i5-13500T"
           hw_ram: "31 Go"
@@ -87,20 +87,20 @@ all:
           docker_services: [nextcloud-aio, paperless, servarr, adguardhome, ...]
 
         ubu-serv-3:
-          ansible_host: 10.10.37.33
+          ansible_host: 192.168.1.11
           hw_model: "Dell OptiPlex 7020"
           host_roles: [monitoring, homepage]
           docker_services: [alertmanager, grafana, prometheus, loki, ...]
 
         ubu-immich:
-          ansible_host: 10.10.37.34
+          ansible_host: 192.168.1.12
           hw_model: "Intel NUC8i7BEH1"
           host_roles: [immich]
           docker_services: [immich-server, immich-microservices, ...]
-          nfs_mounts: ["10.10.37.10:/volume1/immich:/srv/immich"]
+          nfs_mounts: ["192.168.1.5:/volume1/immich:/srv/immich"]
 
         zima-ubu-serv-1:
-          ansible_host: 10.10.37.31
+          ansible_host: 192.168.1.9
           hw_model: "ZimaBoard 832"
           hw_cpu: "Celeron J3455"
           hw_gpu: "AMD Radeon Pro WX3100"
@@ -109,14 +109,14 @@ all:
     macos_hosts:
       hosts:
         mac-mini:
-          ansible_host: 10.10.37.35
+          ansible_host: 192.168.1.13
           hw_model: "Apple Mac Mini M2 Pro"
           host_roles: [ollama, glances]
 
     home_assistant:
       hosts:
         rpi5:
-          ansible_host: 10.10.27.20
+          ansible_host: 192.168.2.20
           hw_model: "Raspberry Pi 5"
           os: "Home Assistant OS 2026.3.3"
           # No SSH on HAOS — metadata only
@@ -124,14 +124,14 @@ all:
     nas:
       hosts:
         synology:
-          ansible_host: 10.10.37.10
+          ansible_host: 192.168.1.5
           hw_model: "Synology DS923+"
           os: "DSM 7.3.2"
           nfs_exports: ["/volume1/immich"]
 
     unifi_network:
       vars:
-        unifi_api_url: "https://10.10.17.1"
+        unifi_api_url: "https://192.168.1.1"
       hosts:
         ucg-max:
           device_name: "Cloud Gateway Max"
@@ -145,8 +145,8 @@ all:
 
     iot_devices:
       hosts:
-        wled-kitchen: { ansible_host: 10.10.27.120, hw: "ESP32" }
-        wled-corniche-1: { ansible_host: 10.10.27.121, hw: "ESP32" }
+        wled-kitchen: { ansible_host: 192.168.2.120, hw: "ESP32" }
+        wled-corniche-1: { ansible_host: 192.168.2.121, hw: "ESP32" }
         # ... more WLED, ESPHome, Hue, Bambu Lab, consoles
 ```
 
