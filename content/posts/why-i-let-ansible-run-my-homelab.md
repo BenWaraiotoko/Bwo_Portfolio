@@ -37,7 +37,7 @@ Look, I'm not going to pretend I evaluated every tool with a scoring matrix. Her
 3. **Idempotent** — run the same playbook 50 times, get the same result. This is the whole point.
 4. **Batteries included** — modules for Docker, systemd, apt, files, templates... I rarely need custom code.
 
-Terraform handles the cloud side (Cloudflare, DNS records). Ansible handles the servers. They complement each other — this isn't a turf war.
+Terraform handles the network side (UniFi Cloud Gateway, VLANs, DNS records). Ansible handles the servers. They complement each other — this isn't a turf war.
 
 ## The Setup
 
@@ -46,225 +46,331 @@ Terraform handles the cloud side (Cloudflare, DNS records). Ansible handles the 
 ```
 homelab-iac/
 ├── ansible/
-│   ├── inventory.yml
-│   ├── ansible.cfg
-│   ├── site.yml              # Main entry point
-│   ├── group_vars/
-│   │   ├── all.yml           # Variables for every host
-│   │   └── docker_hosts.yml  # Docker-specific vars
+│   ├── inventory/
+│   │   ├── hosts.yml           # Full inventory (30+ hosts)
+│   │   └── group_vars/
+│   │       ├── all.yml          # Global vars (VLANs, monitoring, timezone)
+│   │       └── vault.yml       # Encrypted secrets (Ansible Vault)
+│   ├── ansible.cfg              # Optimized config
 │   ├── playbooks/
-│   │   ├── docker-setup.yml
-│   │   ├── immich.yml
-│   │   ├── nextcloud.yml
-│   │   ├── monitoring.yml
-│   │   ├── plex.yml
-│   │   └── adguard.yml
-│   └── roles/
-│       ├── docker/
-│       ├── common/
-│       └── ...
-└── terraform/
-    └── ...
+│   │   ├── site.yml             # Main entry point
+│   │   ├── setup-common.yml     # Base packages
+│   │   ├── setup-docker.yml     # Docker CE + Compose
+│   │   ├── setup-monitoring.yml # Monitoring stack
+│   │   ├── gather-info.yml      # Info collection
+│   │   ├── unifi-auto-inventory.yml  # UniFi API inventory
+│   │   └── unifi-query.yml      # UniFi network queries
+│   └── roles/                   # 17 roles (see below)
+├── terraform/
+│   └── unifi/                   # Network infrastructure
+├── scripts/
+│   └── generate-docs.py        # Auto-generate Obsidian docs
+└── Makefile                     # CLI shortcuts for everything
 ```
 
-### The Inventory
+### The Inventory: Not Just Servers
+
+Here's where things get interesting. My inventory doesn't just list servers — it tracks everything on the network:
 
 ```yaml
-# inventory.yml
+# inventory/hosts.yml (simplified)
 all:
-  hosts:
-    ubu-serv-2:
-      ansible_host: 10.10.37.32
-      role: primary
-    ubu-serv-3:
-      ansible_host: 10.10.37.33
-      role: monitoring
-    ubu-immich:
-      ansible_host: 10.10.37.34
-      role: photos
-    zima-ubu-serv-1:
-      ansible_host: 10.10.37.31
-      role: media
-    mac-mini:
-      ansible_host: 10.10.37.35
-      role: ai
-    rpi5:
-      ansible_host: 10.10.37.36
-      role: homeassistant
-
   children:
-    docker_hosts:
+    ubuntu_servers:
       hosts:
         ubu-serv-2:
+          ansible_host: 10.10.37.32
+          hw_model: "HP Pro Mini 400"
+          hw_cpu: "i5-13500T"
+          hw_ram: "31 Go"
+          host_roles: [ansible-control, nextcloud, baikal]
+          docker_services: [nextcloud-aio, paperless, servarr, adguardhome, ...]
+
         ubu-serv-3:
+          ansible_host: 10.10.37.33
+          hw_model: "Dell OptiPlex 7020"
+          host_roles: [monitoring, homepage]
+          docker_services: [alertmanager, grafana, prometheus, loki, ...]
+
         ubu-immich:
+          ansible_host: 10.10.37.34
+          hw_model: "Intel NUC8i7BEH1"
+          host_roles: [immich]
+          docker_services: [immich-server, immich-microservices, ...]
+          nfs_mounts: ["10.10.37.10:/volume1/immich:/srv/immich"]
+
         zima-ubu-serv-1:
-    ubuntu_hosts:
+          ansible_host: 10.10.37.31
+          hw_model: "ZimaBoard 832"
+          hw_cpu: "Celeron J3455"
+          hw_gpu: "AMD Radeon Pro WX3100"
+          host_roles: [plex, jellyfin, glances]
+
+    macos_hosts:
       hosts:
-        ubu-serv-2:
-        ubu-serv-3:
-        ubu-immich:
-        zima-ubu-serv-1:
+        mac-mini:
+          ansible_host: 10.10.37.35
+          hw_model: "Apple Mac Mini M2 Pro"
+          host_roles: [ollama, glances]
+
+    home_assistant:
+      hosts:
+        rpi5:
+          ansible_host: 10.10.27.20
+          hw_model: "Raspberry Pi 5"
+          os: "Home Assistant OS 2026.3.3"
+          # No SSH on HAOS — metadata only
+
+    nas:
+      hosts:
+        synology:
+          ansible_host: 10.10.37.10
+          hw_model: "Synology DS923+"
+          os: "DSM 7.3.2"
+          nfs_exports: ["/volume1/immich"]
+
+    unifi_network:
+      vars:
+        unifi_api_url: "https://10.10.17.1"
+      hosts:
+        ucg-max:
+          device_name: "Cloud Gateway Max"
+          firmware: "5.1.15"
+          host_roles: [gateway, firewall, dns, dhcp]
+        usw-pro-max-24:
+          device_name: "USW Pro Max 24 PoE"
+          firmware: "7.4.1"
+          host_roles: [switch]
+        # ... 4 more APs and switches
+
+    iot_devices:
+      hosts:
+        wled-kitchen: { ansible_host: 10.10.27.120, hw: "ESP32" }
+        wled-corniche-1: { ansible_host: 10.10.27.121, hw: "ESP32" }
+        # ... more WLED, ESPHome, Hue, Bambu Lab, consoles
 ```
 
-### The Quick Win: Common Setup
+The cool part? I track hardware specs, firmware versions, VLANs, and NFS mounts right in the inventory. When something breaks, I know exactly what I'm dealing with without SSH-ing anywhere.
 
-This is the playbook that makes every new machine ready in 5 minutes:
+### The 17 Roles
 
-```yaml
-# playbooks/common-setup.yml
----
-- name: Common setup for all hosts
-  hosts: all
-  become: true
-  tasks:
-    - name: Update apt cache
-      apt:
-        update_cache: yes
-        cache_valid_time: 3600
+Every service gets its own role. Clean, reusable, testable:
 
-    - name: Install essentials
-      apt:
-        name:
-          - htop
-          - tmux
-          - curl
-          - git
-          - python3
-          - python3-pip
-          - fail2ban
-          - ufw
-        state: present
+| Role | What It Deploys | Server |
+|------|----------------|--------|
+| `common` | Base packages, timezone, locale, UFW, auto-upgrades | All Ubuntu |
+| `docker` | Docker CE + Compose plugin, daemon config | All Ubuntu |
+| `monitoring` | cadvisor, node-exporter, alloy, glances, docker-socket-proxy | All Ubuntu |
+| `adguard` | AdGuard Home (dual instance) | ubu-serv-2, ubu-serv-3 |
+| `nextcloud` | Nextcloud AIO | ubu-serv-2 |
+| `paperless` | Paperless-ngx | ubu-serv-2 |
+| `servarr` | Full *arr stack behind Gluetun VPN | ubu-serv-2 |
+| `grafana-stack` | Grafana + Prometheus + Loki + Alertmanager | ubu-serv-3 |
+| `homepage` | Homepage dashboard | ubu-serv-3 |
+| `uptime-kuma` | Uptime monitoring | ubu-serv-3 |
+| `searxng` | Privacy search engine | ubu-serv-3 |
+| `it-tools` | IT utilities | ubu-serv-3 |
+| `romm` | ROM manager | ubu-serv-3 |
+| `wallos` | Subscription tracker | ubu-serv-3 |
+| `immich` | Photo archive (5 containers) | ubu-immich |
+| `plex` | Plex Media Server | zima-ubu-serv-1 |
+| `jellyfin` | Jellyfin Media Server | zima-ubu-serv-1 |
+| `tdarr` | Transcoding automation | zima-ubu-serv-1 |
 
-    - name: Set timezone
-      timezone:
-        name: Europe/Paris
+And `unifi-api` runs locally to query the UniFi network state.
 
-    - name: Enable UFW with defaults
-      ufw:
-        state: enabled
-        default: deny
-        direction: incoming
+### The Optimized ansible.cfg
 
-    - name: Allow SSH
-      ufw:
-        rule: allow
-        port: "22"
-        proto: tcp
+This isn't the default config. I tuned it:
+
+```ini
+[defaults]
+inventory = ./inventory/hosts.yml
+remote_user = bwo
+host_key_checking = False
+timeout = 30
+retry_files_enabled = False
+gathering = smart                    # Only gather facts when needed
+fact_caching = jsonfile              # Cache facts to disk
+fact_caching_connection = /tmp/ansible_facts
+fact_caching_timeout = 3600         # 1 hour cache
+inject_facts_as_vars = False        # Cleaner variable namespace
+roles_path = ./roles
+
+[ssh_connection]
+ssh_args = -o ControlMaster=auto -o ControlPersist=60s
+pipelining = True                    # Faster SSH transfers
+control_path = /tmp/ansible-ssh-%%h-%%p-%%r
 ```
 
-Run it once, every machine gets the same baseline. No more "wait, does this one have htop?"
+The `smart` gathering + fact caching means Ansible only SSHes into machines when facts are stale. Second runs are noticeably faster. And `pipelining = True` reduces SSH round-trips.
 
-## The Real Power: Docker Deployments
+## The Real Power: Docker Deployments via Templates
 
 Here's where Ansible stops being "nice" and starts being essential.
 
-### Deploying Immich
+Every role follows the same pattern:
 
 ```yaml
-# playbooks/immich.yml
----
-- name: Deploy Immich on ubu-immich
-  hosts: ubu-immich
-  become: true
-  vars:
-    immich_dir: /opt/immich
-    immich_port: 2283
-    immich_data_dir: /srv/immich
+# roles/<service>/tasks/main.yml
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+    owner: "{{ service_user }}"
+  loop:
+    - "{{ service_base_dir }}"
+    - "{{ service_data_dir }}"
 
-  tasks:
-    - name: Ensure immich directory exists
-      file:
-        path: "{{ item }}"
-        state: directory
-        mode: '0755'
-      loop:
-        - "{{ immich_dir }}"
-        - "{{ immich_data_dir }}"
+- name: Deploy docker-compose.yml
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ service_base_dir }}/docker-compose.yml"
+    mode: "0644"
+  notify: restart service
 
-    - name: Deploy docker-compose.yml
-      template:
-        src: immich/docker-compose.yml.j2
-        dest: "{{ immich_dir }}/docker-compose.yml"
-        mode: '0644'
-      notify: restart immich
-
-    - name: Deploy .env file
-      template:
-        src: immich/env.j2
-        dest: "{{ immich_dir }}/.env"
-        mode: '0600'
-      notify: restart immich
-
-    - name: Start Immich services
-      community.docker.docker_compose_v2:
-        project_src: "{{ immich_dir }}"
-        state: present
-        pull: always
-
-  handlers:
-    - name: restart immich
-      community.docker.docker_compose_v2:
-        project_src: "{{ immich_dir }}"
-        state: present
-        restarted: true
+- name: Ensure services are running
+  community.docker.docker_compose_v2:
+    project_src: "{{ service_base_dir }}"
+    state: present
 ```
 
-The cool part? Templates. Your `.env.j2` and `docker-compose.yml.j2` use variables, not hardcoded values. Change a port? Change it in `group_vars`, not in 3 different files.
+Templates use Jinja2 variables, not hardcoded values. Change a port? Change it in `defaults/main.yml`, re-run the playbook, done.
 
-### The Template Trick
+### Example: The Servarr Stack
+
+This is the big one. 13 containers, all templated from one `docker-compose.yml.j2`:
 
 ```yaml
-# templates/immich/docker-compose.yml.j2
-name: immich
+# roles/servarr/templates/docker-compose.yml.j2 (excerpt)
 services:
-  immich-server:
-    container_name: immich_server
-    image: ghcr.io/immich-app/immich-server:{{ immich_version | default('release') }}
-    command: ["start.sh", "immich"]
-    volumes:
-      - {{ immich_data_dir }}:/data
-      - /etc/localtime:/etc/localtime:ro
-    env_file:
-      - .env
+  gluetun:
+    image: {{ gluetun_image }}:{{ gluetun_tag }}
+    cap_add: [NET_ADMIN]
+    devices: [/dev/net/tun:/dev/net/tun]
     ports:
-      - {{ immich_port }}:{{ immich_port }}
-    restart: always
-    networks:
-      - immich_network
-# ... rest of the compose file
+      - "{{ prowlarr_port }}:{{ prowlarr_port }}"
+      - "{{ flaresolverr_port }}:{{ flaresolverr_port }}"
+    environment:
+      - VPN_SERVICE_PROVIDER={{ vpn_service_provider }}
+      - FIREWALL_VPN_INPUT_PORTS={{ gluetun_vpn_input_ports }}
+      # ... VPN credentials from vault
+
+  prowlarr:
+    image: {{ prowlarr_image }}:{{ prowlarr_tag }}
+    network_mode: service:gluetun    # Behind VPN
+
+  flaresolverr:
+    image: {{ flaresolverr_image }}:{{ flaresolverr_tag }}
+    network_mode: service:gluetun    # Also behind VPN
+
+  sonarr:
+    image: {{ sonarr_image }}:{{ sonarr_tag }}
+    ports:
+      - "{{ sonarr_port }}:8989"
+
+  # ... radarr, lidarr, bazarr, qbittorrent, jellyseerr,
+  #     recyclarr, kometa, tdarr, deunhealth
 ```
 
-Now when Immich v3 drops and changes the port again (they wouldn't dare... right?), I change one variable and re-run. No SSH. No manual edits. No "which file was that again?"
+The `FIREWALL_VPN_INPUT_PORTS` variable? That's the one I [learned the hard way](/posts/my-home-lab-2026). Without it, Prowlarr and FlareSolverr are up but unreachable behind Gluetun's DROP policy. Now it's a variable in my defaults, never to be forgotten again.
+
+All VPN credentials live in `vault.yml`, encrypted with Ansible Vault. Never in plain text. Never in git.
+
+### Example: Monitoring on Every Node
+
+Every Ubuntu server runs the same monitoring stack:
+
+```yaml
+# group_vars/all.yml
+monitoring_stack:
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    port: 8080
+  node_exporter:
+    image: prom/node-exporter:latest
+    port: 9100
+  alloy:
+    image: grafana/alloy:latest
+    port: 12345
+  glances:
+    image: nicolargo/glances:latest-full
+    port: 61208
+```
+
+The `monitoring` role templates this out on every node. Same containers, same ports, same config. Prometheus scrapes all of them from ubu-serv-3. No config drift.
 
 ## The Master Playbook
 
 ```yaml
-# site.yml
----
-- import_playbook: playbooks/common-setup.yml
-- import_playbook: playbooks/docker-setup.yml
-- import_playbook: playbooks/immich.yml
-- import_playbook: playbooks/nextcloud.yml
-- import_playbook: playbooks/monitoring.yml
-- import_playbook: playbooks/plex.yml
-- import_playbook: playbooks/adguard.yml
+# playbooks/site.yml
+# Base: common + docker + monitoring on ALL Ubuntu servers
+- name: Base — Common + Docker + Monitoring
+  hosts: ubuntu_servers
+  become: yes
+  roles: [common, docker, monitoring]
+
+# Per-server roles
+- name: ubu-serv-2 — Nextcloud + Paperless + Servarr + AdGuard
+  hosts: ubu-serv-2
+  become: yes
+  roles: [adguard, nextcloud, paperless, servarr, tdarr]
+
+- name: ubu-serv-3 — Grafana Stack + Apps
+  hosts: ubu-serv-3
+  become: yes
+  roles: [grafana-stack, homepage, uptime-kuma, searxng, it-tools, romm, wallos, adguard]
+
+- name: ubu-immich — Immich Photo Archive
+  hosts: ubu-immich
+  become: yes
+  roles: [immich]
+
+- name: zima-ubu-serv-1 — Plex + Jellyfin + Tdarr Node
+  hosts: zima-ubu-serv-1
+  become: yes
+  roles: [plex, jellyfin, tdarr]
+
+# UniFi inventory (runs locally, no SSH)
+- name: UniFi Network Inventory
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  roles: [unifi-api]
 ```
 
 One command to rule them all:
 
 ```bash
 # Deploy everything
-ansible-playbook -i inventory.yml site.yml
+make setup-common     # or: ansible-playbook playbooks/site.yml
 
 # Just one server
-ansible-playbook -i inventory.yml -l ubu-immich site.yml
+ansible-playbook playbooks/site.yml --limit ubu-immich
 
-# Dry run (check mode)
-ansible-playbook -i inventory.yml site.yml --check --diff
+# Dry run (check mode) with diff
+ansible-playbook playbooks/site.yml --check --diff
 ```
 
-The `--check --diff` flags are your best friend. They show what *would* change without actually changing it. Because "just run it and see" is how production dies.
+## The Makefile: Because Typing Less Is Better
+
+I got tired of typing `cd ansible && ansible-playbook ...` so I wrapped everything in a Makefile:
+
+```bash
+make ping            # Test SSH connectivity to all machines
+make gather          # Collect system info from all hosts
+make setup-common    # Base packages on all servers
+make setup-docker    # Install Docker on all servers
+make vault-edit      # Edit encrypted secrets
+make vault-view      # View encrypted secrets
+make lint            # Check syntax (Terraform + Ansible)
+make fmt             # Auto-format everything
+make status          # Repo + Terraform + Ansible status
+make clean           # Remove temp files
+```
+
+Quick, consistent, no typos.
 
 ## The Mistakes I Made (So You Don't Have To)
 
@@ -275,25 +381,22 @@ First week: API keys and passwords right there in the YAML. Committed to git. Pu
 Don't do this. Use Ansible Vault:
 
 ```bash
-# Create encrypted vars file
-ansible-vault create group_vars/vault.yml
+make vault-edit      # Edit encrypted secrets interactively
+make vault-view      # View them (prompts for password)
 
-# Edit it later
-ansible-vault edit group_vars/vault.yml
-
-# Run playbooks with vault
-ansible-playbook -i inventory.yml site.yml --ask-vault-pass
+# Or directly:
+ansible-vault edit inventory/group_vars/vault.yml
 ```
 
-### 2. Not Using `--diff`
+### 2. Not Using `--check --diff`
 
 Without `--diff`, Ansible says "changed" and you're left wondering *what* changed. With it, you see the exact before/after of every file modification.
 
 ```bash
-ansible-playbook -i inventory.yml site.yml --diff
+ansible-playbook playbooks/site.yml --check --diff
 ```
 
-Add it to your `ansible.cfg`:
+This should be in your `ansible.cfg`:
 
 ```ini
 [defaults]
@@ -307,11 +410,11 @@ Now you'll never run blind again.
 Early on, I wrote tasks that used `shell: docker compose up -d`. Every run showed "changed" even when nothing changed. Use the proper modules:
 
 ```yaml
-# BAD - always reports changed
+# BAD — always reports changed
 - name: Start containers
   shell: docker compose up -d
 
-# GOOD - only reports changed when something actually changes
+# GOOD — only reports changed when something actually changes
 - name: Start containers
   community.docker.docker_compose_v2:
     project_src: /opt/immich
@@ -337,23 +440,44 @@ Deploy and pray is not a strategy. Add verification:
 
 Now your playbook fails loudly if something's wrong instead of silently succeeding while your service is down.
 
+### 5. Not Caching Facts
+
+Without fact caching, Ansible gathers system facts on every run. That's an SSH connection per host just to ask "what OS are you running?" every single time.
+
+```ini
+# ansible.cfg
+gathering = smart
+fact_caching = jsonfile
+fact_caching_connection = /tmp/ansible_facts
+fact_caching_timeout = 3600
+```
+
+First run: slow. Second run: facts loaded from disk. Noticeably faster.
+
 ## What This Looks Like Day-to-Day
 
 ```bash
 # Monday morning: update everything
-ansible-playbook -i inventory.yml site.yml --tags update
+make setup-common
 
-# New service? Write a playbook, test with --check, deploy
-ansible-playbook -i inventory.yml -l zima-ubu-serv-1 plex.yml
+# New service? Write a role, test with --check, deploy
+ansible-playbook playbooks/site.yml --limit ubu-serv-3 --check --diff
+ansible-playbook playbooks/site.yml --limit ubu-serv-3
 
 # Something broke? Re-run the playbook (idempotent, remember)
-ansible-playbook -i inventory.yml -l ubu-immich immich.yml
+make setup-docker
+
+# Quick health check
+make ping
 
 # Check what's different across the fleet
-ansible all -i inventory.yml -m setup | grep ansible_docker_version
+make gather
+
+# Edit secrets safely
+make vault-edit
 ```
 
-No more SSH. No more manual anything. Just YAML and trust.
+No more SSH. No more manual anything. Just YAML, templates, and trust.
 
 ## The Honest Take
 
@@ -361,12 +485,12 @@ Ansible isn't perfect. The YAML syntax can feel verbose. Error messages sometime
 
 But for a homelab with more than 2 machines? It's the difference between maintaining infrastructure and being maintained *by* your infrastructure.
 
-Start small. One playbook. One service. Let it grow organically. You don't need the perfect directory structure on day one — you need *something* that's not SSH and hope.
+My repo has 17 roles, 30+ hosts in inventory, and a Makefile that wraps everything into 2-letter commands. Start small. One role. One service. Let it grow organically. You don't need the perfect directory structure on day one — you need *something* that's not SSH and hope.
 
-And honestly? The first time you type `ansible-playbook site.yml` and watch 6 machines configure themselves in parallel — that's the kind of stuff I live for.
+And honestly? The first time you type `make setup-common` and watch 4 machines install the same packages in parallel — that's the kind of stuff I live for.
 
 ---
 
-**Already using Ansible?** I'd love to hear what your playbooks look like. Still SSH-ing into everything? Give it a shot — start with the common setup playbook above and build from there.
+**Already using Ansible?** I'd love to hear what your roles look like. Still SSH-ing into everything? Give it a shot — start with a `common` role and build from there.
 
 Now if you'll excuse me, I have some idempotence to verify. 🎭
