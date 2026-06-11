@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from typing import List, Tuple, Optional
 """
 Sync Obsidian vault to Quartz - publish: true anywhere in vault.
 
@@ -103,7 +104,7 @@ def get_target_folder(frontmatter: dict) -> str:
     return CATEGORY_MAP.get(category, DEFAULT_CATEGORY)
 
 
-def extract_image_refs(file_path: Path) -> list[str]:
+def extract_image_refs(file_path: Path) -> List[str]:
     """Extract image filenames/paths from a markdown file.
 
     Handles both:
@@ -111,7 +112,7 @@ def extract_image_refs(file_path: Path) -> list[str]:
       - Standard markdown:   ![alt](path/to/image.png)
     """
     content = file_path.read_text(encoding="utf-8")
-    refs: list[str] = []
+    refs: List[str] = []
 
     # Wiki-link embeds: ![[some image.png]]
     for m in re.finditer(r"!\[\[([^\]]+\.(png|jpg|jpeg|gif|svg|webp|bmp|tiff|avif))\]\]", content, re.IGNORECASE):
@@ -126,7 +127,7 @@ def extract_image_refs(file_path: Path) -> list[str]:
     return refs
 
 
-def find_image_in_vault(image_ref: str, note_path: Path) -> Path | None:
+def find_image_in_vault(image_ref: str, note_path: Path) -> Optional[Path]:
     """Locate an image file in the vault.
 
     Search order:
@@ -195,7 +196,7 @@ def sync_images(src_note: Path, target_folder: str, dry_run: bool = False) -> tu
     return copied, missing
 
 
-def clean_orphan_images(publishable_files: list[tuple[Path, str]], dry_run: bool = False) -> int:
+def clean_orphan_images(publishable_files: List[Tuple[Path, str]], dry_run: bool = False) -> int:
     """Remove images from content assets/ that are no longer referenced by any published note."""
     # Build set of all referenced image names across published notes
     referenced: dict[str, set[str]] = {}  # folder → set of image filenames
@@ -225,7 +226,7 @@ def clean_orphan_images(publishable_files: list[tuple[Path, str]], dry_run: bool
     return removed
 
 
-def find_publishable_files() -> list[tuple[Path, str]]:
+def find_publishable_files() -> List[Tuple[Path, str]]:
     """Find all files with publish: true in vault."""
     publishable = []
 
@@ -264,7 +265,7 @@ def sync_file(src: Path, dst: Path, dry_run: bool = False) -> bool:
     return True
 
 
-def clean_orphans(publishable_files: list[tuple[Path, str]], dry_run: bool = False) -> int:
+def clean_orphans(publishable_files: List[Tuple[Path, str]], dry_run: bool = False) -> int:
     """Remove files in Quartz that were synced from vault but no longer have publish: true.
 
     Only removes files that have a matching source in the vault with publish: false/missing.
