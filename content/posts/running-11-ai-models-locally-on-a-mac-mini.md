@@ -1,10 +1,15 @@
 ---
-title: "Running 11 AI Models Locally on a Mac Mini (No, I Won't Pay per Token)"
+title: Running 11 AI Models Locally on a Mac Mini (No, I Won't Pay per Token)
 date: 2026-05-26
 publish: true
 category: posts
-tags: [homelab, ai, ollama, local-llm, macos]
-description: "Cloud APIs are great until you see the bill. Here's how I run 11 models locally on an M2 Pro — including a vision model and an agent that manages my lab."
+tags:
+  - homelab
+  - ai
+  - ollama
+  - local-llm
+  - macos
+description: Cloud APIs are great until you see the bill. Here's how I run 11 models locally on an M2 Pro — including a vision model and an agent that manages my lab.
 ---
 
 So here's the thing about cloud AI: it's fast, it's convenient, and one day you check your API usage and realize you've spent €47 on tokens for a script that summarizes your grocery lists.

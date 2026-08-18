@@ -1,10 +1,15 @@
 ---
-title: "Why I Let Ansible Run My Home Lab (And You Should Too)"
+title: Why I Let Ansible Run My Home Lab (And You Should Too)
 date: 2026-05-26
 publish: true
 category: posts
-tags: [homelab, ansible, automation, infrastructure, docker]
-description: "Manual SSH into 6 servers is how homelabs die. Here's how I automated everything with Ansible — including the mistakes I made along the way."
+tags:
+  - homelab
+  - ansible
+  - automation
+  - infrastructure
+  - docker
+description: Manual SSH into 6 servers is how homelabs die. Here's how I automated everything with Ansible — including the mistakes I made along the way.
 ---
 
 You know that feeling when you SSH into a server, change a config file, and then realize three weeks later you have no idea what you changed or why?

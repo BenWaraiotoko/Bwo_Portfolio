@@ -3,8 +3,13 @@ title: "AdGuard Home Dual DNS: Why One Is Never Enough"
 date: 2026-05-26
 publish: true
 category: posts
-tags: [homelab, dns, adguard, networking, self-hosted]
-description: "When your DNS goes down, everything goes down. Here's how I run two AdGuard Home instances in sync — and the pitfalls that almost drove me to /etc/hosts."
+tags:
+  - homelab
+  - dns
+  - adguard
+  - networking
+  - self-hosted
+description: When your DNS goes down, everything goes down. Here's how I run two AdGuard Home instances in sync — and the pitfalls that almost drove me to /etc/hosts.
 ---
 
 Here's a fun fact about DNS: when it stops working, you don't get a nice error message. You get the internet looking at you like you're not connected, except you are. Everything's fine except nothing works.

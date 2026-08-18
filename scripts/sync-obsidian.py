@@ -27,9 +27,7 @@ from pathlib import Path
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".bmp", ".tiff", ".avif"}
 
 # Configuration
-VAULT_PATH = (
-    Path.home() / "Library" / "Mobile Documents" / "iCloud~md~obsidian" / "Documents" / "bwo-second-brain"
-)
+VAULT_PATH = Path.home() / "Documents" / "Obsidian" / "bwo-second-brain"
 QUARTZ_CONTENT = Path(__file__).parent.parent / "content"
 
 # Folders to skip in vault

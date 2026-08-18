@@ -3,8 +3,14 @@ title: "Immich vs PhotoPrism: Why I Picked the One That Broke on Me"
 date: 2026-05-26
 publish: true
 category: posts
-tags: [homelab, immich, photoprism, docker, self-hosted, photos]
-description: "Two self-hosted photo managers. One broke during migration, the other was boring. Here's why I chose the broken one anyway."
+tags:
+  - homelab
+  - immich
+  - photoprism
+  - docker
+  - self-hosted
+  - photos
+description: Two self-hosted photo managers. One broke during migration, the other was boring. Here's why I chose the broken one anyway.
 ---
 
 You know what nobody tells you about self-hosting your photo library? The hardest part isn't setting up the software. It's migrating 5,700 photos without losing your mind.

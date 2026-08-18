@@ -3,8 +3,13 @@ title: "My Home Lab 2026: 6 Servers, 0 Sleep, and All the Network"
 date: 2026-05-26
 publish: true
 category: posts
-tags: [homelab, docker, ansible, unifi, infrastructure]
-description: "A tour of my home infrastructure — what's running, what's broken, and why I keep going anyway"
+tags:
+  - homelab
+  - docker
+  - ansible
+  - unifi
+  - infrastructure
+description: A tour of my home infrastructure — what's running, what's broken, and why I keep going anyway
 ---
 
 So here's the thing. I have a problem.
