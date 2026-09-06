@@ -9,11 +9,13 @@ publish: true
 
 ## Latest
 
-- [[my-home-lab-2026|My Home Lab 2026]] — 6 servers, 0 sleep, and all the network
-- [[why-i-let-ansible-run-my-homelab|Why I Let Ansible Run My Home Lab]] — and you should too
-- [[running-11-ai-models-locally-on-a-mac-mini|11 AI Models on a Mac Mini]] — no, I won't pay per token
-- [[immich-vs-photoprism-why-i-picked-the-one-that-broke-on-me|Immich vs PhotoPrism]] — why I chose the one that broke
-- [[adguard-home-dual-dns-why-one-is-never-enough|AdGuard Dual DNS]] — why one is never enough
+<!-- latest:auto-begin -->
+- [[immich-duplicates-kept-coming-back|I Purged My Immich Duplicates. They Came Back With Friends.]] — 797 duplicates deleted on Monday. *(Sep 6, 2026)*
+- [[ai-agent-runs-my-homelab|My AI Agent Runs My Home Lab]] — I gave an AI agent SSH access to 6 servers. *(Aug 25, 2026)*
+- [[broadcast-lessons-homelab-reliability|What Broadcast Infrastructure Taught Me About Home Lab Reliability]] — When your day job is keeping live TV on air, your home lab benefits from the paranoia. *(Aug 20, 2026)*
+- [[gluetun-ate-my-ports|When Gluetun Eats Your Ports: A VPN Container Debugging Story]] — Your VPN container is up, your services are up, and nothing works. *(Aug 17, 2026)*
+- [[adguard-home-dual-dns-why-one-is-never-enough|AdGuard Home Dual DNS: Why One Is Never Enough]] — When your DNS goes down, everything goes down. *(May 26, 2026)*
+<!-- latest:auto-end -->
 
 ---
 

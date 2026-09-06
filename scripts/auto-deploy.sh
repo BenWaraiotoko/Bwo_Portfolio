@@ -14,6 +14,9 @@ echo "[$(timestamp)] --- sync started ---" >> "$LOG"
 # Sync vault → content/
 python3 scripts/sync-obsidian.py >> "$LOG" 2>&1
 
+# Regenerate homepage "Latest" section (between auto markers in content/index.md)
+python3 scripts/update-latest.py >> "$LOG" 2>&1
+
 # Only build and deploy if something changed
 if [ -n "$(git status --porcelain)" ]; then
     echo "[$(timestamp)] Changes detected — building..." >> "$LOG"

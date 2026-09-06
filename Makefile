@@ -11,15 +11,22 @@
 #   project      → Project documentation
 #   second-brain → Knowledge base, references (default)
 
-.PHONY: sync build serve deploy clean help
+.PHONY: sync sync-dry sync-keep latest build serve deploy clean help
 
 # Sync from Obsidian vault (scans entire vault for publish: true)
+# Also regenerates the homepage "Latest" section from the newest posts
 sync:
 	python3 scripts/sync-obsidian.py
+	python3 scripts/update-latest.py
 
 # Preview what would be synced
 sync-dry:
 	python3 scripts/sync-obsidian.py --dry
+	python3 scripts/update-latest.py --dry
+
+# Regenerate the homepage "Latest" section only
+latest:
+	python3 scripts/update-latest.py
 
 # Sync without removing unpublished files
 sync-keep:
@@ -55,9 +62,10 @@ help:
 	@echo "Quartz Portfolio Commands"
 	@echo "========================="
 	@echo ""
-	@echo "  make sync       Sync + auto-remove unpublished files"
+	@echo "  make sync       Sync + auto-remove unpublished files + refresh Latest"
 	@echo "  make sync-dry   Preview sync (no changes)"
 	@echo "  make sync-keep  Sync without removing files"
+	@echo "  make latest     Regenerate homepage 'Latest' section only"
 	@echo "  make build      Build the site"
 	@echo "  make serve      Serve locally (http://localhost:8080)"
 	@echo "  make dev        Sync + serve (main development command)"
