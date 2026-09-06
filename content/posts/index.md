@@ -26,6 +26,10 @@ Technical writing, tutorials, and homelab war stories. Everything here is stuff 
 - [[TOOLS-Learning-Roadmap|TOOLS Learning Roadmap]] — the tools I'm learning and why
 - [[Python-Fundamentals-Roadmap|Python Fundamentals Roadmap]] — my learning path
 
+## Tools & Workflow
+
+- [[taphouse-homebrew-gui|Taphouse: I Put a GUI on Homebrew and I'm Not Sorry]] — a native window onto brew, with rollbacks and CVE scanning
+
 ## Enterprise & Virtualization
 
 - [[vsphere-network-audit-powercli|vSphere Network Audit with PowerCLI]] — auditing VMware networking at scale
