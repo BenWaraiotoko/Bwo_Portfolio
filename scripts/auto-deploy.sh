@@ -20,7 +20,9 @@ python3 scripts/update-latest.py >> "$LOG" 2>&1
 # Only build and deploy if something changed
 if [ -n "$(git status --porcelain)" ]; then
     echo "[$(timestamp)] Changes detected — building..." >> "$LOG"
-    npx quartz build >> "$LOG" 2>&1
+    # NEVER use `npx quartz build` here: under launchd (no TTY) npx can hang
+    # forever waiting for install confirmation (31h zombie, 2026-09-29).
+    node ./quartz/bootstrap-cli.mjs build < /dev/null >> "$LOG" 2>&1
 
     git add -A
     git commit -m "auto-sync: $(timestamp)" >> "$LOG" 2>&1

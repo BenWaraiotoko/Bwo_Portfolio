@@ -51,7 +51,7 @@ DNS: AdGuard Home in dual setup on `ubu-serv-2:3000` and `ubu-serv-3:3001`, sync
 ### The "Observability" Stack
 
 - **Grafana + Prometheus**: to monitor... everything. All the time.
-- **Home Assistant**: on the RPi5. My light bulbs now know when I'm in a bad mood.
+- **Home Assistant**: on the Zimaboard. My light bulbs now know when I'm in a bad mood.
 
 ### The "Local AI" Stack
 
