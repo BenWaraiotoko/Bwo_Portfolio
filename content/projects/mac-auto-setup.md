@@ -11,12 +11,14 @@ You know that feeling when you get a new machine and spend two days reinstalling
 
 I got tired of that. So I automated it.
 
+> **V2 (Oct 2026):** the setup got a subtraction pass — AeroSpace and Warp are gone, the Brewfile is reorganized into 12 labeled sections (~92 packages), and OpenCode joined the AI toolkit. Same one-command promise, tighter toolset. Details in the [V2 write-up](/posts/mac-autosetup-v2).
+
 ## What It Does
 
-One command turns a factory-fresh Mac into a fully configured keyboard-driven development environment. Tiling window manager, modern shell, Neovim as a full IDE, all dotfiles in place, 60+ tools installed.
+One command turns a factory-fresh Mac into a fully configured, keyboard-friendly development environment. Modern shell, Neovim as a full IDE, all dotfiles in place, ~92 tools installed.
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/BenWaraiotoko/BWO-MacAutoSetup/main/bootstrap.sh | bash
+bash <(curl -fsSL https://raw.githubusercontent.com/BenWaraiotoko/BWO-MacAutoSetup/main/bootstrap-nogit.sh)
 ```
 
 That's it. Go make coffee. Come back to a working setup.
@@ -25,13 +27,13 @@ That's it. Go make coffee. Come back to a working setup.
 
 | Tool | Role |
 |------|------|
-| Homebrew + Brewfile | Declarative package management — one file, all dependencies |
+| Homebrew + Brewfile | Declarative package management — one file, all dependencies, 12 labeled sections |
 | GNU Stow | Symlink-based dotfile deployment |
-| Aerospace | Tiling window manager with i3-style keyboard navigation |
 | Zsh + Oh-My-Zsh + Powerlevel10k | Shell that doesn't make you sad |
 | Neovim + LazyVim | Full IDE, keyboard-first |
 | Zed | Fast editor for when you want something lighter |
-| Ghostty / Warp | Terminals worth using |
+| Ghostty | The terminal (Warp retired in V2) |
+| opencode | Open-source AI coding agent for the terminal |
 
 ## The Architecture
 
@@ -40,7 +42,7 @@ Bootstrap Script → Homebrew → Brewfile → Packages & Apps
                       ↓
                  GNU Stow → Dotfiles → ~/.config/*
                       ↓
-               Aerospace + Ghostty + Neovim → Keyboard workflow
+               Ghostty + Neovim + Zed → Keyboard workflow
 ```
 
 The bootstrap handles two scenarios:
@@ -52,15 +54,14 @@ The bootstrap handles two scenarios:
 
 ```text
 dotfiles/
-├── aerospace/      → ~/.config/aerospace/
-├── nvim/           → ~/.config/nvim/
-├── zsh/            → ~/.zshrc, ~/.zprofile
-├── git/            → ~/.gitconfig
-├── ghostty/        → ~/.config/ghostty/
-├── zed/            → ~/.config/zed/
-├── sublime-text/   → Sublime Text config
-├── obsidian/       → Obsidian config
-└── claude/         → ~/.claude/
+├── zsh/           → ~/.zshrc, ~/.zprofile
+├── vim/           → ~/.vimrc, ~/.vim/
+├── nvim/          → ~/.config/nvim/
+├── ghostty/       → ~/.config/ghostty/
+├── superclaude/   → ~/.claude/
+├── sublime-text/  → Sublime Text config
+├── zed/           → ~/.config/zed/
+└── obsidian/      → Obsidian config (copied into the vault, not stowed)
 ```
 
 GNU Stow creates symlinks from the repo to the right home directory locations. Change a config in the repo — it's live everywhere, instantly.
@@ -69,7 +70,7 @@ GNU Stow creates symlinks from the repo to the right home directory locations. C
 
 The whole workflow is optimized for staying on the keyboard:
 
-- **Aerospace** — Switch workspaces, resize windows, move apps. No mouse required.
+- **Ghostty + Zed** — fast native apps, keyboard-first by design
 - **Neovim** — Modal editing with LSP, fuzzy finding, completions. Full IDE, no Electron.
 - **fzf** — Fuzzy finding for files, command history, anything.
 - **Vi mode in Zsh** — Because consistency matters.
@@ -95,8 +96,9 @@ Hardcoded paths break across machines with different usernames or directory stru
 ## Numbers
 
 - **Setup time**: ~15 minutes (mostly downloads)
-- **Packages managed**: 60+ CLI tools and applications
-- **Dotfiles tracked**: 10+ configurations
+- **Packages managed**: ~92 (55 CLI tools, 37 apps) + 56 VS Code extensions
+- **Brewfile**: 12 labeled sections — reads like a menu, not a junk drawer
+- **Dotfiles tracked**: 7 stow packages + Obsidian config
 - **Re-run safe**: Yes, fully idempotent
 - **Documentation**: `docs/TOOLS.md` — full categorized reference for every tool in the Brewfile
 
