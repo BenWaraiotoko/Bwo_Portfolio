@@ -10,11 +10,11 @@ publish: true
 ## Latest
 
 <!-- latest:auto-begin -->
+- [[leaving-omarchy|No Thanks, Omarchy — Why I Switched Distros Over Values]] — I read Korben's post, then I read the source. *(Oct 17, 2026)*
 - [[mac-autosetup-v2|One Command, 92 Packages: My Mac Setup Script Grew Up]] — Nine months later, my one-command Mac setup got a V2 — fewer apps, better tools, and a Brewfile that finally… *(Oct 16, 2026)*
 - [[sharing-vinyl-collection-cloudflare-tunnel|Sharing My Vinyl Collection Online Without Opening a Single Port]] — A friend wanted to browse my record shelves. *(Sep 30, 2026)*
 - [[taphouse-homebrew-gui|Taphouse: I Put a GUI on Homebrew and I'm Not Sorry]] — A native SwiftUI window onto brew — installs, rollbacks, CVEs, and the disk-usage guilt trip I didn't know I… *(Sep 21, 2026)*
 - [[i-fired-git-from-my-obsidian-vault|I Fired Git From My Obsidian Vault. My Notes Never Synced Better.]] — From a YouTube video to four devices syncing in real time in one day — the five decisions every LiveSync… *(Sep 8, 2026)*
-- [[immich-duplicates-kept-coming-back|I Purged My Immich Duplicates. They Came Back With Friends.]] — 797 duplicates deleted on Monday. *(Sep 6, 2026)*
 <!-- latest:auto-end -->
 
 ---
